@@ -1,0 +1,80 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SkillGrid from "@/components/skills/SkillGrid.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { getFeaturedSkills } from "@/lib/skills";
+import { t } from "@/lib/i18n";
+
+const locale = "es" as const;
+const featuredSkills = await getFeaturedSkills(6);
+---
+
+<BaseLayout title={t("site.title", locale)} description={t("site.description", locale)}>
+  <!-- Hero -->
+  <section class="pt-24 pb-12 sm:pt-32 sm:pb-16">
+    <div class="container-page text-center">
+      <pre
+        class="mb-4 text-primary text-[4px] sm:text-[5px] md:text-[7px] lg:text-[9px] font-mono leading-[110%] tracking-tight select-none">
+███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
+██╔════╝██╔══██╗██╔═══██╗████╗  ██║╚══██╔══╝    ██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝
+█████╗  ██████╔╝██║   ██║██╔██╗ ██║   ██║       ███████╗█████╔╝ ██║██║     ██║     ███████╗
+██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║   ██║       ╚════██║██╔═██╗ ██║██║     ██║     ╚════██║
+██║     ██║  ██║╚██████╔╝██║ ╚████║   ██║       ███████║██║  ██╗██║███████╗███████╗███████║
+╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
+      </pre>
+
+      <p class="mb-6 text-sm text-text-secondary max-w-md mx-auto">
+        Front Skills es una colección de skills de ingeniería de diseño para ayudar a humanos y
+        agentes a crear mejores interfaces.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/es/skills" class="btn-primary">
+          {t("hero.cta", locale)}
+          <Icon name="arrow-right" size={15} />
+        </a>
+        <a href="/es/categories" class="btn-secondary">
+          {t("hero.ctaSecondary", locale)}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section class="pb-20">
+    <div class="container-page">
+      <div class="mb-6 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-text">{t("skills.featured", locale)}</h2>
+          <p class="mt-1 text-xs text-text-secondary">Skills con comparaciones visuales</p>
+        </div>
+        <a
+          href="/es/skills"
+          class="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-text transition-colors"
+        >
+          Ver todas
+          <Icon name="arrow-right" size={12} />
+        </a>
+      </div>
+      <SkillGrid skills={featuredSkills} locale={locale} />
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section class="border-t border-border pb-20">
+    <div class="container-page text-center pt-16">
+      <h2 class="mb-3 text-lg font-bold text-text">Instalar</h2>
+      <p class="mb-6 text-xs text-text-secondary">Copia el comando e instala en tu proyecto</p>
+      <div class="inline-flex items-center gap-3 border border-border bg-surface px-5 py-3">
+        <span class="text-text-dim text-sm">$</span>
+        <code class="text-text text-sm font-mono">npx skills add front-skills</code>
+        <button
+          onclick="navigator.clipboard.writeText('npx skills add front-skills')"
+          class="ml-2 border border-border bg-bg-secondary px-2.5 py-1 text-xs text-text-secondary hover:text-text transition-colors"
+        >
+          Copy
+        </button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

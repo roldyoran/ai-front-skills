@@ -1,0 +1,57 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SkillGrid from '@/components/skills/SkillGrid.astro';
+import Icon from '@/components/ui/Icon.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import FilterButton from '@/components/ui/FilterButton.astro';
+import { getAllSkills, getCategories, getCategoryInfo } from '@/lib/skills';
+
+const locale = 'en' as const;
+const allSkills = await getAllSkills();
+const categories = await getCategories();
+
+const urlCategory = Astro.url.searchParams.get('category') as string | null;
+const urlDifficulty = Astro.url.searchParams.get('difficulty') as string | null;
+
+let filteredSkills = allSkills;
+if (urlCategory) filteredSkills = filteredSkills.filter(s => s.data.category === urlCategory);
+if (urlDifficulty) filteredSkills = filteredSkills.filter(s => s.data.difficulty === urlDifficulty);
+---
+
+<BaseLayout
+  title="Skills - Front Skills"
+  description="Explore all available frontend skills"
+>
+  <div class="container-page pt-24 pb-12">
+    <PageHeader title="Skills" subtitle={`${filteredSkills.length} skills available`} />
+
+    <!-- Category Filters -->
+    <div class="mb-6 flex flex-wrap gap-2">
+      <FilterButton href="/skills" active={!urlCategory && !urlDifficulty}>
+        All
+      </FilterButton>
+      {categories.map(({ category, count }) => {
+        const info = getCategoryInfo(category, locale);
+        return (
+          <FilterButton href={`/skills?category=${category}`} active={urlCategory === category}>
+            <Icon name={info.icon as any} size={13} />
+            <span>{info.label}</span>
+            <span class="text-[10px] opacity-50">({count})</span>
+          </FilterButton>
+        );
+      })}
+    </div>
+
+    <!-- Difficulty Filters -->
+    <div class="mb-8 flex flex-wrap gap-2">
+      <span class="text-xs text-text-muted mr-1">Difficulty:</span>
+      {(['beginner', 'intermediate', 'advanced'] as const).map((diff) => (
+        <FilterButton href={`/skills?difficulty=${diff}`} active={urlDifficulty === diff}>
+          {diff === 'beginner' ? 'Beginner' : diff === 'intermediate' ? 'Intermediate' : 'Advanced'}
+        </FilterButton>
+      ))}
+    </div>
+
+    <SkillGrid skills={filteredSkills} locale={locale} />
+  </div>
+</BaseLayout>

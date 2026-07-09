@@ -1,0 +1,19 @@
+{
+  "skills": [
+    {
+      "title": "Mi Skill Personalizada",
+      "slug": "mi-skill-custom",
+      "category": "css",
+      "description": "Ejemplo de skill personalizada que puedes editar en skills.json",
+      "image": "https://placehold.co/800x500/1c1c1f/22d3ee?text=Custom+Skill",
+      "comparison": {
+        "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Before",
+        "after": "https://placehold.co/800x500/0a0a0a/22d3ee?text=After"
+      },
+      "code": "/* Tu código aquí */",
+      "tags": ["custom", "example"],
+      "featured": false,
+      "difficulty": "beginner"
+    }
+  ]
+}

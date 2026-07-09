@@ -1,0 +1,136 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Badge from '@/components/ui/Badge.astro';
+import Icon from '@/components/ui/Icon.astro';
+import RelatedSkillCard from '@/components/skills/RelatedSkillCard.astro';
+import { ImageComparison } from '@/components/react/ImageComparison';
+import { getAllSkills, getCategoryInfo, getDifficultyInfo } from '@/lib/skills';
+import { t } from '@/lib/i18n';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const skills = await getAllSkills();
+  return skills.map((skill) => ({
+    params: { slug: skill.data.slug },
+    props: { skill },
+  }));
+}
+
+const { skill } = Astro.props;
+const locale = 'es' as const;
+const { title, slug, category, description, difficulty, tags, image, comparison, author } = skill.data;
+
+const categoryInfo = getCategoryInfo(category, locale);
+const difficultyInfo = getDifficultyInfo(difficulty, locale);
+
+const allSkills = await getAllSkills({ category });
+const relatedSkills = allSkills.filter(s => s.data.slug !== slug).slice(0, 3);
+
+const { Content } = await render(skill);
+---
+
+<BaseLayout
+  title={`${title} - Front Skills`}
+  description={description}
+  image={image}
+  type="article"
+>
+  <article class="container-page pt-24 pb-12">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-xs text-text-dim">
+      <a href="/es/" class="hover:text-text-secondary transition-colors">Inicio</a>
+      <span class="mx-1.5">/</span>
+      <a href="/es/skills" class="hover:text-text-secondary transition-colors">Skills</a>
+      <span class="mx-1.5">/</span>
+      <span class="text-text-muted">{title}</span>
+    </nav>
+
+    <!-- Header -->
+    <header class="mb-8">
+      <div class="flex items-center gap-2 mb-3">
+        <Badge variant="category">
+          <Icon name={categoryInfo.icon as any} size={11} class="mr-1" />
+          {categoryInfo.label}
+        </Badge>
+        <Badge>
+          <span class="inline-block w-1.5 h-1.5 mr-1 bg-text-muted"></span>
+          {difficultyInfo.label}
+        </Badge>
+        <span class="text-[11px] text-text-dim">por {author}</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-3xl font-bold text-text tracking-tight mb-3">
+        {title}
+      </h1>
+
+      <p class="text-sm text-text-secondary">
+        {description}
+      </p>
+    </header>
+
+    <!-- Preview Image -->
+    <div class="mb-8 aspect-video overflow-hidden border border-border">
+      <img
+        src={image || `https://placehold.co/800x500/141414/666666?text=${encodeURIComponent(title)}`}
+        alt={title}
+        class="h-full w-full object-cover grayscale"
+        width="800"
+        height="500"
+      />
+    </div>
+
+    <!-- Comparison -->
+    {comparison?.before && comparison?.after && (
+      <section class="mb-10">
+        <h2 class="mb-3 text-base font-semibold text-text">{t('comparison.title', locale)}</h2>
+        <p class="mb-3 text-xs text-text-secondary">{t('comparison.dragHint', locale)}</p>
+
+        <ImageComparison
+          client:visible
+          beforeSrc={comparison.before}
+          afterSrc={comparison.after}
+          beforeAlt={`${title} - Antes`}
+          afterAlt={`${title} - Después`}
+          width={800}
+          height={500}
+        />
+      </section>
+    )}
+
+    <!-- Content -->
+    <div class="prose mb-10">
+      <Content />
+    </div>
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <div class="mb-8">
+        <h3 class="mb-2 text-xs font-semibold text-text flex items-center gap-1.5">
+          <Icon name="tag" size={12} />
+          Tags
+        </h3>
+        <div class="flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <span class="tag">#{tag}</span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Related -->
+    {relatedSkills.length > 0 && (
+      <section class="border-t border-border pt-8">
+        <h2 class="mb-4 text-base font-semibold text-text">Skills Relacionadas</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {relatedSkills.map((related) => (
+            <RelatedSkillCard
+              href={`/es/skills/${related.data.slug}`}
+              title={related.data.title}
+              description={related.data.description}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>

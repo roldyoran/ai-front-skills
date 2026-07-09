@@ -1,0 +1,66 @@
+---
+import { t, getLocaleFromPath } from '@/lib/i18n';
+import Icon from '@/components/ui/Icon.astro';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
+const currentYear = new Date().getFullYear();
+const prefix = locale === 'es' ? '/es' : '';
+
+const footerLinks = [
+  {
+    title: t('nav.skills', locale),
+    links: [
+      { href: `${prefix}/skills?category=css`, label: 'CSS' },
+      { href: `${prefix}/skills?category=react`, label: 'React' },
+      { href: `${prefix}/skills?category=tailwind`, label: 'Tailwind' },
+      { href: `${prefix}/skills?category=astro`, label: 'Astro' },
+      { href: `${prefix}/skills?category=tools`, label: t('categories.tools', locale) },
+    ],
+  },
+  {
+    title: t('nav.categories', locale),
+    links: [
+      { href: `${prefix}/categories`, label: t('categories.title', locale) },
+      { href: `${prefix}/skills?difficulty=beginner`, label: t('skills.difficulty.beginner', locale) },
+      { href: `${prefix}/skills?difficulty=intermediate`, label: t('skills.difficulty.intermediate', locale) },
+      { href: `${prefix}/skills?difficulty=advanced`, label: t('skills.difficulty.advanced', locale) },
+    ],
+  },
+  {
+    title: 'Community',
+    links: [
+      { href: 'https://github.com/front-skills', label: 'GitHub', external: true },
+    ],
+  },
+];
+---
+
+<footer class="border-t border-border">
+  <div class="container-page py-12">
+    <div class="grid gap-8 text-sm md:grid-cols-3">
+      {footerLinks.map((group) => (
+        <div>
+          <h3 class="font-medium text-text">{group.title}</h3>
+          <ul class="mt-3 space-y-1.5">
+            {group.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-text-secondary hover:text-text transition-colors"
+                  {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 flex items-center justify-between border-t border-border pt-6 text-xs text-text-secondary">
+      <p>&copy; {currentYear} Front Skills. {t('footer.allRights', locale)}.</p>
+      <p>{t('footer.madeWith', locale)} + Astro</p>
+    </div>
+  </div>
+</footer>

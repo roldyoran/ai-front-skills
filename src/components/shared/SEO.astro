@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.png',
+  canonicalURL,
+  type = 'website',
+} = Astro.props;
+
+const siteTitle = 'Front Skills';
+const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const currentURL = canonicalURL || Astro.url.href;
+const imageURL = new URL(image, Astro.site).href;
+---
+
+<!-- Primary Meta -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="generator" content={Astro.generator} />
+<link rel="canonical" href={currentURL} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={currentURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:site_name" content={siteTitle} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={currentURL} />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageURL} />
+
+<!-- JSON-LD Structured Data -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteTitle,
+    description,
+    url: currentURL,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: `${Astro.site}search?q={search_term_string}`,
+      'query-input': 'required name=search_term_string',
+    },
+  })}
+/>

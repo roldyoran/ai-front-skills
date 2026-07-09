@@ -1,0 +1,78 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { SearchCommand } from '@/components/react/SearchCommand';
+import { getAllContentSkills } from '@/lib/skills';
+import { t, getLocaleFromPath, getAlternateLocaleUrl } from '@/lib/i18n';
+
+const locale = getLocaleFromPath(Astro.url.pathname);
+const currentPath = Astro.url.pathname;
+const altUrl = getAlternateLocaleUrl(Astro.url.pathname);
+
+const allSkills = await getAllContentSkills();
+const searchData = allSkills.map((s) => ({
+  title: s.data.title,
+  slug: s.data.slug,
+  category: s.data.category,
+  description: s.data.description,
+}));
+
+const prefix = locale === 'es' ? '/es' : '';
+
+const navLinks: { href: string; label: string }[] = [
+  { href: `${prefix}/`, label: t('nav.home', locale) },
+  { href: `${prefix}/skills`, label: t('nav.skills', locale) },
+  { href: `${prefix}/categories`, label: t('nav.categories', locale) },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 pt-5 sm:px-8">
+  <!-- Logo -->
+  <a href={prefix || '/'} class="flex items-center gap-2 text-text hover:text-text-secondary transition-colors">
+    <span class="font-bold text-base tracking-tight">&lt;fs/&gt;</span>
+  </a>
+
+  <!-- Nav (desktop) -->
+  <nav class="hidden md:flex items-center gap-1">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'px-2.5 py-1.5 text-[13px] font-medium transition-colors rounded-[6px]',
+          isActive(link.href)
+            ? 'text-text bg-surface'
+            : 'text-text-muted hover:text-text-secondary hover:bg-surface-hover',
+        ]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+
+  <!-- Actions -->
+  <div class="flex items-center gap-1">
+    <SearchCommand client:load skills={searchData} locale={locale} />
+
+    <a
+      href={altUrl}
+      class="inline-flex items-center px-2.5 py-1.5 text-[13px] font-medium text-text-muted hover:text-text-secondary transition-colors hover:bg-surface-hover rounded-[6px]"
+      title={locale === 'en' ? 'Cambiar a Español' : 'Switch to English'}
+    >
+      {locale === 'en' ? 'ES' : 'EN'}
+    </a>
+
+    <a
+      href="https://github.com/front-skills"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center px-2.5 py-1.5 text-[13px] font-medium text-text-muted hover:text-text-secondary transition-colors hover:bg-surface-hover rounded-[6px]"
+      aria-label="GitHub"
+    >
+      <Icon name="github" size={16} />
+    </a>
+  </div>
+</header>

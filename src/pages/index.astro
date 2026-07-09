@@ -1,11 +1,77 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SkillGrid from "@/components/skills/SkillGrid.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { getFeaturedSkills } from "@/lib/skills";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const locale = "en" as const;
+const featuredSkills = await getFeaturedSkills(6);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title="Front Skills" description="Frontend skills with visual before/after comparisons">
+  <!-- Hero -->
+  <section class="pt-24 pb-12 sm:pt-32 sm:pb-16">
+    <div class="container-page text-center">
+      <pre
+        class="mb-4 text-primary text-[4px] sm:text-[5px] md:text-[7px] lg:text-[9px] font-mono leading-[110%] tracking-tight select-none">
+███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
+██╔════╝██╔══██╗██╔═══██╗████╗  ██║╚══██╔══╝    ██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝
+█████╗  ██████╔╝██║   ██║██╔██╗ ██║   ██║       ███████╗█████╔╝ ██║██║     ██║     ███████╗
+██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║   ██║       ╚════██║██╔═██╗ ██║██║     ██║     ╚════██║
+██║     ██║  ██║╚██████╔╝██║ ╚████║   ██║       ███████║██║  ██╗██║███████╗███████╗███████║
+╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
+      </pre>
+
+      <p class="mb-6 text-sm text-text-secondary max-w-md mx-auto">
+        Front Skills is a collection of design-engineering skills to help humans and agents create
+        better interfaces.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/skills" class="btn-primary">
+          View Skills
+          <Icon name="arrow-right" size={15} />
+        </a>
+        <a href="/categories" class="btn-secondary"> Categories </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured -->
+  <section class="pb-20">
+    <div class="container-page">
+      <div class="mb-6 flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-text">Featured</h2>
+          <p class="mt-1 text-xs text-text-secondary">Skills with visual comparisons</p>
+        </div>
+        <a
+          href="/skills"
+          class="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-text transition-colors"
+        >
+          View all
+          <Icon name="arrow-right" size={12} />
+        </a>
+      </div>
+      <SkillGrid skills={featuredSkills} locale={locale} />
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section class="border-t border-border pb-20">
+    <div class="container-page text-center pt-16">
+      <h2 class="mb-3 text-lg font-bold text-text">Install</h2>
+      <p class="mb-6 text-xs text-text-secondary">Copy the command and install in your project</p>
+      <div class="inline-flex items-center gap-3 border border-border bg-surface px-5 py-3">
+        <span class="text-text-dim text-sm">$</span>
+        <code class="text-text text-sm font-mono">npx skills add front-skills</code>
+        <button
+          onclick="navigator.clipboard.writeText('npx skills add front-skills')"
+          class="ml-2 border border-border bg-bg-secondary px-2.5 py-1 text-xs text-text-secondary hover:text-text transition-colors"
+        >
+          Copy
+        </button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

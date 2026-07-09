@@ -1,0 +1,61 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Icon from '@/components/ui/Icon.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import { getCategories, getCategoryInfo } from '@/lib/skills';
+
+const locale = 'en' as const;
+const categories = await getCategories();
+
+const categoryData = await Promise.all(
+  categories.map(async ({ category, count }) => {
+    const info = getCategoryInfo(category, locale);
+    return { ...info, category, count };
+  })
+);
+---
+
+<BaseLayout
+  title="Categories - Front Skills"
+  description="Explore frontend skill categories"
+>
+  <div class="container-page pt-24 pb-12">
+    <PageHeader
+      title="Categories"
+      subtitle="Explore skills organized by technology"
+    />
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {categoryData.map(({ label, icon, category, count }) => (
+        <a
+          href={`/skills?category=${category}`}
+          class="group card p-4"
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="text-text-muted group-hover:text-text transition-colors">
+                <Icon name={icon as any} size={20} />
+              </div>
+              <div>
+                <h2 class="text-sm font-semibold text-text group-hover:text-text-secondary transition-colors">
+                  {label}
+                </h2>
+                <p class="text-xs text-text-secondary">
+                  {count} skills
+                </p>
+              </div>
+            </div>
+            <span class="text-text-dim group-hover:text-text-secondary transition-colors text-sm">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href="/skills" class="btn-secondary">
+        View all skills
+        <Icon name="arrow-right" size={14} />
+      </a>
+    </div>
+  </div>
+</BaseLayout>
