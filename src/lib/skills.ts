@@ -3,7 +3,6 @@ import { resolve } from 'node:path';
 import { marked } from 'marked';
 import type { Locale } from './i18n';
 import { t } from './i18n';
-import customSkillsData from '@/data/skills.json';
 import registrySkillsData from '@/data/registry-skills.json';
 
 // --- Types ---
@@ -23,6 +22,7 @@ export interface RegistrySkillData {
   featured: boolean;
   difficulty: SkillDifficulty;
   tags: string[];
+  topics: string[];
   image?: string;
   comparison?: {
     before?: string;
@@ -38,25 +38,6 @@ export interface Skill {
   id: string;
   data: RegistrySkillData;
   body: string;
-}
-
-/**
- * Custom skill type (from JSON)
- */
-export interface CustomSkill {
-  title: string;
-  slug: string;
-  category: SkillCategory;
-  description: string;
-  image?: string;
-  comparison?: {
-    before?: string;
-    after?: string;
-  };
-  code?: string;
-  tags: string[];
-  featured: boolean;
-  difficulty: SkillDifficulty;
 }
 
 // --- Registry Skills ---
@@ -95,15 +76,6 @@ export function renderMarkdown(markdown: string): string {
   return marked.parse(markdown) as string;
 }
 
-// --- Custom Skills ---
-
-/**
- * Get custom skills from JSON
- */
-export function getCustomSkills(): CustomSkill[] {
-  return customSkillsData.skills || [];
-}
-
 // --- Unified API ---
 
 /**
@@ -112,6 +84,7 @@ export function getCustomSkills(): CustomSkill[] {
 export async function getAllSkills(options?: {
   category?: SkillCategory;
   difficulty?: SkillDifficulty;
+  topic?: string;
   featured?: boolean;
   limit?: number;
 }): Promise<Skill[]> {
@@ -123,6 +96,13 @@ export async function getAllSkills(options?: {
 
   if (options?.difficulty) {
     skills = skills.filter((skill) => skill.data.difficulty === options.difficulty);
+  }
+
+  if (options?.topic) {
+    const lowerTopic = options.topic.toLowerCase();
+    skills = skills.filter((skill) =>
+      skill.data.topics.some((t) => t.toLowerCase() === lowerTopic)
+    );
   }
 
   if (options?.featured !== undefined) {
@@ -184,6 +164,25 @@ export async function getCategories(): Promise<{ category: SkillCategory; count:
 }
 
 /**
+ * Get all unique topics with counts
+ */
+export async function getTopics(): Promise<{ topic: string; count: number }[]> {
+  const skills = getRegistrySkills();
+  const topicMap = new Map<string, number>();
+
+  skills.forEach((skill) => {
+    skill.data.topics.forEach((topic) => {
+      const count = topicMap.get(topic) || 0;
+      topicMap.set(topic, count + 1);
+    });
+  });
+
+  return Array.from(topicMap.entries())
+    .map(([topic, count]) => ({ topic, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+/**
  * Search skills by query
  */
 export async function searchSkills(query: string): Promise<Skill[]> {
@@ -194,20 +193,8 @@ export async function searchSkills(query: string): Promise<Skill[]> {
     (skill) =>
       skill.data.title.toLowerCase().includes(lowerQuery) ||
       skill.data.description.toLowerCase().includes(lowerQuery) ||
-      skill.data.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))
-  );
-}
-
-/**
- * Search custom skills by query
- */
-export function searchCustomSkills(query: string): CustomSkill[] {
-  const lowerQuery = query.toLowerCase();
-  return getCustomSkills().filter(
-    (skill) =>
-      skill.title.toLowerCase().includes(lowerQuery) ||
-      skill.description.toLowerCase().includes(lowerQuery) ||
-      skill.tags.some((tag) => tag.toLowerCase().includes(lowerQuery))
+      skill.data.tags.some((tag) => tag.toLowerCase().includes(lowerQuery)) ||
+      skill.data.topics.some((topic) => topic.toLowerCase().includes(lowerQuery))
   );
 }
 

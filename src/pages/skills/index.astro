@@ -1,19 +1,22 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SkillGrid from '@/components/skills/SkillGrid.astro';
-import Icon from '@/components/ui/Icon.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
-import FilterButton from '@/components/ui/FilterButton.astro';
-import { getAllSkills, getCategories, getCategoryInfo } from '@/lib/skills';
+import TopicFilter from '@/components/ui/TopicFilter.astro';
+import { getAllSkills, getTopics } from '@/lib/skills';
 
 const locale = 'en' as const;
 const allSkills = await getAllSkills();
-const categories = await getCategories();
+const topics = await getTopics();
 
-const urlCategory = Astro.url.searchParams.get('category') as string | null;
+const urlTopic = Astro.url.searchParams.get('topic') as string | null;
 
 let filteredSkills = allSkills;
-if (urlCategory) filteredSkills = filteredSkills.filter(s => s.data.category === urlCategory);
+if (urlTopic) {
+  filteredSkills = filteredSkills.filter(s =>
+    s.data.topics.some(t => t.toLowerCase() === urlTopic.toLowerCase())
+  );
+}
 ---
 
 <BaseLayout
@@ -23,22 +26,7 @@ if (urlCategory) filteredSkills = filteredSkills.filter(s => s.data.category ===
   <div class="container-page pt-24 pb-12">
     <PageHeader title="Skills" subtitle={`${filteredSkills.length} skills available`} />
 
-    <!-- Category Filters -->
-    <div class="mb-8 flex flex-wrap gap-2">
-      <FilterButton href="/skills" active={!urlCategory}>
-        All
-      </FilterButton>
-      {categories.map(({ category, count }) => {
-        const info = getCategoryInfo(category, locale);
-        return (
-          <FilterButton href={`/skills?category=${category}`} active={urlCategory === category}>
-            <Icon name={info.icon as any} size={13} />
-            <span>{info.label}</span>
-            <span class="text-[10px] opacity-50">({count})</span>
-          </FilterButton>
-        );
-      })}
-    </div>
+    <TopicFilter topics={topics} activeTopic={urlTopic} baseUrl="/skills" />
 
     <SkillGrid skills={filteredSkills} locale={locale} />
   </div>

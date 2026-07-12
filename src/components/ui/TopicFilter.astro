@@ -1,0 +1,191 @@
+---
+interface Props {
+  topics: { topic: string; count: number }[];
+  activeTopic?: string | null;
+  baseUrl?: string;
+}
+
+const { topics, activeTopic = null, baseUrl = '/skills' } = Astro.props;
+
+const selectedLabel = activeTopic
+  ? topics.find(t => t.topic === activeTopic)?.topic || 'All topics'
+  : 'All topics';
+
+const redirectBase = baseUrl;
+---
+
+<div class="mb-8" data-topic-select data-base-url={redirectBase} data-active={activeTopic || ''}>
+  <label class="block text-[11px] text-text-dim uppercase tracking-wider mb-2">Topic</label>
+  <div class="relative">
+    <button
+      type="button"
+      class="topic-select-trigger w-full flex items-center justify-between gap-2 border border-border bg-surface px-3 py-2.5 text-sm text-left cursor-pointer hover:border-border-hover transition-colors"
+    >
+      <span class="topic-select-label">{selectedLabel}</span>
+      <svg class="w-4 h-4 text-text-dim shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="square" d="M6 9l6 6 6-6" />
+      </svg>
+    </button>
+
+    <div class="topic-select-dropdown hidden absolute z-50 top-full left-0 right-0 mt-1 border border-border bg-bg shadow-2xl">
+      <!-- Search -->
+      <div class="border-b border-border">
+        <div class="flex items-center gap-2 px-3 py-2">
+          <svg class="w-4 h-4 text-text-dim shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="square" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search topics..."
+            class="topic-select-search flex-1 bg-transparent border-none outline-none text-sm text-text placeholder:text-text-dim"
+          />
+        </div>
+      </div>
+
+      <!-- Options -->
+      <div class="topic-select-options max-h-64 overflow-y-auto">
+        <a
+          href={baseUrl}
+          class:list={[
+            'topic-select-option',
+            !activeTopic ? 'topic-select-option-active' : '',
+          ]}
+        >
+          <span>All topics</span>
+          <span class="topic-select-count">{topics.reduce((a, t) => a + t.count, 0)}</span>
+        </a>
+        {topics.map(({ topic, count }) => (
+          <a
+            href={`${baseUrl}?topic=${encodeURIComponent(topic)}`}
+            class:list={[
+              'topic-select-option',
+              activeTopic === topic ? 'topic-select-option-active' : '',
+            ]}
+            data-topic={topic.toLowerCase()}
+          >
+            <span>{topic}</span>
+            <span class="topic-select-count">{count}</span>
+          </a>
+        ))}
+      </div>
+
+      {topics.length === 0 && (
+        <div class="px-3 py-4 text-center text-sm text-text-dim">
+          No topics available
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
+<script>
+  function initTopicSelect() {
+    document.querySelectorAll<HTMLElement>('[data-topic-select]').forEach((root) => {
+      const trigger = root.querySelector<HTMLButtonElement>('.topic-select-trigger');
+      const dropdown = root.querySelector<HTMLElement>('.topic-select-dropdown');
+      const search = root.querySelector<HTMLInputElement>('.topic-select-search');
+      const options = root.querySelectorAll<HTMLElement>('.topic-select-option');
+
+      if (!trigger || !dropdown || !search) return;
+
+      // Toggle dropdown
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !dropdown.classList.contains('hidden');
+        // Close all other dropdowns
+        document.querySelectorAll('.topic-select-dropdown').forEach(d => d.classList.add('hidden'));
+        if (!isOpen) {
+          dropdown.classList.remove('hidden');
+          search.focus();
+          search.value = '';
+          filterOptions('');
+        }
+      });
+
+      // Search filter
+      search.addEventListener('input', () => {
+        filterOptions(search.value.toLowerCase());
+      });
+
+      // Prevent dropdown close on search click
+      search.addEventListener('click', (e) => e.stopPropagation());
+
+      function filterOptions(query: string) {
+        options.forEach((opt) => {
+          const topic = opt.getAttribute('data-topic') || '';
+          const text = opt.textContent?.toLowerCase() || '';
+          const match = !query || topic.includes(query) || text.includes(query);
+          opt.style.display = match ? '' : 'none';
+        });
+      }
+
+      // Close on outside click
+      document.addEventListener('click', () => {
+        dropdown.classList.add('hidden');
+      });
+
+      // Keyboard navigation
+      trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          trigger.click();
+        }
+      });
+    });
+  }
+
+  initTopicSelect();
+  document.addEventListener('astro:page-load', initTopicSelect);
+</script>
+
+<style>
+  .topic-select-trigger {
+    font-family: var(--font-mono);
+  }
+
+  .topic-select-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .topic-select-dropdown {
+    font-family: var(--font-mono);
+  }
+
+  .topic-select-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: background-color 0.1s;
+    cursor: pointer;
+  }
+
+  .topic-select-option:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .topic-select-option-active {
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .topic-select-count {
+    font-size: 11px;
+    color: var(--color-text-dim);
+    padding: 1px 6px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .topic-select-option-active .topic-select-count {
+    color: var(--color-text-muted);
+    background: var(--color-bg);
+    border-color: var(--color-border-hover);
+  }
+</style>

@@ -9,6 +9,7 @@
       "featured": true,
       "difficulty": "intermediate",
       "tags": ["design", "typography", "aesthetic", "visual-identity", "color-system"],
+      "topics": ["Visual", "Systems", "Motion", "Interaction"],
       "image": "https://placehold.co/800x500/141414/22d3ee?text=Frontend+Design",
       "comparison": {
         "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Generic+UI",
@@ -25,6 +26,7 @@
       "featured": true,
       "difficulty": "advanced",
       "tags": ["ui-ux", "design-system", "colors", "typography", "accessibility"],
+      "topics": ["Accessibility", "Visual", "Systems", "Performance"],
       "image": "https://placehold.co/800x500/141414/a855f7?text=UI/UX+Pro+Max",
       "comparison": {
         "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Basic+UI",
@@ -41,6 +43,7 @@
       "featured": true,
       "difficulty": "intermediate",
       "tags": ["guidelines", "accessibility", "review", "best-practices", "audit"],
+      "topics": ["Accessibility", "Interaction", "Performance", "Motion"],
       "image": "https://placehold.co/800x500/141414/f97316?text=Web+Guidelines",
       "comparison": {
         "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Non-Compliant",

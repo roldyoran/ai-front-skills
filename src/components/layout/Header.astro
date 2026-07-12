@@ -1,32 +1,21 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import SearchCommand from '@/components/svelte/SearchCommand.svelte';
-import { getAllContentSkills, getCustomSkills } from '@/lib/skills';
+import { getAllContentSkills } from '@/lib/skills';
 import { t, getLocaleFromPath, getAlternateLocaleUrl } from '@/lib/i18n';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 const currentPath = Astro.url.pathname;
 const altUrl = getAlternateLocaleUrl(Astro.url.pathname);
 
-const [contentSkills, customSkills] = await Promise.all([
-  getAllContentSkills(),
-  getCustomSkills(),
-]);
+const contentSkills = await getAllContentSkills();
 
-const searchData = [
-  ...contentSkills.map((s) => ({
-    title: s.data.title,
-    slug: s.data.slug,
-    category: s.data.category,
-    description: s.data.description,
-  })),
-  ...customSkills.map((s) => ({
-    title: s.title,
-    slug: s.slug,
-    category: s.category,
-    description: s.description,
-  })),
-];
+const searchData = contentSkills.map((s) => ({
+  title: s.data.title,
+  slug: s.data.slug,
+  category: s.data.category,
+  description: s.data.description,
+}));
 
 const prefix = locale === 'es' ? '/es' : '';
 
@@ -43,7 +32,6 @@ const searchLabels = {
 const navLinks: { href: string; label: string }[] = [
   { href: `${prefix}/`, label: t('nav.home', locale) },
   { href: `${prefix}/skills`, label: t('nav.skills', locale) },
-  { href: `${prefix}/categories`, label: t('nav.categories', locale) },
 ];
 
 function isActive(href: string): boolean {
@@ -54,14 +42,14 @@ function isActive(href: string): boolean {
 }
 ---
 
-<header class="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 pt-5 sm:px-8">
+<header class="absolute inset-x-0 top-0 z-10 grid grid-cols-[1fr_auto_1fr] items-center px-4 pt-5 sm:px-8">
   <!-- Logo -->
-  <a href={prefix || '/'} class="flex items-center gap-2 text-text hover:text-text-secondary transition-colors">
+  <a href={prefix || '/'} class="flex items-center gap-2 text-text hover:text-text-secondary transition-colors justify-self-start">
     <span class="font-bold text-base tracking-tight">&lt;fs/&gt;</span>
   </a>
 
   <!-- Nav (desktop) -->
-  <nav class="hidden md:flex items-center gap-1">
+  <nav class="hidden md:flex items-center gap-1 justify-self-center">
     {navLinks.map((link) => (
       <a
         href={link.href}
@@ -78,7 +66,7 @@ function isActive(href: string): boolean {
   </nav>
 
   <!-- Actions -->
-  <div class="flex items-center gap-1">
+  <div class="flex items-center gap-1 justify-self-end">
     <SearchCommand client:load skills={searchData} locale={locale} labels={searchLabels} />
 
     <a

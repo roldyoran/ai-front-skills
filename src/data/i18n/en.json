@@ -5,15 +5,12 @@
   },
   "nav": {
     "home": "Home",
-    "skills": "Skills",
-    "categories": "Categories",
-    "about": "About"
+    "skills": "Skills"
   },
   "hero": {
     "title": "Frontend Skills",
     "subtitle": "CSS, React, Tailwind skills with visual before/after comparisons",
-    "cta": "View Skills",
-    "ctaSecondary": "Explore Categories"
+    "cta": "View Skills"
   },
   "skills": {
     "title": "Skills",
@@ -22,12 +19,7 @@
     "search": "Search skills...",
     "noResults": "No skills found",
     "viewAll": "View all skills",
-    "viewSkill": "View skill",
-    "difficulty": {
-      "beginner": "Beginner",
-      "intermediate": "Intermediate",
-      "advanced": "Advanced"
-    }
+    "viewSkill": "View skill"
   },
   "search": {
     "trigger": "Search skills...",
@@ -38,23 +30,10 @@
     "close": "Close",
     "results": "results"
   },
-  "categories": {
-    "title": "Categories",
-    "css": "CSS",
-    "react": "React",
-    "astro": "Astro",
-    "tailwind": "Tailwind",
-    "tools": "Tools",
-    "ui-ux": "UI/UX"
-  },
   "comparison": {
     "title": "Comparison",
     "before": "Before",
     "after": "After",
     "dragHint": "Drag to compare"
-  },
-  "footer": {
-    "madeWith": "Made with",
-    "allRights": "All rights reserved"
   }
 }
