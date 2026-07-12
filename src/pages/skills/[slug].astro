@@ -2,10 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Icon from '@/components/ui/Icon.astro';
-import RelatedSkillCard from '@/components/skills/RelatedSkillCard.astro';
-import { ImageComparison } from '@/components/react/ImageComparison';
-import { getAllSkills, getCategoryInfo, getDifficultyInfo } from '@/lib/skills';
-import { render } from 'astro:content';
+import ImageComparison from '@/components/svelte/ImageComparison.svelte';
+import { getAllSkills, getCategoryInfo, isRegistrySkill } from '@/lib/skills';
 
 export async function getStaticPaths() {
   const skills = await getAllSkills();
@@ -17,15 +15,26 @@ export async function getStaticPaths() {
 
 const { skill } = Astro.props;
 const locale = 'en' as const;
-const { title, slug, category, description, difficulty, tags, image, comparison, author } = skill.data;
+const { title, slug, category, description, tags, image, comparison, author } = skill.data;
 
 const categoryInfo = getCategoryInfo(category, locale);
-const difficultyInfo = getDifficultyInfo(difficulty, locale);
 
 const allSkills = await getAllSkills({ category });
 const relatedSkills = allSkills.filter(s => s.data.slug !== slug).slice(0, 3);
 
-const { Content } = await render(skill);
+// Render content for content collection entries only
+let Content: any = null;
+if (!isRegistrySkill(skill)) {
+  try {
+    const { render } = await import('astro:content');
+    const rendered = await render(skill);
+    Content = rendered.Content;
+  } catch {
+    // Fallback: no content available
+  }
+}
+
+const installCommand = `npx skills add front-skills@${slug}`;
 ---
 
 <BaseLayout
@@ -37,35 +46,55 @@ const { Content } = await render(skill);
   <article class="container-page pt-24 pb-12">
     <!-- Breadcrumb -->
     <nav class="mb-6 text-xs text-text-dim">
-      <a href="/" class="hover:text-text-secondary transition-colors">Home</a>
-      <span class="mx-1.5">/</span>
-      <a href="/skills" class="hover:text-text-secondary transition-colors">Skills</a>
-      <span class="mx-1.5">/</span>
-      <span class="text-text-muted">{title}</span>
+      <a href="/" class="hover:text-text-secondary transition-colors">skills</a>
+      <span class="mx-1.5 text-text-dim">/</span>
+      <a href={`/skills?category=${category}`} class="hover:text-text-secondary transition-colors">{author}</a>
+      <span class="mx-1.5 text-text-dim">/</span>
+      <span class="text-text-muted">{slug}</span>
     </nav>
 
     <!-- Header -->
-    <header class="mb-8">
+    <header class="mb-6">
       <div class="flex items-center gap-2 mb-3">
-        <Badge variant="category">
-          <Icon name={categoryInfo.icon as any} size={11} class="mr-1" />
-          {categoryInfo.label}
-        </Badge>
-        <Badge>
-          <span class="inline-block w-1.5 h-1.5 mr-1 bg-text-muted"></span>
-          {difficultyInfo.label}
-        </Badge>
-        <span class="text-[11px] text-text-dim">by {author}</span>
+        <a href={`/skills?category=${category}`} class="hover:opacity-80 transition-opacity">
+          <Badge variant="category">
+            <Icon name={categoryInfo.icon as any} size={11} class="mr-1" />
+            {categoryInfo.label}
+          </Badge>
+        </a>
       </div>
 
       <h1 class="text-2xl sm:text-3xl font-bold text-text tracking-tight mb-3">
         {title}
       </h1>
 
-      <p class="text-sm text-text-secondary">
+      <p class="text-sm text-text-secondary leading-relaxed">
         {description}
       </p>
     </header>
+
+    <!-- Installation -->
+    <section class="mb-8">
+      <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">Installation</h2>
+      <div class="flex items-center gap-3 border border-border bg-surface px-4 py-3">
+        <span class="text-text-dim text-sm">$</span>
+        <code class="text-text text-sm font-mono flex-1 truncate">{installCommand}</code>
+        <button
+          onclick={`navigator.clipboard.writeText('${installCommand}').then(() => this.innerHTML = '<span class=text-text>Copied!</span>').catch(() => {}); setTimeout(() => this.innerHTML = '<Icon name=copy size=14 />', 2000)`}
+          class="border border-border bg-bg-secondary px-3 py-1.5 text-xs text-text-secondary hover:text-text transition-colors flex items-center gap-1.5 shrink-0"
+        >
+          <Icon name="copy" size={14} />
+        </button>
+      </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="mb-8">
+      <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">Summary</h2>
+      <div class="text-sm text-text-secondary leading-relaxed">
+        <p class="font-medium text-text mb-2">{description}</p>
+      </div>
+    </section>
 
     <!-- Preview Image -->
     <div class="mb-8 aspect-video overflow-hidden border border-border">
@@ -80,10 +109,9 @@ const { Content } = await render(skill);
 
     <!-- Comparison -->
     {comparison?.before && comparison?.after && (
-      <section class="mb-10">
-        <h2 class="mb-3 text-base font-semibold text-text">Comparison</h2>
+      <section class="mb-8">
+        <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">Comparison</h2>
         <p class="mb-3 text-xs text-text-secondary">Drag to compare</p>
-
         <ImageComparison
           client:visible
           beforeSrc={comparison.before}
@@ -96,15 +124,20 @@ const { Content } = await render(skill);
       </section>
     )}
 
-    <!-- Content -->
-    <div class="prose mb-10">
-      <Content />
-    </div>
+    <!-- SKILL.md Content -->
+    {Content && (
+      <section class="mb-8">
+        <h2 class="mb-4 text-xs font-semibold text-text uppercase tracking-wider">SKILL.md</h2>
+        <div class="prose">
+          <Content />
+        </div>
+      </section>
+    )}
 
     <!-- Tags -->
     {tags.length > 0 && (
       <div class="mb-8">
-        <h3 class="mb-2 text-xs font-semibold text-text flex items-center gap-1.5">
+        <h3 class="mb-2 text-xs font-semibold text-text flex items-center gap-1.5 uppercase tracking-wider">
           <Icon name="tag" size={12} />
           Tags
         </h3>
@@ -116,17 +149,16 @@ const { Content } = await render(skill);
       </div>
     )}
 
-    <!-- Related -->
+    <!-- Related Skills -->
     {relatedSkills.length > 0 && (
       <section class="border-t border-border pt-8">
-        <h2 class="mb-4 text-base font-semibold text-text">Related Skills</h2>
+        <h2 class="mb-4 text-xs font-semibold text-text uppercase tracking-wider">Related Skills</h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {relatedSkills.map((related) => (
-            <RelatedSkillCard
-              href={`/skills/${related.data.slug}`}
-              title={related.data.title}
-              description={related.data.description}
-            />
+            <a href={`/skills/${related.data.slug}`} class="group related-card">
+              <h3 class="related-card-title">{related.data.title}</h3>
+              <p class="related-card-desc">{related.data.description}</p>
+            </a>
           ))}
         </div>
       </section>

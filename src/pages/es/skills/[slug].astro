@@ -3,10 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Icon from '@/components/ui/Icon.astro';
 import RelatedSkillCard from '@/components/skills/RelatedSkillCard.astro';
-import { ImageComparison } from '@/components/react/ImageComparison';
-import { getAllSkills, getCategoryInfo, getDifficultyInfo } from '@/lib/skills';
+import ImageComparison from '@/components/svelte/ImageComparison.svelte';
+import { getAllSkills, getCategoryInfo, getDifficultyInfo, isRegistrySkill } from '@/lib/skills';
 import { t } from '@/lib/i18n';
-import { render } from 'astro:content';
 
 export async function getStaticPaths() {
   const skills = await getAllSkills();
@@ -26,7 +25,17 @@ const difficultyInfo = getDifficultyInfo(difficulty, locale);
 const allSkills = await getAllSkills({ category });
 const relatedSkills = allSkills.filter(s => s.data.slug !== slug).slice(0, 3);
 
-const { Content } = await render(skill);
+// Render content for content collection entries only
+let Content: any = null;
+if (!isRegistrySkill(skill)) {
+  try {
+    const { render } = await import('astro:content');
+    const rendered = await render(skill);
+    Content = rendered.Content;
+  } catch {
+    // Fallback: no content available
+  }
+}
 ---
 
 <BaseLayout
@@ -98,9 +107,16 @@ const { Content } = await render(skill);
     )}
 
     <!-- Content -->
-    <div class="prose mb-10">
-      <Content />
-    </div>
+    {Content ? (
+      <div class="prose mb-10">
+        <Content />
+      </div>
+    ) : (
+      <div class="mb-10">
+        <h2 class="mb-3 text-base font-semibold text-text">Descripción</h2>
+        <p class="text-sm text-text-secondary leading-relaxed">{description}</p>
+      </div>
+    )}
 
     <!-- Tags -->
     {tags.length > 0 && (

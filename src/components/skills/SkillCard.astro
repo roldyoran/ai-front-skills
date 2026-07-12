@@ -8,10 +8,11 @@ import type { Skill } from '@/lib/skills';
 import { getCategoryInfo } from '@/lib/skills';
 
 const { skill, locale = 'en' } = Astro.props;
-const { title, slug, category, description, tags, author } = skill.data;
+const { title, slug, category, description, tags, author, comparison } = skill.data;
 const categoryInfo = getCategoryInfo(category, locale);
 
 const skillUrl = locale === 'es' ? `/es/skills/${slug}` : `/skills/${slug}`;
+const hasComparison = comparison?.before && comparison?.after;
 
 // Generate initials from author name
 const initials = author
@@ -28,9 +29,19 @@ const initials = author
 >
   <div class="space-y-2.5">
     <!-- Title -->
-    <h3 class="text-sm font-semibold text-text group-hover:text-text-secondary transition-colors leading-snug">
-      {title}
-    </h3>
+    <div class="flex items-start justify-between gap-2">
+      <h3 class="text-sm font-semibold text-text group-hover:text-text-secondary transition-colors leading-snug">
+        {title}
+      </h3>
+      {hasComparison && (
+        <span class="shrink-0 inline-flex items-center gap-1 text-[9px] text-text-dim border border-border px-1.5 py-0.5" title="Has before/after comparison">
+          <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={2}>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+          </svg>
+          Compare
+        </span>
+      )}
+    </div>
 
     <!-- Description -->
     <p class="text-xs text-text-muted line-clamp-2 leading-relaxed">
