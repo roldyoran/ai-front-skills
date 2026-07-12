@@ -85,19 +85,19 @@ body {
 
   /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 border border-text bg-text px-6 py-3 text-sm font-semibold text-bg transition-opacity hover:opacity-80;
+    @apply inline-flex items-center justify-center gap-2 border border-text bg-text px-6 py-3 text-sm font-semibold text-bg transition-opacity hover:opacity-80 cursor-pointer;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 border border-border bg-surface px-6 py-3 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-hover hover:text-text;
+    @apply inline-flex items-center justify-center gap-2 border border-border bg-surface px-6 py-3 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-hover hover:text-text cursor-pointer;
   }
 
   .btn-ghost {
-    @apply border px-4 py-2 text-sm transition-all border-border bg-surface text-text-secondary hover:border-border-hover hover:bg-surface-hover;
+    @apply border px-4 py-2 text-sm transition-all border-border bg-surface text-text-secondary hover:border-border-hover hover:bg-surface-hover cursor-pointer;
   }
 
   .btn-ghost-active {
-    @apply border px-4 py-2 text-sm transition-all border-text bg-text text-bg;
+    @apply border px-4 py-2 text-sm transition-all border-text bg-text text-bg cursor-pointer;
   }
 
   /* Page header */

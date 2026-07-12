@@ -3,7 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Badge from '@/components/ui/Badge.astro';
 import Icon from '@/components/ui/Icon.astro';
 import ImageComparison from '@/components/svelte/ImageComparison.svelte';
-import { getAllSkills, getCategoryInfo, isRegistrySkill } from '@/lib/skills';
+import { getAllSkills, getCategoryInfo, renderMarkdown } from '@/lib/skills';
 
 export async function getStaticPaths() {
   const skills = await getAllSkills();
@@ -15,24 +15,12 @@ export async function getStaticPaths() {
 
 const { skill } = Astro.props;
 const locale = 'en' as const;
-const { title, slug, category, description, tags, image, comparison, author } = skill.data;
+const { title, slug, category, description, comparison, author } = skill.data;
 
 const categoryInfo = getCategoryInfo(category, locale);
 
-const allSkills = await getAllSkills({ category });
-const relatedSkills = allSkills.filter(s => s.data.slug !== slug).slice(0, 3);
-
-// Render content for content collection entries only
-let Content: any = null;
-if (!isRegistrySkill(skill)) {
-  try {
-    const { render } = await import('astro:content');
-    const rendered = await render(skill);
-    Content = rendered.Content;
-  } catch {
-    // Fallback: no content available
-  }
-}
+// Render markdown body
+const contentHtml = renderMarkdown(skill.body);
 
 const installCommand = `npx skills add front-skills@${slug}`;
 ---
@@ -40,7 +28,6 @@ const installCommand = `npx skills add front-skills@${slug}`;
 <BaseLayout
   title={`${title} - Front Skills`}
   description={description}
-  image={image}
   type="article"
 >
   <article class="container-page pt-24 pb-12">
@@ -48,7 +35,7 @@ const installCommand = `npx skills add front-skills@${slug}`;
     <nav class="mb-6 text-xs text-text-dim">
       <a href="/" class="hover:text-text-secondary transition-colors">skills</a>
       <span class="mx-1.5 text-text-dim">/</span>
-      <a href={`/skills?category=${category}`} class="hover:text-text-secondary transition-colors">{author}</a>
+      <a href={`/skills?category=${category}`} class="hover:text-text-secondary transition-colors">{categoryInfo.label}</a>
       <span class="mx-1.5 text-text-dim">/</span>
       <span class="text-text-muted">{slug}</span>
     </nav>
@@ -62,6 +49,7 @@ const installCommand = `npx skills add front-skills@${slug}`;
             {categoryInfo.label}
           </Badge>
         </a>
+        <span class="text-[11px] text-text-dim">{author}</span>
       </div>
 
       <h1 class="text-2xl sm:text-3xl font-bold text-text tracking-tight mb-3">
@@ -80,10 +68,11 @@ const installCommand = `npx skills add front-skills@${slug}`;
         <span class="text-text-dim text-sm">$</span>
         <code class="text-text text-sm font-mono flex-1 truncate">{installCommand}</code>
         <button
-          onclick={`navigator.clipboard.writeText('${installCommand}').then(() => this.innerHTML = '<span class=text-text>Copied!</span>').catch(() => {}); setTimeout(() => this.innerHTML = '<Icon name=copy size=14 />', 2000)`}
-          class="border border-border bg-bg-secondary px-3 py-1.5 text-xs text-text-secondary hover:text-text transition-colors flex items-center gap-1.5 shrink-0"
+          data-copy={installCommand}
+          class="copy-btn border border-border bg-bg-secondary px-3 py-1.5 text-xs text-text-secondary hover:text-text transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
         >
           <Icon name="copy" size={14} />
+          <span class="copy-label">Copy</span>
         </button>
       </div>
     </section>
@@ -95,17 +84,6 @@ const installCommand = `npx skills add front-skills@${slug}`;
         <p class="font-medium text-text mb-2">{description}</p>
       </div>
     </section>
-
-    <!-- Preview Image -->
-    <div class="mb-8 aspect-video overflow-hidden border border-border">
-      <img
-        src={image || `https://placehold.co/800x500/141414/666666?text=${encodeURIComponent(title)}`}
-        alt={title}
-        class="h-full w-full object-cover grayscale"
-        width="800"
-        height="500"
-      />
-    </div>
 
     <!-- Comparison -->
     {comparison?.before && comparison?.after && (
@@ -125,43 +103,25 @@ const installCommand = `npx skills add front-skills@${slug}`;
     )}
 
     <!-- SKILL.md Content -->
-    {Content && (
+    {contentHtml && (
       <section class="mb-8">
         <h2 class="mb-4 text-xs font-semibold text-text uppercase tracking-wider">SKILL.md</h2>
-        <div class="prose">
-          <Content />
-        </div>
-      </section>
-    )}
-
-    <!-- Tags -->
-    {tags.length > 0 && (
-      <div class="mb-8">
-        <h3 class="mb-2 text-xs font-semibold text-text flex items-center gap-1.5 uppercase tracking-wider">
-          <Icon name="tag" size={12} />
-          Tags
-        </h3>
-        <div class="flex flex-wrap gap-1.5">
-          {tags.map((tag) => (
-            <span class="tag">#{tag}</span>
-          ))}
-        </div>
-      </div>
-    )}
-
-    <!-- Related Skills -->
-    {relatedSkills.length > 0 && (
-      <section class="border-t border-border pt-8">
-        <h2 class="mb-4 text-xs font-semibold text-text uppercase tracking-wider">Related Skills</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {relatedSkills.map((related) => (
-            <a href={`/skills/${related.data.slug}`} class="group related-card">
-              <h3 class="related-card-title">{related.data.title}</h3>
-              <p class="related-card-desc">{related.data.description}</p>
-            </a>
-          ))}
-        </div>
+        <div class="prose" set:html={contentHtml} />
       </section>
     )}
   </article>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll('.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const command = btn.getAttribute('data-copy');
+      if (!command) return;
+      navigator.clipboard.writeText(command).then(() => {
+        const label = btn.querySelector('.copy-label');
+        if (label) label.textContent = 'Copied!';
+        setTimeout(() => { if (label) label.textContent = 'Copy'; }, 2000);
+      });
+    });
+  });
+</script>

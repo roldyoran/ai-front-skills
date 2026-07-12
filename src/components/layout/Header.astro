@@ -1,22 +1,44 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
-import { SearchCommand } from '@/components/react/SearchCommand';
-import { getAllContentSkills } from '@/lib/skills';
+import SearchCommand from '@/components/svelte/SearchCommand.svelte';
+import { getAllContentSkills, getCustomSkills } from '@/lib/skills';
 import { t, getLocaleFromPath, getAlternateLocaleUrl } from '@/lib/i18n';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 const currentPath = Astro.url.pathname;
 const altUrl = getAlternateLocaleUrl(Astro.url.pathname);
 
-const allSkills = await getAllContentSkills();
-const searchData = allSkills.map((s) => ({
-  title: s.data.title,
-  slug: s.data.slug,
-  category: s.data.category,
-  description: s.data.description,
-}));
+const [contentSkills, customSkills] = await Promise.all([
+  getAllContentSkills(),
+  getCustomSkills(),
+]);
+
+const searchData = [
+  ...contentSkills.map((s) => ({
+    title: s.data.title,
+    slug: s.data.slug,
+    category: s.data.category,
+    description: s.data.description,
+  })),
+  ...customSkills.map((s) => ({
+    title: s.title,
+    slug: s.slug,
+    category: s.category,
+    description: s.description,
+  })),
+];
 
 const prefix = locale === 'es' ? '/es' : '';
+
+const searchLabels = {
+  trigger: t('search.trigger', locale),
+  placeholder: t('search.placeholder', locale),
+  noResults: t('search.noResults', locale),
+  navigate: t('search.navigate', locale),
+  select: t('search.select', locale),
+  close: t('search.close', locale),
+  results: t('search.results', locale),
+};
 
 const navLinks: { href: string; label: string }[] = [
   { href: `${prefix}/`, label: t('nav.home', locale) },
@@ -25,7 +47,9 @@ const navLinks: { href: string; label: string }[] = [
 ];
 
 function isActive(href: string): boolean {
-  if (href === '/') return currentPath === '/';
+  if (href === '/' || href === '/es') {
+    return currentPath === href || currentPath === href + '/';
+  }
   return currentPath.startsWith(href);
 }
 ---
@@ -42,7 +66,7 @@ function isActive(href: string): boolean {
       <a
         href={link.href}
         class:list={[
-          'px-2.5 py-1.5 text-[13px] font-medium transition-colors rounded-[6px]',
+          'px-2.5 py-1.5 text-[13px] font-medium transition-colors rounded-md',
           isActive(link.href)
             ? 'text-text bg-surface'
             : 'text-text-muted hover:text-text-secondary hover:bg-surface-hover',
@@ -55,7 +79,7 @@ function isActive(href: string): boolean {
 
   <!-- Actions -->
   <div class="flex items-center gap-1">
-    <SearchCommand client:load skills={searchData} locale={locale} />
+    <SearchCommand client:load skills={searchData} locale={locale} labels={searchLabels} />
 
     <a
       href={altUrl}

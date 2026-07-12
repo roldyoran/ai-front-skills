@@ -1,4 +1,6 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { marked } from 'marked';
 import type { Locale } from './i18n';
 import { t } from './i18n';
 import customSkillsData from '@/data/skills.json';
@@ -30,20 +32,13 @@ export interface RegistrySkillData {
 }
 
 /**
- * Registry skill entry (wraps data to match CollectionEntry shape)
+ * Registry skill entry
  */
-export interface RegistrySkillEntry {
+export interface Skill {
   id: string;
   data: RegistrySkillData;
   body: string;
-  /** Indicates this is a registry skill, not a content collection entry */
-  _isRegistry: true;
 }
-
-/**
- * Unified Skill type: either a content collection entry or a registry entry
- */
-export type Skill = CollectionEntry<'skills'> | RegistrySkillEntry;
 
 /**
  * Custom skill type (from JSON)
@@ -67,22 +62,37 @@ export interface CustomSkill {
 // --- Registry Skills ---
 
 /**
- * Convert registry JSON data to RegistrySkillEntry[]
+ * Read SKILL.md body content (everything after frontmatter)
  */
-function getRegistrySkills(): RegistrySkillEntry[] {
+function readSkillMarkdown(registryPath: string): string {
+  try {
+    const fullPath = resolve(process.cwd(), registryPath);
+    const raw = readFileSync(fullPath, 'utf-8');
+    // Remove YAML frontmatter (between --- delimiters)
+    const body = raw.replace(/^---[\s\S]*?---\n*/, '').trim();
+    return body;
+  } catch {
+    return '';
+  }
+}
+
+/**
+ * Get all registry skills from JSON
+ */
+function getRegistrySkills(): Skill[] {
   return (registrySkillsData.skills || []).map((skill) => ({
     id: skill.slug,
     data: skill as RegistrySkillData,
-    body: '',
-    _isRegistry: true as const,
+    body: readSkillMarkdown(skill.registryPath),
   }));
 }
 
 /**
- * Check if a skill is a registry entry
+ * Render markdown body to HTML
  */
-export function isRegistrySkill(skill: Skill): skill is RegistrySkillEntry {
-  return '_isRegistry' in skill && skill._isRegistry === true;
+export function renderMarkdown(markdown: string): string {
+  if (!markdown) return '';
+  return marked.parse(markdown) as string;
 }
 
 // --- Custom Skills ---
@@ -94,20 +104,10 @@ export function getCustomSkills(): CustomSkill[] {
   return customSkillsData.skills || [];
 }
 
-// --- Content Collection Skills (legacy) ---
-
-async function getContentCollectionSkills(): Promise<CollectionEntry<'skills'>[]> {
-  try {
-    return await getCollection('skills', () => true);
-  } catch {
-    return [];
-  }
-}
-
 // --- Unified API ---
 
 /**
- * Get all skills (registry + content collection + custom)
+ * Get all skills (registry only)
  */
 export async function getAllSkills(options?: {
   category?: SkillCategory;
@@ -115,9 +115,7 @@ export async function getAllSkills(options?: {
   featured?: boolean;
   limit?: number;
 }): Promise<Skill[]> {
-  const registrySkills = getRegistrySkills();
-  const contentSkills = await getContentCollectionSkills();
-  let skills: Skill[] = [...registrySkills, ...contentSkills];
+  let skills = getRegistrySkills();
 
   if (options?.category) {
     skills = skills.filter((skill) => skill.data.category === options.category);
@@ -139,24 +137,22 @@ export async function getAllSkills(options?: {
 }
 
 /**
- * Get all skills for search (registry + content collection)
+ * Get all skills for search
  */
 export async function getAllContentSkills(): Promise<Skill[]> {
-  const registrySkills = getRegistrySkills();
-  const contentSkills = await getContentCollectionSkills();
-  return [...registrySkills, ...contentSkills];
+  return getRegistrySkills();
 }
 
 /**
  * Get a single skill by slug
  */
 export async function getSkillBySlug(slug: string): Promise<Skill | undefined> {
-  const skills = await getAllSkills();
+  const skills = getRegistrySkills();
   return skills.find((skill) => skill.data.slug === slug);
 }
 
 /**
- * Get featured skills (registry first, then content collection)
+ * Get featured skills
  */
 export async function getFeaturedSkills(limit = 6): Promise<Skill[]> {
   return getAllSkills({ featured: true, limit });
@@ -173,7 +169,7 @@ export async function getSkillsByCategory(category: SkillCategory): Promise<Skil
  * Get all unique categories with counts
  */
 export async function getCategories(): Promise<{ category: SkillCategory; count: number }[]> {
-  const skills = await getAllSkills();
+  const skills = getRegistrySkills();
   const categoryMap = new Map<SkillCategory, number>();
 
   skills.forEach((skill) => {
@@ -191,7 +187,7 @@ export async function getCategories(): Promise<{ category: SkillCategory; count:
  * Search skills by query
  */
 export async function searchSkills(query: string): Promise<Skill[]> {
-  const skills = await getAllSkills();
+  const skills = getRegistrySkills();
   const lowerQuery = query.toLowerCase();
 
   return skills.filter(

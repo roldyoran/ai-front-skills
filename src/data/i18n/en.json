@@ -29,13 +29,23 @@
       "advanced": "Advanced"
     }
   },
+  "search": {
+    "trigger": "Search skills...",
+    "placeholder": "Search by title, category, or keyword...",
+    "noResults": "No results found for",
+    "navigate": "Navigate",
+    "select": "Select",
+    "close": "Close",
+    "results": "results"
+  },
   "categories": {
     "title": "Categories",
     "css": "CSS",
     "react": "React",
     "astro": "Astro",
     "tailwind": "Tailwind",
-    "tools": "Tools"
+    "tools": "Tools",
+    "ui-ux": "UI/UX"
   },
   "comparison": {
     "title": "Comparison",

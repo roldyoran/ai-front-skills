@@ -15,11 +15,11 @@ No lint, test, or typecheck scripts are configured. Verify changes with `pnpm bu
 
 ## Architecture
 
-- **Framework**: Astro 7 (static output) + React 19 (client islands)
+- **Framework**: Astro 7 (static output) + Svelte 5 (client islands)
 - **Styling**: Tailwind CSS v4 via Vite plugin, design tokens in `src/styles/global.css`
-- **Content**: Astro Content Collections (`src/content/skills/*.md`) + custom JSON (`src/data/skills.json`)
+- **Content**: Astro Content Collections (`src/content/skills/*.md` and `./skills/**/SKILL.md`) + custom JSON (`src/data/skills.json`)
 - **i18n**: Astro native routing, both locales prefixed (`/en/*`, `/es/*`), default `en`
-- **React islands**: Scoped to `src/components/react/` only (SearchCommand, ImageComparison, CopyButton)
+- **Svelte islands**: Scoped to `src/components/svelte/` only (SearchCommand, ImageComparison, CopyButton)
 
 ## Path Alias
 
@@ -56,7 +56,7 @@ src/
 │   ├── ui/            # Badge, Icon, PageHeader, FilterButton
 │   ├── skills/        # SkillCard, SkillGrid, RelatedSkillCard
 │   ├── shared/        # SEO, SkipLink
-│   └── react/         # Client-only islands (SearchCommand, ImageComparison, CopyButton)
+│   └── svelte/        # Client-only islands (SearchCommand, ImageComparison, CopyButton)
 ├── lib/               # skills.ts, i18n.ts, images.ts
 ├── data/              # skills.json, i18n/{en,es}.json
 ├── content/skills/    # MDX skill articles
@@ -65,7 +65,7 @@ src/
 
 ## Gotchas
 
-- React integration is limited to `src/components/react/` — do not add `client:*` directives outside this directory
+- Svelte integration is limited to `src/components/svelte/` — do not add `client:*` directives outside this directory
 - Tailwind v4 uses `@theme` blocks, not `tailwind.config.js`
 - `getCategoryInfo()` and `getDifficultyInfo()` accept a `locale` parameter — always pass it
 - Skill detail pages use `getStaticPaths()` — add new slugs to content collection or `skills.json`

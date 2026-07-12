@@ -11,11 +11,9 @@ const allSkills = await getAllSkills();
 const categories = await getCategories();
 
 const urlCategory = Astro.url.searchParams.get('category') as string | null;
-const urlDifficulty = Astro.url.searchParams.get('difficulty') as string | null;
 
 let filteredSkills = allSkills;
 if (urlCategory) filteredSkills = filteredSkills.filter(s => s.data.category === urlCategory);
-if (urlDifficulty) filteredSkills = filteredSkills.filter(s => s.data.difficulty === urlDifficulty);
 ---
 
 <BaseLayout
@@ -26,8 +24,8 @@ if (urlDifficulty) filteredSkills = filteredSkills.filter(s => s.data.difficulty
     <PageHeader title="Skills" subtitle={`${filteredSkills.length} skills available`} />
 
     <!-- Category Filters -->
-    <div class="mb-6 flex flex-wrap gap-2">
-      <FilterButton href="/skills" active={!urlCategory && !urlDifficulty}>
+    <div class="mb-8 flex flex-wrap gap-2">
+      <FilterButton href="/skills" active={!urlCategory}>
         All
       </FilterButton>
       {categories.map(({ category, count }) => {
@@ -40,16 +38,6 @@ if (urlDifficulty) filteredSkills = filteredSkills.filter(s => s.data.difficulty
           </FilterButton>
         );
       })}
-    </div>
-
-    <!-- Difficulty Filters -->
-    <div class="mb-8 flex flex-wrap gap-2">
-      <span class="text-xs text-text-muted mr-1">Difficulty:</span>
-      {(['beginner', 'intermediate', 'advanced'] as const).map((diff) => (
-        <FilterButton href={`/skills?difficulty=${diff}`} active={urlDifficulty === diff}>
-          {diff === 'beginner' ? 'Beginner' : diff === 'intermediate' ? 'Intermediate' : 'Advanced'}
-        </FilterButton>
-      ))}
     </div>
 
     <SkillGrid skills={filteredSkills} locale={locale} />

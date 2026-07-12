@@ -53,7 +53,7 @@ const imageURL = new URL(image, Astro.site).href;
     url: currentURL,
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${Astro.site}search?q={search_term_string}`,
+      target: new URL('/search', Astro.site).href + '?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   })}
