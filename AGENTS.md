@@ -1,14 +1,12 @@
 # Front Skills
 
-Astro 7 site with React 19 components, Tailwind CSS v4, MDX content, and i18n (en/es).
+Astro 7 site with Svelte 5 client islands, Tailwind CSS v4, and i18n (en/es).
 
 ## Quick Commands
 
 ```sh
 pnpm dev                    # dev server at localhost:4321
 pnpm build                  # production build to ./dist/
-pnpm exec astro dev --background   # background mode
-pnpm exec astro dev stop    # stop background server
 ```
 
 No lint, test, or typecheck scripts are configured. Verify changes with `pnpm build`.
@@ -17,8 +15,8 @@ No lint, test, or typecheck scripts are configured. Verify changes with `pnpm bu
 
 - **Framework**: Astro 7 (static output) + Svelte 5 (client islands)
 - **Styling**: Tailwind CSS v4 via Vite plugin, design tokens in `src/styles/global.css`
-- **Content**: Astro Content Collections (`src/content/skills/*.md` and `./skills/**/SKILL.md`) + custom JSON (`src/data/skills.json`)
-- **i18n**: Astro native routing, both locales prefixed (`/en/*`, `/es/*`), default `en`
+- **Content**: Skills loaded from `src/data/registry-skills.json` (metadata) + `packages/front-skills/skills-registry/*/SKILL.md` (markdown content read at build time)
+- **i18n**: Astro native routing. English pages have NO prefix (`/skills`), Spanish pages use `/es/` prefix (`/es/skills`)
 - **Svelte islands**: Scoped to `src/components/svelte/` only (SearchCommand, ImageComparison, CopyButton)
 
 ## Path Alias
@@ -27,40 +25,48 @@ No lint, test, or typecheck scripts are configured. Verify changes with `pnpm bu
 
 ## i18n Routing
 
-Both locales use URL prefixes. All internal links must include the locale prefix:
-- English: `/en/skills`, `/en/categories`
-- Spanish: `/es/skills`, `/es/categories`
+- English: `/skills`, `/` (no locale prefix)
+- Spanish: `/es/skills`, `/es/`
 
-`getLocaleFromPath()` and `getAlternateLocaleUrl()` in `src/lib/i18n.ts` handle detection and switching. Use them, never hardcode locale logic.
+`getLocaleFromPath()` and `getAlternateLocaleUrl()` in `src/lib/i18n.ts` handle detection and switching.
 
-## Content Collections
+## Skills System
 
-Skills are defined in `src/content.config.ts` with Zod schema. Key fields: `title`, `slug`, `category`, `author`, `tags`, `difficulty`, `featured`, `image`, `comparison`.
+All skills are defined in `src/data/registry-skills.json`. Each entry has:
+- Metadata: `title`, `slug`, `category`, `author`, `tags`, `topics`, `difficulty`, `featured`
+- `registryPath`: points to a `SKILL.md` file under `packages/front-skills/skills-registry/`
+- Optional: `comparison` (before/after image URLs)
 
-Custom skills live in `src/data/skills.json` (merged at runtime by `src/lib/skills.ts`).
+At build time, `src/lib/skills.ts` reads each SKILL.md, strips YAML frontmatter, and renders via `marked`.
 
 ## Design System
 
 Tokens in `src/styles/global.css` under `@theme`:
 - Colors: `--color-bg`, `--color-surface`, `--color-border`, `--color-text`, etc.
-- Component classes: `.container-page`, `.card`, `.btn-primary`, `.btn-secondary`, `.tag`
-- Global reset: `border-radius: 0 !important` on all elements
+- Component classes: `.container-page`, `.card`, `.btn-primary`, `.btn-secondary`, `.topic-pill`
+- Global reset: `border-radius: 0 !important` on all elements (sharp corners)
 
 ## File Organization
 
 ```
 src/
-├── pages/{en,es}/     # i18n pages (symmetrical structure)
+├── pages/                # English pages (no prefix)
+│   ├── index.astro
+│   └── skills/
+├── pages/es/             # Spanish pages (/es/ prefix)
+│   ├── index.astro
+│   └── skills/
 ├── components/
-│   ├── layout/        # Header, Footer
-│   ├── ui/            # Badge, Icon, PageHeader, FilterButton
-│   ├── skills/        # SkillCard, SkillGrid, RelatedSkillCard
-│   ├── shared/        # SEO, SkipLink
-│   └── svelte/        # Client-only islands (SearchCommand, ImageComparison, CopyButton)
-├── lib/               # skills.ts, i18n.ts, images.ts
-├── data/              # skills.json, i18n/{en,es}.json
-├── content/skills/    # MDX skill articles
-└── styles/global.css  # Design tokens + component classes
+│   ├── layout/           # Header.astro, Footer.astro
+│   ├── ui/               # Icon, PageHeader, TopicFilter, FilterButton
+│   ├── skills/           # SkillCard, SkillGrid
+│   ├── shared/           # SEO, SkipLink
+│   └── svelte/           # Client-only islands (SearchCommand, ImageComparison, CopyButton)
+├── lib/                  # skills.ts, i18n.ts, images.ts
+├── data/
+│   ├── registry-skills.json  # All skill metadata
+│   └── i18n/{en,es}.json
+└── styles/global.css     # Design tokens + component classes
 ```
 
 ## Gotchas
@@ -68,5 +74,6 @@ src/
 - Svelte integration is limited to `src/components/svelte/` — do not add `client:*` directives outside this directory
 - Tailwind v4 uses `@theme` blocks, not `tailwind.config.js`
 - `getCategoryInfo()` and `getDifficultyInfo()` accept a `locale` parameter — always pass it
-- Skill detail pages use `getStaticPaths()` — add new slugs to content collection or `skills.json`
+- Skill detail pages use `getStaticPaths()` — add new slugs to `registry-skills.json`
 - Node >= 22.12.0 required
+- Content collections are disabled (empty `collections = {}` in `src/content.config.ts`)
