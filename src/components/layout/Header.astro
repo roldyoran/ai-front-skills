@@ -1,10 +1,11 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import SearchCommand from '@/components/svelte/SearchCommand.svelte';
+import LanguageSelector from '@/components/layout/LanguageSelector.astro';
 import { Button } from '@/components/starwind/button';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/starwind/tooltip';
 import { getAllContentSkills } from '@/lib/skills';
-import { t, getLocaleFromPath, locales, localeLabels, getLocaleUrl, type Locale } from '@/lib/i18n';
+import { t, getLocaleFromPath, locales, getLocaleUrl, type Locale } from '@/lib/i18n';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 const currentPath = Astro.url.pathname;
@@ -71,34 +72,7 @@ function isActive(href: string): boolean {
 
   <!-- Actions -->
   <div class="flex items-center gap-1 justify-self-end">
-    <SearchCommand client:idle skills={searchData} locale={locale} labels={searchLabels} />
-
-    <nav
-      class="flex items-center gap-0.5 border border-border bg-bg-secondary px-0.5 py-0.5"
-      aria-label={t('nav.language', locale)}
-      data-lang-toggle
-    >
-      {locales.map((l: Locale) =>
-        l === locale ? (
-          <span
-            title={localeLabels[l]}
-            aria-current="true"
-            class="px-2 py-1 text-[12px] font-medium leading-none bg-surface text-text"
-          >
-            {l.toUpperCase()}
-          </span>
-        ) : (
-          <a
-            href={localeUrls[l]}
-            hreflang={l}
-            title={localeLabels[l]}
-            class="px-2 py-1 text-[12px] font-medium leading-none transition-colors text-text-muted hover:text-text-secondary hover:bg-surface-hover"
-          >
-            {l.toUpperCase()}
-          </a>
-        ),
-      )}
-    </nav>
+    <LanguageSelector locale={locale} localeUrls={localeUrls} />
 
     <Tooltip>
       <TooltipTrigger>
@@ -118,29 +92,7 @@ function isActive(href: string): boolean {
       </TooltipTrigger>
       <TooltipContent>GitHub</TooltipContent>
     </Tooltip>
+
+    <SearchCommand client:idle skills={searchData} locale={locale} labels={searchLabels} />
   </div>
 </header>
-
-<script>
-  // Preserve ?query and #hash when switching language (progressive enhancement;
-  // the links already work without JS).
-  function initLangToggle() {
-    document.querySelectorAll<HTMLElement>('[data-lang-toggle]').forEach((root) => {
-      if (root.dataset.initialized === 'true') return;
-      root.dataset.initialized = 'true';
-
-      root.addEventListener('click', (event) => {
-        const anchor = (event.target as HTMLElement).closest('a[href]');
-        if (!anchor) return;
-        const url = new URL(anchor.getAttribute('href') || '/', window.location.origin);
-        if (window.location.search) url.search = window.location.search;
-        if (window.location.hash) url.hash = window.location.hash;
-        event.preventDefault();
-        window.location.href = url.pathname + url.search + url.hash;
-      });
-    });
-  }
-
-  initLangToggle();
-  document.addEventListener('astro:page-load', initLangToggle);
-</script>

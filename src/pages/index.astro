@@ -4,7 +4,6 @@ import SkillGrid from "@/components/skills/SkillGrid.astro";
 import InstallCommand from "@/components/skills/InstallCommand.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { Button } from "@/components/starwind/button";
-import { Badge } from "@/components/starwind/badge";
 import { Separator } from "@/components/starwind/separator";
 import {
   Accordion,
@@ -12,12 +11,11 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/starwind/accordion";
-import { getFeaturedSkills, getAllSkills } from "@/lib/skills";
+import { getFeaturedSkills } from "@/lib/skills";
 import { t } from "@/lib/i18n";
 
 const locale = "en" as const;
 const featuredSkills = await getFeaturedSkills();
-const allSkills = await getAllSkills();
 
 const installCommand = "npx skills add front-skills";
 
@@ -32,12 +30,6 @@ const faqItems = [
   <!-- Hero -->
   <section class="pt-24 pb-12 sm:pt-32 sm:pb-16">
     <div class="container-page text-center">
-      <div class="mb-6 flex justify-center">
-        <Badge variant="secondary" size="md">
-          {allSkills.length} {t("home.available", locale)}
-        </Badge>
-      </div>
-
       <pre
         class="mb-4 text-white text-[4px] sm:text-[5px] md:text-[7px] lg:text-[9px] font-mono leading-[110%] tracking-tight select-none">
 ███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗

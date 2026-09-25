@@ -8,6 +8,12 @@
     "skills": "Skills",
     "language": "Idioma"
   },
+  "footer": {
+    "topics": "Temas",
+    "bestSkills": "Mejores skills",
+    "resources": "Recursos",
+    "allSkills": "Todas las skills"
+  },
   "hero": {
     "title": "Frontend Skills",
     "subtitle": "Skills de CSS, React, Tailwind y más con comparaciones visuales antes/después",

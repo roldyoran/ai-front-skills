@@ -52,7 +52,9 @@ Single stylesheet `src/styles/global.css` (sections marked 1-6):
 2. Starwind bridge (`@theme inline`): maps Starwind utilities (`bg-card`, `text-muted-foreground`...) to vars — keep in sync with CLI managed block
 3. Site palette applied to Starwind vars: `:root` and `.dark` resolve to the SAME values (dark-only design, `html` always carries `.dark`)
 - Sharp corners enforced by global reset (`border-radius: 0 !important`); `--radius` intentionally left valid so radius `calc()`s don't break
-- Only live component classes: `.container-page`, `.page-title`, `.page-subtitle` (+ search modal, skip-link). Buttons/cards/tags come from Starwind, not custom classes
+- Only live component classes: `.container-page`, `.page-title`, `.page-subtitle` (+ search modal, skip-link, topic-filter active pill). Buttons/cards/tags come from Starwind, not custom classes
+- Always prefer the available Starwind components (`src/components/starwind/`, 55 total) over custom markup/CSS: check the local registry first before building any button, badge, card, dialog, form control, or other UI primitive from scratch. Custom UI (in `src/components/ui/` or new classes in `global.css` §5) is a last resort, only when no Starwind component fits the need
+- Mobile-first: design and write all markup/CSS for small screens first, then scale up with `sm:`/`md:`/`lg:` breakpoints. Never hide essential content or actions behind desktop-only layouts — every page must be fully usable at 360px wide
 - `starwind.config.json` `tailwind.css` points at `src/styles/global.css` — the CLI follows that path on future `add`/`update`
 
 ## File Organization
