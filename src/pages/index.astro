@@ -1,17 +1,44 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SkillGrid from "@/components/skills/SkillGrid.astro";
+import InstallCommand from "@/components/skills/InstallCommand.astro";
 import Icon from "@/components/ui/Icon.astro";
-import { getFeaturedSkills } from "@/lib/skills";
+import { Button } from "@/components/starwind/button";
+import { Badge } from "@/components/starwind/badge";
+import { Separator } from "@/components/starwind/separator";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/starwind/accordion";
+import { getFeaturedSkills, getAllSkills, getCategories, getCategoryInfo } from "@/lib/skills";
+import { t } from "@/lib/i18n";
 
 const locale = "en" as const;
-const featuredSkills = await getFeaturedSkills(6);
+const featuredSkills = await getFeaturedSkills();
+const allSkills = await getAllSkills();
+const categories = await getCategories();
+
+const installCommand = "npx skills add front-skills";
+
+const faqItems = [
+  { q: t("home.faq.q1", locale), a: t("home.faq.a1", locale) },
+  { q: t("home.faq.q2", locale), a: t("home.faq.a2", locale) },
+  { q: t("home.faq.q3", locale), a: t("home.faq.a3", locale) },
+];
 ---
 
 <BaseLayout title="Front Skills" description="Frontend skills with visual before/after comparisons">
   <!-- Hero -->
   <section class="pt-24 pb-12 sm:pt-32 sm:pb-16">
     <div class="container-page text-center">
+      <div class="mb-6 flex justify-center">
+        <Badge variant="secondary" size="md">
+          {allSkills.length} {t("home.available", locale)}
+        </Badge>
+      </div>
+
       <pre
         class="mb-4 text-white text-[4px] sm:text-[5px] md:text-[7px] lg:text-[9px] font-mono leading-[110%] tracking-tight select-none">
 ███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
@@ -27,11 +54,14 @@ const featuredSkills = await getFeaturedSkills(6);
         better interfaces.
       </p>
 
-      <div class="flex justify-center">
-        <a href="/skills" class="btn-primary">
-          View Skills
+      <div class="flex flex-wrap justify-center gap-2">
+        <Button as="a" href="/skills" size="md">
+          {t("hero.cta", locale)}
           <Icon name="arrow-right" size={15} />
-        </a>
+        </Button>
+        <Button as="a" href="#install" variant="outline" size="md">
+          {t("home.installTitle", locale)}
+        </Button>
       </div>
     </div>
   </section>
@@ -41,36 +71,67 @@ const featuredSkills = await getFeaturedSkills(6);
     <div class="container-page">
       <div class="mb-6 flex items-center justify-between">
         <div>
-          <h2 class="text-lg font-bold text-text">Featured</h2>
+          <h2 class="text-lg font-bold text-text">{t("skills.featured", locale)}</h2>
           <p class="mt-1 text-xs text-text-secondary">Skills with visual comparisons</p>
         </div>
-        <a
-          href="/skills"
-          class="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-text transition-colors"
-        >
-          View all
+        <Button as="a" href="/skills" variant="ghost" size="sm">
+          {t("skills.viewAll", locale)}
           <Icon name="arrow-right" size={12} />
-        </a>
+        </Button>
       </div>
-      <SkillGrid skills={featuredSkills} locale={locale} />
+      <SkillGrid skills={featuredSkills} locale={locale} variant="list" />
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="pb-20">
+    <div class="container-page">
+      <h2 class="mb-4 text-lg font-bold text-text">{t("home.categories", locale)}</h2>
+      <div class="flex flex-wrap gap-2">
+        {categories.map(({ category, count }) => (
+          <a href="/skills">
+            <Badge variant="outline" size="md">
+              {getCategoryInfo(category, locale).label} ({count})
+            </Badge>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
   <!-- Install -->
-  <section class="border-t border-border pb-20">
-    <div class="container-page text-center pt-16">
-      <h2 class="mb-3 text-lg font-bold text-text">Install</h2>
-      <p class="mb-6 text-xs text-text-secondary">Copy the command and install in your project</p>
-      <div class="inline-flex items-center gap-3 border border-border bg-surface px-5 py-3">
-        <span class="text-text-dim text-sm">$</span>
-        <code class="text-text text-sm font-mono">npx skills add front-skills</code>
-        <button
-          onclick="navigator.clipboard.writeText('npx skills add front-skills')"
-          class="ml-2 border border-border bg-bg-secondary px-2.5 py-1 text-xs text-text-secondary hover:text-text transition-colors cursor-pointer"
-        >
-          Copy
-        </button>
+  <section id="install" class="pb-20">
+    <div class="container-page">
+      <Separator class="mb-16" />
+      <div class="text-center">
+        <h2 class="mb-3 text-lg font-bold text-text">{t("home.installTitle", locale)}</h2>
+        <p class="mb-6 text-xs text-text-secondary">{t("home.installSubtitle", locale)}</p>
+        <div class="mx-auto max-w-xl text-left">
+          <InstallCommand
+            command={installCommand}
+            copyLabel={t("detail.copy", locale)}
+            copiedLabel={t("detail.copiedLabel", locale)}
+            copiedMessage={t("detail.copied", locale)}
+          />
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="pb-20">
+    <div class="container-page">
+      <h2 class="mb-4 text-lg font-bold text-text">{t("home.faqTitle", locale)}</h2>
+      <Accordion type="single" collapsible defaultValue="faq-0">
+        {faqItems.map((item, i) => (
+          <AccordionItem value={`faq-${i}`}>
+            <AccordionTrigger>{item.q}</AccordionTrigger>
+            <AccordionContent>
+              <p class="text-sm text-text-secondary leading-relaxed">{item.a}</p>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </div>
   </section>
 </BaseLayout>

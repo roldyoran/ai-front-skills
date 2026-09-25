@@ -1,20 +1,24 @@
 ---
 import Icon from '@/components/ui/Icon.astro';
 import SearchCommand from '@/components/svelte/SearchCommand.svelte';
+import { Button } from '@/components/starwind/button';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/starwind/tooltip';
 import { getAllContentSkills } from '@/lib/skills';
-import { t, getLocaleFromPath, getAlternateLocaleUrl } from '@/lib/i18n';
+import { t, getLocaleFromPath, locales, localeLabels, getLocaleUrl, type Locale } from '@/lib/i18n';
 
 const locale = getLocaleFromPath(Astro.url.pathname);
 const currentPath = Astro.url.pathname;
-const altUrl = getAlternateLocaleUrl(Astro.url.pathname);
+const localeUrls: Record<string, string> = Object.fromEntries(
+  locales.map((l: Locale) => [l, getLocaleUrl(currentPath, l)]),
+);
 
 const contentSkills = await getAllContentSkills();
 
 const searchData = contentSkills.map((s) => ({
   title: s.data.title,
   slug: s.data.slug,
-  category: s.data.category,
   description: s.data.description,
+  topics: s.data.topics,
 }));
 
 const prefix = locale === 'es' ? '/es' : '';
@@ -44,7 +48,7 @@ function isActive(href: string): boolean {
 
 <header class="absolute inset-x-0 top-0 z-10 grid grid-cols-[1fr_auto_1fr] items-center px-4 pt-5 sm:px-8">
   <!-- Logo -->
-  <a href={prefix || '/'} class="flex items-center gap-2 text-text hover:text-text-secondary transition-colors justify-self-start">
+  <a href={prefix || '/'} class="flex items-center gap-2 text-text transition-colors hover:text-text-secondary justify-self-start">
     <span class="font-bold text-base tracking-tight">&lt;fs/&gt;</span>
   </a>
 
@@ -67,24 +71,76 @@ function isActive(href: string): boolean {
 
   <!-- Actions -->
   <div class="flex items-center gap-1 justify-self-end">
-    <SearchCommand client:load skills={searchData} locale={locale} labels={searchLabels} />
+    <SearchCommand client:idle skills={searchData} locale={locale} labels={searchLabels} />
 
-    <a
-      href={altUrl}
-      class="inline-flex items-center px-2.5 py-1.5 text-[13px] font-medium text-text-muted hover:text-text-secondary transition-colors hover:bg-surface-hover rounded-[6px]"
-      title={locale === 'en' ? 'Cambiar a Español' : 'Switch to English'}
+    <nav
+      class="flex items-center gap-0.5 border border-border bg-bg-secondary px-0.5 py-0.5"
+      aria-label={t('nav.language', locale)}
+      data-lang-toggle
     >
-      {locale === 'en' ? 'ES' : 'EN'}
-    </a>
+      {locales.map((l: Locale) =>
+        l === locale ? (
+          <span
+            title={localeLabels[l]}
+            aria-current="true"
+            class="px-2 py-1 text-[12px] font-medium leading-none bg-surface text-text"
+          >
+            {l.toUpperCase()}
+          </span>
+        ) : (
+          <a
+            href={localeUrls[l]}
+            hreflang={l}
+            title={localeLabels[l]}
+            class="px-2 py-1 text-[12px] font-medium leading-none transition-colors text-text-muted hover:text-text-secondary hover:bg-surface-hover"
+          >
+            {l.toUpperCase()}
+          </a>
+        ),
+      )}
+    </nav>
 
-    <a
-      href="https://github.com/front-skills"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center px-2.5 py-1.5 text-[13px] font-medium text-text-muted hover:text-text-secondary transition-colors hover:bg-surface-hover rounded-[6px]"
-      aria-label="GitHub"
-    >
-      <Icon name="github" size={16} />
-    </a>
+    <Tooltip>
+      <TooltipTrigger>
+        <span class="inline-flex">
+          <Button
+            as="a"
+            href="https://github.com/front-skills"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="ghost"
+            size="icon-sm"
+            aria-label="GitHub"
+          >
+            <Icon name="github" size={16} />
+          </Button>
+        </span>
+      </TooltipTrigger>
+      <TooltipContent>GitHub</TooltipContent>
+    </Tooltip>
   </div>
 </header>
+
+<script>
+  // Preserve ?query and #hash when switching language (progressive enhancement;
+  // the links already work without JS).
+  function initLangToggle() {
+    document.querySelectorAll<HTMLElement>('[data-lang-toggle]').forEach((root) => {
+      if (root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      root.addEventListener('click', (event) => {
+        const anchor = (event.target as HTMLElement).closest('a[href]');
+        if (!anchor) return;
+        const url = new URL(anchor.getAttribute('href') || '/', window.location.origin);
+        if (window.location.search) url.search = window.location.search;
+        if (window.location.hash) url.hash = window.location.hash;
+        event.preventDefault();
+        window.location.href = url.pathname + url.search + url.hash;
+      });
+    });
+  }
+
+  initLangToggle();
+  document.addEventListener('astro:page-load', initLangToggle);
+</script>

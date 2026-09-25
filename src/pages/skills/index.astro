@@ -1,33 +1,59 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SkillGrid from '@/components/skills/SkillGrid.astro';
-import PageHeader from '@/components/ui/PageHeader.astro';
-import TopicFilter from '@/components/ui/TopicFilter.astro';
-import { getAllSkills, getTopics } from '@/lib/skills';
+import { Badge } from '@/components/starwind/badge';
+import { Separator } from '@/components/starwind/separator';
+import { getAllSkills, getTopics, topicSlug } from '@/lib/skills';
+import { t } from '@/lib/i18n';
 
 const locale = 'en' as const;
 const allSkills = await getAllSkills();
 const topics = await getTopics();
 
-const urlTopic = Astro.url.searchParams.get('topic') as string | null;
-
-let filteredSkills = allSkills;
-if (urlTopic) {
-  filteredSkills = filteredSkills.filter(s =>
-    s.data.topics.some(t => t.toLowerCase() === urlTopic.toLowerCase())
-  );
-}
+const siteOrigin = Astro.site ?? new URL('https://front-skills.local');
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Front Skills Library',
+  url: new URL('/skills', siteOrigin).toString(),
+  hasPart: {
+    '@type': 'ItemList',
+    itemListElement: allSkills.map((skill, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      url: new URL(`/skills/${skill.data.slug}`, siteOrigin).toString(),
+      name: skill.data.title,
+    })),
+  },
+};
 ---
 
 <BaseLayout
   title="Skills - Front Skills"
   description="Explore all available frontend skills"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <div class="container-page pt-24 pb-12">
-    <PageHeader title="Skills" subtitle={`${filteredSkills.length} skills available`} />
+    <h1 class="page-title">{t('skills.title', locale)}</h1>
+    <p class="page-subtitle">
+      {allSkills.length} {t('skills.countSuffix', locale)}
+    </p>
 
-    <TopicFilter topics={topics} activeTopic={urlTopic} baseUrl="/skills" />
+    <div class="mt-6 flex flex-wrap gap-2">
+      <Badge variant="default" size="md">
+        {t('skills.all', locale)} ({allSkills.length})
+      </Badge>
+      {topics.map(({ topic, count }) => (
+        <a href={`/skills/topic/${topicSlug(topic)}`}>
+          <Badge variant="outline" size="md">
+            {topic} ({count})
+          </Badge>
+        </a>
+      ))}
+    </div>
 
-    <SkillGrid skills={filteredSkills} locale={locale} />
+    <Separator class="my-8" />
+
+    <SkillGrid skills={allSkills} locale={locale} />
   </div>
 </BaseLayout>

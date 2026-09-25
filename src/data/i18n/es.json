@@ -5,7 +5,8 @@
   },
   "nav": {
     "home": "Inicio",
-    "skills": "Skills"
+    "skills": "Skills",
+    "language": "Idioma"
   },
   "hero": {
     "title": "Frontend Skills",
@@ -19,7 +20,41 @@
     "search": "Buscar skills...",
     "noResults": "No se encontraron skills",
     "viewAll": "Ver todas las skills",
-    "viewSkill": "Ver skill"
+    "viewSkill": "Ver skill",
+    "difficulty": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "countSuffix": "skills disponibles",
+    "filterTopic": "Tema",
+    "allTopics": "Todos los temas",
+    "emptyTitle": "No se encontraron skills",
+    "emptyDescription": "Prueba con otro tema o categoría.",
+    "compareAction": "Comparar",
+    "compareHint": "Esta skill incluye una comparación visual antes/después"
+  },
+  "detail": {
+    "installation": "Instalación",
+    "copy": "Copiar",
+    "copied": "Comando de instalación copiado",
+    "copiedLabel": "Copiado",
+    "related": "Skills relacionadas"
+  },
+  "home": {
+    "available": "skills en el registro",
+    "categories": "Explorar por categoría",
+    "installTitle": "Instalar",
+    "installSubtitle": "Copia el comando e instala en tu proyecto",
+    "faqTitle": "Preguntas frecuentes",
+    "faq": {
+      "q1": "¿Qué es una front skill?",
+      "a1": "Una front skill es un paquete reutilizable de guía — reglas, ejemplos y patrones — que ayuda a humanos y agentes de IA a crear mejores interfaces. Cada skill incluye documentación y, cuando importa, una comparación visual antes/después.",
+      "q2": "¿Cómo instalo una skill?",
+      "a2": "Copia el comando de instalación y ejecútalo en tu proyecto. Puedes instalar toda la colección o una sola skill añadiendo su slug.",
+      "q3": "¿Las skills funcionan con agentes de IA?",
+      "a3": "Sí. Las skills son markdown plano con frontmatter, así que cualquier agente de código puede leerlas y aplicarlas directamente en tu repositorio."
+    }
   },
   "search": {
     "trigger": "Buscar skills...",
@@ -29,6 +64,14 @@
     "select": "Seleccionar",
     "close": "Cerrar",
     "results": "resultados"
+  },
+  "categories": {
+    "css": "CSS",
+    "react": "React",
+    "astro": "Astro",
+    "tailwind": "Tailwind",
+    "tools": "Herramientas",
+    "ui-ux": "UI/UX"
   },
   "comparison": {
     "title": "Comparación",

@@ -4,6 +4,7 @@ import { marked } from 'marked';
 import type { Locale } from './i18n';
 import { t } from './i18n';
 import registrySkillsData from '@/data/registry-skills.json';
+import { FEATURED_SLUGS, MAX_FEATURED } from '@/data/featured';
 
 // --- Types ---
 
@@ -58,14 +59,20 @@ function readSkillMarkdown(registryPath: string): string {
 }
 
 /**
- * Get all registry skills from JSON
+ * Get all registry skills from JSON.
+ * Memoized: SKILL.md files are static at build time, so read+parse once
+ * instead of on every getAllSkills/getTopics/getRelatedSkills call.
  */
+let registryCache: Skill[] | null = null;
+
 function getRegistrySkills(): Skill[] {
-  return (registrySkillsData.skills || []).map((skill) => ({
+  if (registryCache) return registryCache;
+  registryCache = (registrySkillsData.skills || []).map((skill) => ({
     id: skill.slug,
     data: skill as RegistrySkillData,
     body: readSkillMarkdown(skill.registryPath),
   }));
+  return registryCache;
 }
 
 /**
@@ -132,10 +139,81 @@ export async function getSkillBySlug(slug: string): Promise<Skill | undefined> {
 }
 
 /**
- * Get featured skills
+ * Get featured skills in curated FEATURED_SLUGS order (ui-skills style).
+ * Falls back to `featured: true` flags when the curated list is empty.
  */
-export async function getFeaturedSkills(limit = 6): Promise<Skill[]> {
-  return getAllSkills({ featured: true, limit });
+export function getFeaturedSkills(limit = MAX_FEATURED): Promise<Skill[]> {
+  const skills = getRegistrySkills();
+  const bySlug = new Map(skills.map((s) => [s.data.slug, s]));
+  const curated = FEATURED_SLUGS.map((slug) => bySlug.get(slug)).filter(
+    (s): s is Skill => Boolean(s),
+  );
+  const list = curated.length > 0
+    ? curated
+    : skills.filter((s) => s.data.featured);
+  return Promise.resolve(list.slice(0, limit));
+}
+
+/**
+ * GitHub avatar URL for an author handle (ui-skills pattern).
+ * Returns empty string when the author is not a plausible GitHub handle
+ * (e.g. generic labels like "community").
+ */
+export function getAvatarUrl(author: string, size = 80): string {
+  const handle = author.trim().toLowerCase();
+  if (!handle || handle === 'community' || handle.includes(' ')) return '';
+  const clean = handle.replace(/^@/, '');
+  if (!/^[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?$/.test(clean)) return '';
+  return `https://github.com/${clean}.png?size=${size}`;
+}
+
+/**
+ * Slugify a topic for /skills/topic/<topic> routes.
+ */
+export function topicSlug(topic: string): string {
+  return topic.toLowerCase().trim().replace(/\s+/g, '-');
+}
+
+/**
+ * Related skills scored by shared topics (+2 same author), like ui-skills.
+ */
+export function getRelatedSkills(slug: string, limit = 4): Promise<Skill[]> {
+  const skills = getRegistrySkills();
+  const current = skills.find((s) => s.data.slug === slug);
+  if (!current) return Promise.resolve([]);
+  const currentTopics = new Set(current.data.topics.map((x) => x.toLowerCase()));
+  return Promise.resolve(
+    skills
+      .filter((s) => s.data.slug !== slug)
+      .map((s) => {
+        const shared = s.data.topics.filter((x) => currentTopics.has(x.toLowerCase())).length;
+        const sameAuthor = s.data.author.toLowerCase() === current.data.author.toLowerCase() ? 2 : 0;
+        const sameCategory = s.data.category === current.data.category ? 1 : 0;
+        return { skill: s, score: shared * 10 + sameAuthor + sameCategory };
+      })
+      .filter((x) => x.score > 0)
+      .sort((a, b) => b.score - a.score || a.skill.data.title.localeCompare(b.skill.data.title))
+      .slice(0, limit)
+      .map((x) => x.skill),
+  );
+}
+
+/**
+ * Prev/next navigation inside the same category (falls back to global list).
+ */
+export function getPrevNextSkills(slug: string): Promise<{ prev?: Skill; next?: Skill }> {
+  const skills = getRegistrySkills();
+  const current = skills.find((s) => s.data.slug === slug);
+  if (!current) return Promise.resolve({});
+  let list = skills.filter((s) => s.data.category === current.data.category);
+  if (list.length <= 1) list = [...skills];
+  const ordered = [...list].sort((a, b) => a.data.title.localeCompare(b.data.title));
+  const idx = ordered.findIndex((s) => s.data.slug === slug);
+  if (idx < 0) return Promise.resolve({});
+  return Promise.resolve({
+    prev: ordered[(idx - 1 + ordered.length) % ordered.length],
+    next: ordered[(idx + 1) % ordered.length],
+  });
 }
 
 /**
@@ -215,19 +293,4 @@ export function getCategoryInfo(category: SkillCategory, locale: Locale = 'en'):
     'ui-ux': { label: t('categories.ui-ux', locale), color: 'var(--color-cat-ui-ux)', icon: 'palette' },
   };
   return categories[category];
-}
-
-/**
- * Get difficulty display info
- */
-export function getDifficultyInfo(difficulty: SkillDifficulty, locale: Locale = 'en'): {
-  label: string;
-  color: string;
-} {
-  const difficulties: Record<SkillDifficulty, { label: string; color: string }> = {
-    beginner: { label: t('skills.difficulty.beginner', locale), color: 'var(--color-success)' },
-    intermediate: { label: t('skills.difficulty.intermediate', locale), color: 'var(--color-warning)' },
-    advanced: { label: t('skills.difficulty.advanced', locale), color: 'var(--color-error)' },
-  };
-  return difficulties[difficulty];
 }

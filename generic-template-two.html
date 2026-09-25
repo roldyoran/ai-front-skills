@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ÉLITE — Hair Studio</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #f8f5f1;
+        --dark: #1c1816;
+        --brown: #765548;
+        --gold: #b8905a;
+        --gold-light: #d8bb91;
+        --cream: #fffdf9;
+        --muted: #827870;
+        --border: #e6ded5;
+        --white: #ffffff;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+
+      body {
+        font-family: "Segoe UI", Inter, sans-serif;
+        background: var(--bg);
+        color: var(--dark);
+        overflow: hidden;
+      }
+
+      /* =========================
+     PAGE
+  ========================== */
+
+      .page {
+        width: 100%;
+        height: 100vh;
+        display: grid;
+        grid-template-rows: 64px 1fr 28px;
+        padding: 12px 18px 8px;
+        gap: 8px;
+      }
+
+      /* =========================
+     HEADER
+  ========================== */
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 18px;
+
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+
+        backdrop-filter: blur(10px);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--dark);
+        color: var(--gold-light);
+
+        display: grid;
+        place-items: center;
+
+        font-family: Georgia, serif;
+        font-size: 18px;
+      }
+
+      .logo-text {
+        font-family: Georgia, serif;
+        font-size: 19px;
+        letter-spacing: 2px;
+      }
+
+      .logo-text span {
+        display: block;
+        font-family: "Segoe UI", sans-serif;
+        font-size: 8px;
+        letter-spacing: 3px;
+        color: var(--muted);
+        margin-top: -2px;
+      }
+
+      nav {
+        display: flex;
+        gap: 24px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      nav a:first-child {
+        color: var(--dark);
+      }
+
+      .header-button {
+        background: var(--dark);
+        color: white;
+        border: 0;
+        padding: 10px 16px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      /* =========================
+     MAIN
+  ========================== */
+
+      main {
+        min-height: 0;
+
+        display: grid;
+        grid-template-columns: 1.45fr 0.75fr;
+        gap: 10px;
+      }
+
+      /* =========================
+     HERO
+  ========================== */
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+
+        border-radius: 18px;
+
+        background:
+          linear-gradient(
+            90deg,
+            rgba(24, 20, 18, 0.94) 0%,
+            rgba(24, 20, 18, 0.75) 42%,
+            rgba(24, 20, 18, 0.12) 100%
+          ),
+          linear-gradient(135deg, #4b3931, #a98b73);
+
+        color: white;
+
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 360px;
+        height: 360px;
+
+        right: -100px;
+        bottom: -130px;
+
+        border-radius: 50%;
+
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        box-shadow:
+          0 0 0 45px rgba(255, 255, 255, 0.025),
+          0 0 0 90px rgba(255, 255, 255, 0.02);
+      }
+
+      .eyebrow {
+        position: relative;
+        z-index: 1;
+
+        color: var(--gold-light);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+
+        margin-bottom: 12px;
+      }
+
+      .hero h1 {
+        position: relative;
+        z-index: 1;
+
+        max-width: 590px;
+
+        font-family: Georgia, serif;
+        font-weight: 400;
+        font-size: clamp(40px, 5vw, 67px);
+        line-height: 0.98;
+      }
+
+      .hero h1 em {
+        color: var(--gold-light);
+        font-style: italic;
+      }
+
+      .hero-description {
+        position: relative;
+        z-index: 1;
+
+        max-width: 480px;
+        color: #ded6d0;
+
+        font-size: 12px;
+        line-height: 1.6;
+
+        margin: 18px 0;
+      }
+
+      .hero-actions {
+        position: relative;
+        z-index: 1;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .primary-button {
+        background: var(--gold);
+        color: white;
+        border: 0;
+        border-radius: 8px;
+
+        padding: 12px 18px;
+
+        font-size: 11px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .secondary-button {
+        background: transparent;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 8px;
+
+        padding: 11px 17px;
+
+        font-size: 11px;
+        cursor: pointer;
+      }
+
+      .hero-bottom {
+        position: absolute;
+        z-index: 2;
+
+        bottom: 20px;
+        left: 40px;
+
+        display: flex;
+        gap: 25px;
+      }
+
+      .hero-stat strong {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 19px;
+        color: var(--gold-light);
+      }
+
+      .hero-stat span {
+        color: #bcb1aa;
+        font-size: 9px;
+      }
+
+      /* =========================
+     RIGHT SIDE
+  ========================== */
+
+      .side {
+        min-width: 0;
+
+        display: grid;
+        grid-template-rows: 1.25fr 0.8fr;
+        gap: 10px;
+      }
+
+      /* =========================
+     SERVICES
+  ========================== */
+
+      .services {
+        background: var(--cream);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 18px;
+
+        overflow: hidden;
+      }
+
+      .section-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+
+        margin-bottom: 10px;
+      }
+
+      .section-heading h2 {
+        font-family: Georgia, serif;
+        font-size: 20px;
+        font-weight: 400;
+      }
+
+      .section-heading span {
+        font-size: 9px;
+        color: var(--muted);
+      }
+
+      .service-list {
+        display: grid;
+        gap: 5px;
+      }
+
+      .service {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 8px 7px;
+
+        border-bottom: 1px solid var(--border);
+      }
+
+      .service:last-child {
+        border-bottom: 0;
+      }
+
+      .service-icon {
+        width: 31px;
+        height: 31px;
+
+        flex-shrink: 0;
+
+        border-radius: 8px;
+        background: #f0e8df;
+
+        display: grid;
+        place-items: center;
+
+        font-size: 14px;
+      }
+
+      .service-info {
+        flex: 1;
+      }
+
+      .service-info strong {
+        display: block;
+        font-size: 11px;
+      }
+
+      .service-info span {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 2px;
+      }
+
+      .price {
+        font-family: Georgia, serif;
+        font-size: 15px;
+        color: var(--brown);
+      }
+
+      /* =========================
+     PROMO
+  ========================== */
+
+      .promo {
+        border-radius: 18px;
+        padding: 18px;
+
+        background: var(--dark);
+        color: white;
+
+        position: relative;
+        overflow: hidden;
+      }
+
+      .promo::after {
+        content: "✦";
+
+        position: absolute;
+        right: 22px;
+        top: 15px;
+
+        font-size: 42px;
+        color: rgba(216, 187, 145, 0.25);
+      }
+
+      .promo small {
+        color: var(--gold-light);
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .promo h3 {
+        font-family: Georgia, serif;
+        font-weight: 400;
+        font-size: 22px;
+        margin: 6px 0;
+      }
+
+      .promo p {
+        color: #c7bdb6;
+        font-size: 10px;
+        max-width: 300px;
+        line-height: 1.5;
+      }
+
+      .promo button {
+        margin-top: 10px;
+
+        background: var(--gold);
+        border: 0;
+        color: white;
+
+        padding: 8px 12px;
+        border-radius: 6px;
+
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      /* =========================
+     BOTTOM CARDS
+  ========================== */
+
+      .bottom {
+        grid-column: 1 / -1;
+
+        display: grid;
+        grid-template-columns: 1.1fr 1fr 1fr;
+        gap: 10px;
+
+        min-height: 0;
+      }
+
+      .card {
+        background: var(--cream);
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        padding: 13px 15px;
+
+        overflow: hidden;
+      }
+
+      .card-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-bottom: 8px;
+      }
+
+      .card-title h3 {
+        font-family: Georgia, serif;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      .card-title span {
+        font-size: 9px;
+        color: var(--muted);
+      }
+
+      /* =========================
+     STYLIST
+  ========================== */
+
+      .stylist {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .stylist-photo {
+        width: 54px;
+        height: 54px;
+
+        flex-shrink: 0;
+
+        border-radius: 12px;
+
+        background: linear-gradient(135deg, #d6bda5, #755548);
+
+        display: grid;
+        place-items: center;
+
+        color: white;
+        font-family: Georgia, serif;
+        font-size: 19px;
+      }
+
+      .stylist-info strong {
+        display: block;
+        font-family: Georgia, serif;
+        font-size: 14px;
+      }
+
+      .stylist-info span {
+        display: block;
+        color: var(--muted);
+        font-size: 9px;
+        margin-top: 3px;
+      }
+
+      .rating {
+        margin-top: 6px;
+        color: var(--gold);
+        font-size: 10px;
+      }
+
+      /* =========================
+     TESTIMONIAL
+  ========================== */
+
+      .quote {
+        color: #514942;
+        font-family: Georgia, serif;
+        font-size: 13px;
+        line-height: 1.4;
+        font-style: italic;
+      }
+
+      .quote-author {
+        margin-top: 8px;
+
+        display: flex;
+        justify-content: space-between;
+
+        font-size: 9px;
+        color: var(--muted);
+      }
+
+      /* =========================
+     HOURS
+  ========================== */
+
+      .hours {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 15px;
+      }
+
+      .hour {
+        display: flex;
+        justify-content: space-between;
+
+        padding-bottom: 4px;
+
+        border-bottom: 1px dotted var(--border);
+
+        font-size: 9px;
+      }
+
+      .hour strong {
+        font-weight: 600;
+      }
+
+      .open {
+        margin-top: 7px;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+
+        color: #287545;
+        background: #eaf6ed;
+
+        padding: 4px 7px;
+        border-radius: 999px;
+
+        font-size: 8px;
+        font-weight: 700;
+      }
+
+      .open::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        background: #35a858;
+        border-radius: 50%;
+      }
+
+      /* =========================
+     FOOTER
+  ========================== */
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 4px;
+
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      footer strong {
+        color: var(--brown);
+      }
+
+      /* =========================
+     RESPONSIVE
+  ========================== */
+
+      @media (max-width: 1000px) {
+        body {
+          overflow: auto;
+        }
+
+        .page {
+          height: auto;
+        }
+
+        main {
+          grid-template-columns: 1fr;
+        }
+
+        .side {
+          grid-template-columns: 1fr 1fr;
+          grid-template-rows: auto;
+        }
+
+        .bottom {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 650px) {
+        nav {
+          display: none;
+        }
+
+        .page {
+          padding: 8px;
+        }
+
+        .hero {
+          padding: 25px;
+        }
+
+        .hero-bottom {
+          display: none;
+        }
+
+        .side {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <!-- ================= HEADER ================= -->
+
+      <header>
+        <div class="logo">
+          <div class="logo-mark">É</div>
+
+          <div class="logo-text">
+            ÉLITE
+            <span>HAIR STUDIO</span>
+          </div>
+        </div>
+
+        <nav>
+          <a href="#">Inicio</a>
+          <a href="#">Servicios</a>
+          <a href="#">Galería</a>
+          <a href="#">Nosotros</a>
+          <a href="#">Contacto</a>
+        </nav>
+
+        <button class="header-button">Reservar cita</button>
+      </header>
+
+      <!-- ================= MAIN ================= -->
+
+      <main>
+        <!-- HERO -->
+
+        <section class="hero">
+          <div class="eyebrow">Salón de belleza · Guatemala</div>
+
+          <h1>
+            Tu estilo.<br />
+            Tu <em>momento.</em>
+          </h1>
+
+          <p class="hero-description">
+            Creamos cortes, colores y estilos diseñados para resaltar tu personalidad. Una
+            experiencia de belleza donde cada detalle cuenta.
+          </p>
+
+          <div class="hero-actions">
+            <button class="primary-button">Reservar mi cita →</button>
+
+            <button class="secondary-button">Ver servicios</button>
+          </div>
+
+          <div class="hero-bottom">
+            <div class="hero-stat">
+              <strong>8+</strong>
+              <span>Años de experiencia</span>
+            </div>
+
+            <div class="hero-stat">
+              <strong>4.9</strong>
+              <span>Valoración promedio</span>
+            </div>
+
+            <div class="hero-stat">
+              <strong>2K+</strong>
+              <span>Clientes felices</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- RIGHT -->
+
+        <div class="side">
+          <!-- SERVICES -->
+
+          <section class="services">
+            <div class="section-heading">
+              <h2>Servicios</h2>
+              <span>VER TODOS →</span>
+            </div>
+
+            <div class="service-list">
+              <div class="service">
+                <div class="service-icon">✂</div>
+
+                <div class="service-info">
+                  <strong>Corte & Styling</strong>
+                  <span>Corte, lavado y peinado</span>
+                </div>
+
+                <div class="price">$25</div>
+              </div>
+
+              <div class="service">
+                <div class="service-icon">◉</div>
+
+                <div class="service-info">
+                  <strong>Coloración</strong>
+                  <span>Color personalizado</span>
+                </div>
+
+                <div class="price">$55</div>
+              </div>
+
+              <div class="service">
+                <div class="service-icon">✦</div>
+
+                <div class="service-info">
+                  <strong>Balayage</strong>
+                  <span>Iluminación natural</span>
+                </div>
+
+                <div class="price">$85</div>
+              </div>
+
+              <div class="service">
+                <div class="service-icon">♡</div>
+
+                <div class="service-info">
+                  <strong>Tratamiento</strong>
+                  <span>Hidratación profunda</span>
+                </div>
+
+                <div class="price">$35</div>
+              </div>
+
+              <div class="service">
+                <div class="service-icon">◇</div>
+
+                <div class="service-info">
+                  <strong>Peinado</strong>
+                  <span>Eventos y ocasiones especiales</span>
+                </div>
+
+                <div class="price">$40</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PROMO -->
+
+          <section class="promo">
+            <small>Oferta del mes</small>
+
+            <h3>
+              Nuevo look,<br />
+              nueva energía.
+            </h3>
+
+            <p>
+              Reserva un servicio de coloración + corte y recibe un tratamiento de hidratación sin
+              costo adicional.
+            </p>
+
+            <button>Aprovechar promoción</button>
+          </section>
+        </div>
+
+        <!-- ================= BOTTOM ================= -->
+
+        <div class="bottom">
+          <!-- STYLIST -->
+
+          <section class="card">
+            <div class="card-title">
+              <h3>Tu estilista</h3>
+              <span>CONOCE AL EQUIPO</span>
+            </div>
+
+            <div class="stylist">
+              <div class="stylist-photo">ML</div>
+
+              <div class="stylist-info">
+                <strong>María López</strong>
+
+                <span> Directora creativa · Colorista </span>
+
+                <div class="rating">
+                  ★★★★★
+                  <span style="color: #827870"> 4.9 / 5 </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TESTIMONIAL -->
+
+          <section class="card">
+            <div class="card-title">
+              <h3>Lo que dicen</h3>
+              <span>CLIENTES</span>
+            </div>
+
+            <p class="quote">
+              “Salí sintiéndome increíble. Entendieron exactamente lo que quería y el resultado
+              superó mis expectativas.”
+            </p>
+
+            <div class="quote-author">
+              <strong>— Andrea M.</strong>
+              <span>Cliente desde 2022</span>
+            </div>
+          </section>
+
+          <!-- HOURS -->
+
+          <section class="card">
+            <div class="card-title">
+              <h3>Horarios</h3>
+              <span>VISÍTANOS</span>
+            </div>
+
+            <div class="hours">
+              <div class="hour">
+                <strong>Lun — Vie</strong>
+                <span>9:00 — 19:00</span>
+              </div>
+
+              <div class="hour">
+                <strong>Sábado</strong>
+                <span>9:00 — 17:00</span>
+              </div>
+
+              <div class="hour">
+                <strong>Domingo</strong>
+                <span>Cerrado</span>
+              </div>
+
+              <div class="hour">
+                <strong>Tel.</strong>
+                <span>5555-1234</span>
+              </div>
+            </div>
+
+            <div class="open">Abierto hoy · Cierra 19:00</div>
+          </section>
+        </div>
+      </main>
+
+      <!-- FOOTER -->
+
+      <footer>
+        <span> © 2026 <strong>ÉLITE Hair Studio</strong> </span>
+
+        <span> Zona 10 · Ciudad de Guatemala · Instagram @elitehair </span>
+      </footer>
+    </div>
+  </body>
+</html>

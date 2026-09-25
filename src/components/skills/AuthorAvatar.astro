@@ -1,0 +1,69 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { getAvatarUrl } from '@/lib/skills';
+
+interface Props {
+  author: string;
+  /** sm = detail header (round), card = boxed rows, md = home list */
+  variant?: 'sm' | 'card' | 'md';
+  class?: string;
+  /** Direct image URL override (e.g. per-skill `image` from the registry). */
+  src?: string;
+}
+
+const { author, variant = 'md', class: className = '', src } = Astro.props;
+
+const boxClass = {
+  sm: 'size-6 text-[9px]',
+  card: 'size-9 text-[10px]',
+  md: 'size-10 text-[11px]',
+}[variant];
+
+const roundedClass = variant === 'sm' ? 'rounded-full' : 'rounded-xl';
+const iconSize = { sm: 12, card: 16, md: 18 }[variant];
+
+const handle = author.trim().toLowerCase();
+const brandLogo = handle === 'anthropic' ? 'anthropic' : handle === 'vercel' ? 'vercel' : null;
+const avatarUrl = src || (brandLogo ? '' : getAvatarUrl(author, 80));
+
+const initials = author
+  .split(/[\s_-]+/)
+  .map((w) => w[0])
+  .join('')
+  .slice(0, 2)
+  .toUpperCase();
+---
+
+{brandLogo ? (
+  <span
+    class={`inline-flex shrink-0 items-center justify-center ${roundedClass} ${brandLogo === 'vercel' ? 'bg-black' : 'bg-[#D97757]'} text-white ${boxClass} ${className}`}
+    role="img"
+    aria-label={`${author} logo`}
+    title={author}
+  >
+    <Icon name={brandLogo} size={iconSize} />
+  </span>
+) : avatarUrl ? (
+  <span class={`relative inline-flex shrink-0 ${className}`}>
+    <img
+      src={avatarUrl}
+      alt={`${author} avatar`}
+      width="80"
+      height="80"
+      loading="lazy"
+      decoding="async"
+      class={`${boxClass} ${roundedClass} border border-border object-cover`}
+      onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'"
+    />
+    <span
+      style="display:none"
+      class={`${boxClass} ${roundedClass} items-center justify-center border border-border bg-surface font-semibold text-text-secondary`}
+      aria-hidden="true"
+    >{initials}</span>
+  </span>
+) : (
+  <span
+    class={`inline-flex shrink-0 items-center justify-center ${roundedClass} border border-border bg-surface font-semibold text-text-secondary ${boxClass} ${className}`}
+    aria-hidden="true"
+  >{initials}</span>
+)}

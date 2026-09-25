@@ -1,14 +1,26 @@
 ---
+import Icon from '@/components/ui/Icon.astro';
+
 interface Props {
   href: string;
   title: string;
   description: string;
+  author?: string;
 }
 
-const { href, title, description } = Astro.props;
+const { href, title, description, author } = Astro.props;
 ---
 
-<a href={href} class="group related-card">
-  <h3 class="related-card-title">{title}</h3>
-  <p class="related-card-desc">{description}</p>
+<a
+  href={href}
+  class="group flex items-center gap-3 border border-border bg-surface px-3 py-2.5 transition-colors hover:border-border-hover hover:bg-surface-hover"
+>
+  <div class="min-w-0 flex-1">
+    <h3 class="truncate text-[13px] font-semibold leading-tight text-text">{title}</h3>
+    {author && <p class="truncate text-[11px] leading-tight text-text-muted">{author}</p>}
+    <p class="truncate text-xs leading-snug text-text-secondary">{description}</p>
+  </div>
+  <span class="shrink-0 text-text-dim transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-text" aria-hidden="true">
+    <Icon name="arrow-right" size={14} />
+  </span>
 </a>

@@ -8,8 +8,19 @@
       "author": "anthropic",
       "featured": true,
       "difficulty": "intermediate",
-      "tags": ["design", "typography", "aesthetic", "visual-identity", "color-system"],
-      "topics": ["Visual", "Systems", "Motion", "Interaction"],
+      "tags": [
+        "design",
+        "typography",
+        "aesthetic",
+        "visual-identity",
+        "color-system"
+      ],
+      "topics": [
+        "Visual",
+        "Systems",
+        "Motion",
+        "Interaction"
+      ],
       "image": "https://placehold.co/800x500/141414/22d3ee?text=Frontend+Design",
       "comparison": {
         "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Generic+UI",
@@ -22,12 +33,23 @@
       "slug": "ui-ux-pro-max",
       "category": "ui-ux",
       "description": "UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks.",
-      "author": "community",
+      "author": "Next Level Builder",
       "featured": true,
       "difficulty": "advanced",
-      "tags": ["ui-ux", "design-system", "colors", "typography", "accessibility"],
-      "topics": ["Accessibility", "Visual", "Systems", "Performance"],
-      "image": "https://placehold.co/800x500/141414/a855f7?text=UI/UX+Pro+Max",
+      "tags": [
+        "ui-ux",
+        "design-system",
+        "colors",
+        "typography",
+        "accessibility"
+      ],
+      "topics": [
+        "Accessibility",
+        "Visual",
+        "Systems",
+        "Performance"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/246974152?s=200&v=4",
       "comparison": {
         "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Basic+UI",
         "after": "https://placehold.co/800x500/0a0a0a/a855f7?text=Pro+Max+Design"
@@ -42,14 +64,331 @@
       "author": "vercel",
       "featured": true,
       "difficulty": "intermediate",
-      "tags": ["guidelines", "accessibility", "review", "best-practices", "audit"],
-      "topics": ["Accessibility", "Interaction", "Performance", "Motion"],
+      "tags": [
+        "guidelines",
+        "accessibility",
+        "review",
+        "best-practices",
+        "audit"
+      ],
+      "topics": [
+        "Accessibility",
+        "Interaction",
+        "Performance",
+        "Motion"
+      ],
       "image": "https://placehold.co/800x500/141414/f97316?text=Web+Guidelines",
       "comparison": {
         "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Non-Compliant",
         "after": "https://placehold.co/800x500/0a0a0a/f97316?text=Guidelines+Compliant"
       },
       "registryPath": "packages/front-skills/skills-registry/web-design-guidelines/SKILL.md"
+    },
+    {
+      "title": "UI Skills Root",
+      "slug": "ui-skills-root",
+      "category": "ui-ux",
+      "description": "Use when the user needs UI help and you must route by topic, stack, and intent to the smallest useful set of UI skills.",
+      "author": "ibelick",
+      "featured": false,
+      "difficulty": "beginner",
+      "tags": [
+        "routing",
+        "ui-skills",
+        "agent",
+        "cli"
+      ],
+      "topics": [
+        "Systems",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/ui-skills-root/SKILL.md"
+    },
+    {
+      "title": "Improve UI",
+      "slug": "improve-ui",
+      "category": "ui-ux",
+      "description": "Audit an existing product surface against its own design evidence, identify verified UI problems, and write self-contained implementation plans for another agent without modifying product source.",
+      "author": "ibelick",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "audit",
+        "review",
+        "ui-polish",
+        "design-system"
+      ],
+      "topics": [
+        "Visual",
+        "Systems",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/improve-ui/SKILL.md"
+    },
+    {
+      "title": "Improve Animations",
+      "slug": "improve-animations",
+      "category": "ui-ux",
+      "description": "Survey a codebase's animation and motion code as a senior motion advisor, then produce prioritized audit and self-contained implementation plans. Read-only on source code - it plans improvements, it does not apply them. Use when the user asks to improve animations, audit motion, make an app feel better, or wants a roadmap of animation fixes rather than a review of a single diff.",
+      "author": "emilkowalski",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "animation",
+        "motion",
+        "audit",
+        "micro-interactions"
+      ],
+      "topics": [
+        "Motion",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/improve-animations/SKILL.md"
+    },
+    {
+      "title": "Improve React",
+      "slug": "improve-react",
+      "category": "ui-ux",
+      "description": "Survey a React codebase using React Doctor's findings, then produce prioritized audits and self-contained implementation plans without modifying source code.",
+      "author": "millionco",
+      "featured": false,
+      "difficulty": "advanced",
+      "tags": [
+        "react",
+        "audit",
+        "performance",
+        "refactor"
+      ],
+      "topics": [
+        "Systems",
+        "Performance"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/improve-react/SKILL.md"
+    },
+    {
+      "title": "Improve",
+      "slug": "improve",
+      "category": "ui-ux",
+      "description": "Survey any codebase as a senior advisor and produce prioritized, self-contained implementation plans for OTHER models/agents to execute. Strictly read-only on source code — never implements, fixes, or refactors anything itself. Use when asked to audit a codebase, find improvement opportunities (bugs, security, performance, test coverage, tech debt, migrations, DX), suggest features or take the project next, or generate handoff plans for another agent to implement.",
+      "author": "shadcn",
+      "featured": false,
+      "difficulty": "advanced",
+      "tags": [
+        "audit",
+        "code-review",
+        "architecture",
+        "tech-debt"
+      ],
+      "topics": [
+        "Systems",
+        "Performance"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/improve/SKILL.md"
+    },
+    {
+      "title": "Better UI",
+      "slug": "better-ui",
+      "category": "ui-ux",
+      "description": "Design engineering principles for making interfaces feel polished. Use when building UI components, reviewing frontend code, implementing animations, hover states, shadows, borders, micro-interactions, enter/exit animations, or any visual detail work. Triggers on UI polish, design details, \"make it feel better\", \"feels off\", stagger animations, border radius, optical alignment, image outlines, box shadows.",
+      "author": "jakubkrehel",
+      "featured": false,
+      "difficulty": "beginner",
+      "tags": [
+        "polish",
+        "design-details",
+        "micro-interactions",
+        "shadows"
+      ],
+      "topics": [
+        "Visual",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/better-ui/SKILL.md"
+    },
+    {
+      "title": "Design Lab",
+      "slug": "design-lab",
+      "category": "ui-ux",
+      "description": "Interactive design exploration workflow: conduct interviews, generate variants, and refine UI designs through feedback.",
+      "author": "0xdesign",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "exploration",
+        "variants",
+        "prototyping",
+        "feedback"
+      ],
+      "topics": [
+        "Visual",
+        "Systems",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/design-lab/SKILL.md"
+    },
+    {
+      "title": "Interface Design",
+      "slug": "interface-design",
+      "category": "ui-ux",
+      "description": "Specialized skill for interface design: dashboards, admin panels, and SaaS apps. Focused on craft and consistency.",
+      "author": "dammyjay93",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "dashboards",
+        "saas",
+        "admin",
+        "craft"
+      ],
+      "topics": [
+        "Visual",
+        "Systems"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/interface-design/SKILL.md"
+    },
+    {
+      "title": "12 Principles of Animation",
+      "slug": "12-principles-of-animation",
+      "category": "ui-ux",
+      "description": "Apply Disney's 12 animation principles to web interfaces to make motion feel natural, organic, and human.",
+      "author": "raphaelsalaja",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "animation",
+        "motion",
+        "disney-principles",
+        "ux-motion"
+      ],
+      "topics": [
+        "Motion"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/12-principles-of-animation/SKILL.md"
+    },
+    {
+      "title": "Impeccable",
+      "slug": "impeccable",
+      "category": "ui-ux",
+      "description": "Flagship design skill for production-grade, anti-generic frontend interfaces with strong craft and consistency.",
+      "author": "pbakaus",
+      "featured": false,
+      "difficulty": "advanced",
+      "tags": [
+        "design",
+        "craft",
+        "anti-generic",
+        "consistency"
+      ],
+      "topics": [
+        "Visual",
+        "Systems",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/impeccable/SKILL.md"
+    },
+    {
+      "title": "Bencium Innovative UX Designer",
+      "slug": "bencium-innovative-ux-designer",
+      "category": "ui-ux",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.",
+      "author": "bencium",
+      "featured": false,
+      "difficulty": "advanced",
+      "tags": [
+        "visual-identity",
+        "components",
+        "creative",
+        "design-system"
+      ],
+      "topics": [
+        "Visual",
+        "Systems"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/bencium-innovative-ux-designer/SKILL.md"
+    },
+    {
+      "title": "GPT Tasteskill",
+      "slug": "gpt-tasteskill",
+      "category": "ui-ux",
+      "description": "High-agency UX/UI skill with strict layout variance, typography, and GSAP motion engineering constraints.",
+      "author": "leonxlnx",
+      "featured": false,
+      "difficulty": "advanced",
+      "tags": [
+        "ux",
+        "gsap",
+        "motion",
+        "editorial",
+        "bento"
+      ],
+      "topics": [
+        "Visual",
+        "Motion",
+        "Interaction"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/gpt-tasteskill/SKILL.md"
+    },
+    {
+      "title": "Rams",
+      "slug": "rams",
+      "category": "ui-ux",
+      "description": "Real-time design feedback skill focused on accessibility, spacing, typography, contrast, and component quality.",
+      "author": "rams",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "accessibility",
+        "review",
+        "wcag",
+        "visual-qa"
+      ],
+      "topics": [
+        "Accessibility",
+        "Visual",
+        "Systems"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/rams/SKILL.md"
+    },
+    {
+      "title": "Interaction Design",
+      "slug": "interaction-design",
+      "category": "ui-ux",
+      "description": "Design and implement microinteractions, motion design, transitions, and user feedback patterns for delightful user experiences.",
+      "author": "wshobson",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "microinteractions",
+        "motion",
+        "transitions",
+        "feedback"
+      ],
+      "topics": [
+        "Interaction",
+        "Motion"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/interaction-design/SKILL.md"
+    },
+    {
+      "title": "Frontend UI Engineering",
+      "slug": "frontend-ui-engineering",
+      "category": "ui-ux",
+      "description": "Frontend UI engineering guidance covering component architecture, responsive design, accessibility, and maintainable implementation patterns.",
+      "author": "addyosmani",
+      "featured": false,
+      "difficulty": "intermediate",
+      "tags": [
+        "components",
+        "responsive",
+        "accessibility",
+        "architecture"
+      ],
+      "topics": [
+        "Systems",
+        "Accessibility",
+        "Performance"
+      ],
+      "registryPath": "packages/front-skills/skills-registry/frontend-ui-engineering/SKILL.md"
     }
   ]
 }

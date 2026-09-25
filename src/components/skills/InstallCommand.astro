@@ -1,0 +1,129 @@
+---
+import { Input } from '@/components/starwind/input';
+import { Button } from '@/components/starwind/button';
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  command: string;
+  copyLabel?: string;
+  copiedLabel?: string;
+  copiedMessage?: string;
+}
+
+const {
+  command,
+  copyLabel = 'Copy',
+  copiedLabel = 'Copied',
+  copiedMessage = 'Copied to clipboard',
+} = Astro.props;
+---
+
+<div
+  class="flex items-center gap-2 border border-border bg-surface px-4 py-3"
+  data-install-command
+  data-command={command}
+  data-copy-label={copyLabel}
+  data-copied-label={copiedLabel}
+  data-copied-message={copiedMessage}
+>
+  <span class="text-text-dim text-sm" aria-hidden="true">$</span>
+  <Input
+    value={command}
+    readonly
+    onfocus="this.select()"
+    aria-label={command}
+    class="flex-1 border-0 bg-transparent font-mono shadow-none"
+  />
+  <Button variant="outline" size="sm" data-copy-btn class="shrink-0">
+    <span data-copy-icon-copy class="inline-flex">
+      <Icon name="copy" size={14} />
+    </span>
+    <span data-copy-icon-check class="hidden items-center text-success">
+      <Icon name="check" size={14} />
+    </span>
+    <span data-copy-text>{copyLabel}</span>
+  </Button>
+  <span class="sr-only" role="status" data-copy-status></span>
+</div>
+
+<script>
+  import { toast } from '@/components/starwind/toast';
+
+  const SUCCESS_MS = 2000;
+
+  async function writeClipboard(text: string): Promise<boolean> {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fallback for non-secure contexts / older browsers
+      try {
+        const area = document.createElement('textarea');
+        area.value = text;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(area);
+        return ok;
+      } catch {
+        return false;
+      }
+    }
+  }
+
+  function initInstallCommands() {
+    document.querySelectorAll<HTMLElement>('[data-install-command]').forEach((root) => {
+      if (root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      const btn = root.querySelector<HTMLButtonElement>('[data-copy-btn]');
+      const iconCopy = root.querySelector('[data-copy-icon-copy]');
+      const iconCheck = root.querySelector('[data-copy-icon-check]');
+      const label = root.querySelector('[data-copy-text]');
+      const status = root.querySelector('[data-copy-status]');
+      if (!btn || !iconCopy || !iconCheck || !label) return;
+
+      const cmd = root.dataset.command ?? '';
+      const copyLabel = root.dataset.copyLabel ?? 'Copy';
+      const copiedLabel = root.dataset.copiedLabel ?? 'Copied';
+      const msg = root.dataset.copiedMessage ?? 'Copied';
+      let timer: ReturnType<typeof setTimeout> | undefined;
+
+      const setState = (copied: boolean) => {
+        iconCopy.classList.toggle('hidden', copied);
+        iconCopy.classList.toggle('inline-flex', !copied);
+        iconCheck.classList.toggle('hidden', !copied);
+        iconCheck.classList.toggle('inline-flex', copied);
+        label.textContent = copied ? copiedLabel : copyLabel;
+        btn.setAttribute('aria-label', copied ? copiedLabel : copyLabel);
+        btn.dataset.copied = copied ? 'true' : 'false';
+        if (status) status.textContent = copied ? msg : '';
+      };
+
+      btn.addEventListener('click', async () => {
+        const ok = await writeClipboard(cmd);
+        if (!ok) {
+          toast.error(msg);
+          return;
+        }
+        toast.success(msg, { description: cmd });
+        setState(true);
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => setState(false), SUCCESS_MS);
+      });
+    });
+  }
+
+  initInstallCommands();
+  document.addEventListener('astro:page-load', initInstallCommands);
+</script>
+
+<style>
+  [data-copy-btn][data-copied='true'] {
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+</style>

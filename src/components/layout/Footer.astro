@@ -1,5 +1,14 @@
 ---
-import { getTopics, getAllSkills } from '@/lib/skills';
+import { Separator } from '@/components/starwind/separator';
+import { getTopics, getAllSkills, topicSlug } from '@/lib/skills';
+import { getLocalePrefix, type Locale } from '@/lib/i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'en' } = Astro.props;
+const prefix = getLocalePrefix(locale);
 
 const topics = await getTopics();
 const featuredSkills = await getAllSkills({ featured: true });
@@ -15,7 +24,7 @@ const featuredSkills = await getAllSkills({ featured: true });
           {topics.map(({ topic, count }) => (
             <li>
               <a
-                href={`/skills?topic=${encodeURIComponent(topic)}`}
+                href={`${prefix}/skills/topic/${topicSlug(topic)}`}
                 class="text-[13px] text-text-secondary hover:text-text transition-colors"
               >
                 {topic}
@@ -32,7 +41,7 @@ const featuredSkills = await getAllSkills({ featured: true });
           {featuredSkills.slice(0, 7).map((skill) => (
             <li>
               <a
-                href={`/skills/${skill.data.slug}`}
+                href={`${prefix}/skills/${skill.data.slug}`}
                 class="text-[13px] text-text-secondary hover:text-text transition-colors"
               >
                 {skill.data.title}
@@ -58,7 +67,7 @@ const featuredSkills = await getAllSkills({ featured: true });
           </li>
           <li>
             <a
-              href="/skills"
+              href={`${prefix}/skills`}
               class="text-[13px] text-text-secondary hover:text-text transition-colors"
             >
               All skills
@@ -69,10 +78,10 @@ const featuredSkills = await getAllSkills({ featured: true });
 
       <!-- Brand -->
       <div>
-        <a href="/" class="text-text hover:text-text-secondary transition-colors">
+        <a href={prefix || '/'} class="text-text hover:text-text-secondary transition-colors">
           <span class="font-bold text-base tracking-tight">&lt;fs/&gt;</span>
         </a>
-        <p class="mt-3 text-[12px] text-text-dim leading-relaxed">
+        <p class="mt-3 text-[12px] text-text-muted leading-relaxed">
           Frontend skills with visual before/after comparisons.
         </p>
         <div class="mt-4 flex items-center gap-3">
@@ -105,8 +114,9 @@ const featuredSkills = await getAllSkills({ featured: true });
     </div>
 
     <!-- Copyright -->
-    <div class="mt-10 pt-6 border-t border-border">
-      <p class="text-[11px] text-text-dim text-center">
+    <div class="mt-10">
+      <Separator class="mb-6" />
+      <p class="text-[11px] text-text-muted text-center">
         &copy; {new Date().getFullYear()} Front Skills
       </p>
     </div>
