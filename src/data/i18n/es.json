@@ -45,6 +45,8 @@
     "copy": "Copiar",
     "copied": "Comando de instalación copiado",
     "copiedLabel": "Copiado",
+    "copyMarkdown": "Copiar markdown",
+    "markdownCopied": "Markdown de la skill copiado",
     "related": "Skills relacionadas"
   },
   "home": {

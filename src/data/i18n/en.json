@@ -44,6 +44,8 @@
     "copy": "Copy",
     "copied": "Install command copied to clipboard",
     "copiedLabel": "Copied",
+    "copyMarkdown": "Copy markdown",
+    "markdownCopied": "Skill markdown copied to clipboard",
     "related": "Related skills"
   },
   "home": {
