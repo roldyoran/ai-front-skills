@@ -168,7 +168,7 @@ export function getAvatarUrl(author: string, size = 80): string {
 }
 
 /**
- * Slugify a topic for /skills/topic/<topic> routes.
+ * Slugify a topic for the ?topic= filter on /skills.
  */
 export function topicSlug(topic: string): string {
   return topic.toLowerCase().trim().replace(/\s+/g, '-');

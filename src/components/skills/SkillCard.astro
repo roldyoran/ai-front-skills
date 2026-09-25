@@ -1,5 +1,6 @@
 ---
 import type { Skill } from '@/lib/skills';
+import { topicSlug } from '@/lib/skills';
 import { t, type Locale } from '@/lib/i18n';
 import { Badge } from '@/components/starwind/badge';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/starwind/tooltip';
@@ -21,11 +22,14 @@ const primaryTopic = topics[0];
 const skillUrl = locale === 'es' ? `/es/skills/${slug}` : `/skills/${slug}`;
 const hasComparison = comparison?.before && comparison?.after;
 const showBadge = showCategory ?? variant === 'card';
+// Space-separated topic slugs for the client-side topic filter on /skills.
+const topicSlugs = topics.map(topicSlug).join(' ');
 ---
 
 {variant === 'list' ? (
   <a
     href={skillUrl}
+    data-topic-slugs={topicSlugs}
     class="group flex items-center gap-3 border-b border-border py-3 transition-colors hover:border-border-hover"
   >
     <AuthorAvatar author={author} variant="md" src={image} />
@@ -44,6 +48,7 @@ const showBadge = showCategory ?? variant === 'card';
 ) : (
   <a
     href={skillUrl}
+    data-topic-slugs={topicSlugs}
     class="group flex items-center gap-3 border border-border bg-surface px-3 py-2.5 transition-colors hover:border-border-hover hover:bg-surface-hover"
   >
     <AuthorAvatar author={author} variant="card" src={image} />

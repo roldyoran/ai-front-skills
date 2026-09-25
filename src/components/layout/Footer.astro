@@ -24,7 +24,7 @@ const featuredSkills = await getAllSkills({ featured: true });
           {topics.map(({ topic, count }) => (
             <li>
               <a
-                href={`${prefix}/skills/topic/${topicSlug(topic)}`}
+                href={`${prefix}/skills?topic=${topicSlug(topic)}`}
                 class="text-[13px] text-text-secondary hover:text-text transition-colors"
               >
                 {topic}

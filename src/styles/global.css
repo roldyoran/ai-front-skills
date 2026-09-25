@@ -232,6 +232,15 @@ body {
   }
 }
 
+/* Topic filter (skills page): pressed pill reads as active.
+   Specificity beats the Badge utilities; tokens keep it in sync
+   with the design system. */
+.topic-filter [aria-pressed="true"] [data-slot="badge"] {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
 /* ============================================================
    SEARCH MODAL - Command palette style (SearchCommand.svelte)
    ============================================================ */
