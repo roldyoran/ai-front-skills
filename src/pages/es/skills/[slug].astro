@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import InstallCommand from '@/components/skills/InstallCommand.astro';
+import InstallTabs from '@/components/skills/InstallTabs.astro';
 import CopyMarkdownButton from '@/components/skills/CopyMarkdownButton.astro';
 import SkillGrid from '@/components/skills/SkillGrid.astro';
 import AuthorAvatar from '@/components/skills/AuthorAvatar.astro';
@@ -39,7 +39,7 @@ const comparisonCases = getComparisonCases(slug);
 // Render markdown body
 const contentHtml = renderMarkdown(skill.body);
 
-const installCommand = `npx skills add front-skills@${slug}`;
+const installPkg = `front-skills@${slug}`;
 
 const relatedSkills = await getRelatedSkills(slug, 4);
 const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
@@ -96,8 +96,8 @@ const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
       <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">
         {t('detail.installation', locale)}
       </h2>
-      <InstallCommand
-        command={installCommand}
+      <InstallTabs
+        pkg={installPkg}
         copyLabel={t('detail.copy', locale)}
         copiedLabel={t('detail.copiedLabel', locale)}
         copiedMessage={t('detail.copied', locale)}
@@ -105,7 +105,7 @@ const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
     </section>
 
     <Tabs defaultValue="overview" class="mb-8">
-      <TabsList>
+      <TabsList class="w-full">
         <TabsTrigger value="overview">{t('comparison.overviewTab', locale)}</TabsTrigger>
         {comparisonCases.length > 0 && (
           <TabsTrigger value="comparisons">

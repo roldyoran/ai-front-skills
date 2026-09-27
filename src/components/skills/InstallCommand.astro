@@ -3,11 +3,15 @@ import { Input } from '@/components/starwind/input';
 import { Button } from '@/components/starwind/button';
 import Icon from '@/components/ui/Icon.astro';
 
+type Variant = 'boxed' | 'minimal';
+
 interface Props {
   command: string;
   copyLabel?: string;
   copiedLabel?: string;
   copiedMessage?: string;
+  /** boxed: framed panel · minimal: hairline row, icon-only copy */
+  variant?: Variant;
 }
 
 const {
@@ -15,11 +19,17 @@ const {
   copyLabel = 'Copy',
   copiedLabel = 'Copied',
   copiedMessage = 'Copied to clipboard',
+  variant = 'boxed',
 } = Astro.props;
+
+const minimal = variant === 'minimal';
 ---
 
 <div
-  class="flex items-center gap-2 border border-border bg-surface px-4 py-3"
+  class:list={[
+    'flex items-center gap-2',
+    minimal ? 'border-b border-border pb-3' : 'border border-border bg-surface px-4 py-3',
+  ]}
   data-install-command
   data-command={command}
   data-copy-label={copyLabel}
@@ -34,14 +44,20 @@ const {
     aria-label={command}
     class="flex-1 border-0 bg-transparent font-mono shadow-none"
   />
-  <Button variant="outline" size="sm" data-copy-btn class="shrink-0">
+  <Button
+    variant={minimal ? 'ghost' : 'outline'}
+    size={minimal ? 'icon-sm' : 'sm'}
+    data-copy-btn
+    class="shrink-0"
+    aria-label={copyLabel}
+  >
     <span data-copy-icon-copy class="inline-flex">
       <Icon name="copy" size={14} />
     </span>
     <span data-copy-icon-check class="hidden items-center text-success">
       <Icon name="check" size={14} />
     </span>
-    <span data-copy-text>{copyLabel}</span>
+    {!minimal && <span data-copy-text>{copyLabel}</span>}
   </Button>
   <span class="sr-only" role="status" data-copy-status></span>
 </div>
@@ -84,7 +100,7 @@ const {
       const iconCheck = root.querySelector('[data-copy-icon-check]');
       const label = root.querySelector('[data-copy-text]');
       const status = root.querySelector('[data-copy-status]');
-      if (!btn || !iconCopy || !iconCheck || !label) return;
+      if (!btn || !iconCopy || !iconCheck) return;
 
       const cmd = root.dataset.command ?? '';
       const copyLabel = root.dataset.copyLabel ?? 'Copy';
@@ -97,7 +113,7 @@ const {
         iconCopy.classList.toggle('inline-flex', !copied);
         iconCheck.classList.toggle('hidden', !copied);
         iconCheck.classList.toggle('inline-flex', copied);
-        label.textContent = copied ? copiedLabel : copyLabel;
+        if (label) label.textContent = copied ? copiedLabel : copyLabel;
         btn.setAttribute('aria-label', copied ? copiedLabel : copyLabel);
         btn.dataset.copied = copied ? 'true' : 'false';
         if (status) status.textContent = copied ? msg : '';

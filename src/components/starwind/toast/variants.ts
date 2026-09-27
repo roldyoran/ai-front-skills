@@ -16,11 +16,11 @@ export const toastContent = tv({
 });
 
 export const toastDescription = tv({
-  base: "text-muted-foreground text-sm",
+  base: "text-muted-foreground text-sm break-words leading-relaxed",
 });
 
 export const toastItem = tv({
-  base: "bg-popover text-popover-foreground pointer-events-auto absolute inset-x-0 bottom-0 flex w-full origin-bottom flex-col gap-1 overflow-hidden rounded-lg border bg-clip-padding p-4 pr-10 shadow-lg transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-limited:pointer-events-none data-limited:opacity-0",
+  base: "bg-bg-secondary text-popover-foreground pointer-events-auto absolute inset-x-0 bottom-0 flex w-full origin-bottom flex-col gap-1 overflow-hidden rounded-lg border bg-clip-padding p-5 pr-11 shadow-xl shadow-black/50 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-limited:pointer-events-none data-limited:opacity-0",
   variants: {
     variant: {
       default: "border-border",
@@ -36,7 +36,7 @@ export const toastItem = tv({
 });
 
 export const toastTitle = tv({
-  base: "flex items-center gap-2 text-sm font-semibold [&_svg]:size-6 [&_svg]:shrink-0",
+  base: "flex items-center gap-2.5 text-sm font-semibold [&_svg]:size-7 [&_svg]:shrink-0",
   variants: {
     variant: {
       default: "",
@@ -54,7 +54,7 @@ export const toastTitle = tv({
 
 export const toastViewport = tv({
   base: [
-    "fixed z-50 flex w-[min(22rem,calc(100vw-2rem))] outline-none",
+    "fixed z-50 flex w-[min(26rem,calc(100vw-2rem))] outline-none",
     "data-[position=bottom-center]:bottom-4 data-[position=bottom-center]:left-1/2 data-[position=bottom-center]:-translate-x-1/2",
     "data-[position=bottom-left]:bottom-4 data-[position=bottom-left]:left-4",
     "data-[position=bottom-right]:right-4 data-[position=bottom-right]:bottom-4",
