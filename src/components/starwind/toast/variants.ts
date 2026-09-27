@@ -36,7 +36,7 @@ export const toastItem = tv({
 });
 
 export const toastTitle = tv({
-  base: "flex items-center gap-1 text-sm font-semibold [&_svg]:size-4",
+  base: "flex items-center gap-2 text-sm font-semibold [&_svg]:size-6 [&_svg]:shrink-0",
   variants: {
     variant: {
       default: "",
@@ -54,7 +54,7 @@ export const toastTitle = tv({
 
 export const toastViewport = tv({
   base: [
-    "fixed z-50 flex w-80 outline-none",
+    "fixed z-50 flex w-[min(22rem,calc(100vw-2rem))] outline-none",
     "data-[position=bottom-center]:bottom-4 data-[position=bottom-center]:left-1/2 data-[position=bottom-center]:-translate-x-1/2",
     "data-[position=bottom-left]:bottom-4 data-[position=bottom-left]:left-4",
     "data-[position=bottom-right]:right-4 data-[position=bottom-right]:bottom-4",
