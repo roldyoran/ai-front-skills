@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nova Studio — Hair Salon & Barbershop</title>
+  <meta name="description" content="Downtown hair salon: cuts, color, beard trims and event styling. Book your appointment in 1 minute." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#111110',
+            cream: '#FAF7F2',
+            sand: '#EDE6DA',
+            gold: '#C9A227',
+            golddark: '#A3861F',
+          },
+          fontFamily: {
+            serif: ['Georgia', 'Times New Roman', 'serif'],
+            sans: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+    .hero-bg {
+      background:
+        linear-gradient(rgba(17,17,16,.72), rgba(17,17,16,.55)),
+        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1600&auto=format&fit=crop') center / cover no-repeat;
+    }
+    .card-img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="bg-cream text-ink antialiased">
+
+  <!-- Top bar -->
+  <div class="bg-ink text-cream text-xs sm:text-sm">
+    <div class="max-w-6xl mx-auto px-4 py-2 flex flex-col sm:flex-row items-center justify-between gap-1">
+      <p class="tracking-wide">✂️ Mon – Sat · 9:00 AM – 8:00 PM · 24 Main Street, Madrid</p>
+      <a href="tel:+34910000000" class="font-semibold text-gold hover:text-cream transition">📞 910 000 000</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-ink/10">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-2">
+        <span class="w-9 h-9 rounded-full bg-ink text-gold grid place-items-center font-serif text-xl font-bold">N</span>
+        <span class="font-serif text-xl font-bold tracking-tight">Nova <span class="text-golddark">Studio</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+        <a href="#services" class="hover:text-golddark transition">Services</a>
+        <a href="#gallery" class="hover:text-golddark transition">Gallery</a>
+        <a href="#pricing" class="hover:text-golddark transition">Pricing</a>
+        <a href="#reviews" class="hover:text-golddark transition">Reviews</a>
+        <a href="#contact" class="hover:text-golddark transition">Contact</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a href="#booking" class="bg-ink text-cream text-sm font-semibold px-4 py-2 rounded-full hover:bg-golddark transition">Book now</a>
+      </div>
+    </div>
+    <!-- Mobile nav -->
+    <nav class="md:hidden border-t border-ink/10 px-4 py-2 flex gap-4 overflow-x-auto text-sm font-medium whitespace-nowrap">
+      <a href="#services" class="hover:text-golddark">Services</a>
+      <a href="#gallery" class="hover:text-golddark">Gallery</a>
+      <a href="#pricing" class="hover:text-golddark">Pricing</a>
+      <a href="#reviews" class="hover:text-golddark">Reviews</a>
+      <a href="#contact" class="hover:text-golddark">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero-bg text-cream">
+    <div class="max-w-6xl mx-auto px-4 py-20 sm:py-28 flex flex-col gap-6 max-w-2xl">
+      <p class="inline-flex w-fit items-center gap-2 bg-cream/15 border border-cream/25 rounded-full px-4 py-1.5 text-xs sm:text-sm tracking-wide">★ 4.9 on Google · 2,400+ happy clients</p>
+      <h1 class="font-serif text-4xl sm:text-6xl font-bold leading-tight">Your hair,<br />our <span class="text-gold italic">masterpiece.</span></h1>
+      <p class="text-cream/85 text-base sm:text-lg leading-relaxed">Cuts, color and beard care with a free consultation. Air-conditioned salon, complimentary coffee and guaranteed punctuality: your appointment starts on time.</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="#booking" class="bg-gold text-ink font-bold px-6 py-3 rounded-full text-center hover:bg-cream transition">Book appointment →</a>
+        <a href="#pricing" class="border border-cream/40 font-semibold px-6 py-3 rounded-full text-center hover:bg-cream hover:text-ink transition">See pricing</a>
+      </div>
+      <div class="flex flex-wrap gap-x-8 gap-y-3 pt-2 text-sm text-cream/80">
+        <p><span class="text-gold font-bold text-lg">12</span> years of craft</p>
+        <p><span class="text-gold font-bold text-lg">6</span> expert stylists</p>
+        <p><span class="text-gold font-bold text-lg">0</span> min waiting time</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
+    <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Our services</p>
+    <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">Everything your look needs</h2>
+    <p class="text-ink/60 mt-2 max-w-xl">Free consultation with every visit. We use professional ammonia-free products.</p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
+      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
+        <img class="card-img" src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop" alt="Haircut" loading="lazy" />
+        <div class="p-5">
+          <h3 class="font-serif text-xl font-bold">Cut & Style</h3>
+          <p class="text-sm text-ink/60 mt-1">Tailored cut, premium wash and styled finish. For men and women.</p>
+          <p class="mt-3 font-bold">from €18</p>
+        </div>
+      </article>
+      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
+        <img class="card-img" src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800&auto=format&fit=crop" alt="Color and highlights" loading="lazy" />
+        <div class="p-5">
+          <h3 class="font-serif text-xl font-bold">Color & Highlights</h3>
+          <p class="text-sm text-ink/60 mt-1">Balayage, babylights, full color and toning. Allergy test included.</p>
+          <p class="mt-3 font-bold">from €35</p>
+        </div>
+      </article>
+      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
+        <img class="card-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Beard trim" loading="lazy" />
+        <div class="p-5">
+          <h3 class="font-serif text-xl font-bold">Beard & Shave</h3>
+          <p class="text-sm text-ink/60 mt-1">Straight-razor shaping, hot towel and essential oils. 30-min ritual.</p>
+          <p class="mt-3 font-bold">from €15</p>
+        </div>
+      </article>
+      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
+        <img class="card-img" src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" alt="Event styling" loading="lazy" />
+        <div class="p-5">
+          <h3 class="font-serif text-xl font-bold">Brides & Events</h3>
+          <p class="text-sm text-ink/60 mt-1">Updos, waves and a preview trial. Home service available.</p>
+          <p class="mt-3 font-bold">from €45</p>
+        </div>
+      </article>
+      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
+        <img class="card-img" src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=800&auto=format&fit=crop" alt="Hair treatment" loading="lazy" />
+        <div class="p-5">
+          <h3 class="font-serif text-xl font-bold">Treatments</h3>
+          <p class="text-sm text-ink/60 mt-1">Keratin, hair botox and deep hydration for damaged hair.</p>
+          <p class="mt-3 font-bold">from €30</p>
+        </div>
+      </article>
+      <article class="bg-ink text-cream rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <h3 class="font-serif text-xl font-bold">Not sure what to pick?</h3>
+          <p class="text-sm text-cream/70 mt-1">Get a free 10-minute consultation and honest advice, no commitment.</p>
+        </div>
+        <a href="#booking" class="mt-6 bg-gold text-ink font-bold px-5 py-2.5 rounded-full text-center text-sm hover:bg-cream transition">Get a free consultation</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="bg-sand/60 border-y border-ink/10">
+    <div class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
+      <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Gallery</p>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">Real work, real clients</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-8">
+        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=600&auto=format&fit=crop" alt="Salon interior" loading="lazy" />
+        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=600&auto=format&fit=crop" alt="Modern haircut" loading="lazy" />
+        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=600&auto=format&fit=crop" alt="Professional styling" loading="lazy" />
+        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=600&auto=format&fit=crop" alt="Beard detail" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
+    <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Transparent pricing</p>
+    <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">No surprises at checkout</h2>
+
+    <div class="grid md:grid-cols-3 gap-4 sm:gap-6 mt-8">
+      <div class="bg-white border border-ink/10 rounded-2xl p-6">
+        <h3 class="font-serif text-lg font-bold">Essential</h3>
+        <p class="text-4xl font-bold mt-2">€18</p>
+        <p class="text-sm text-ink/60">Quick maintenance</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>✔ Cut + wash</li>
+          <li>✔ Styled finish</li>
+          <li>✔ Style advice</li>
+          <li class="text-ink/40">✘ Hydration treatment</li>
+        </ul>
+        <a href="#booking" class="mt-6 block text-center border-2 border-ink font-bold rounded-full py-2.5 hover:bg-ink hover:text-cream transition">Book</a>
+      </div>
+      <div class="bg-ink text-cream rounded-2xl p-6 relative shadow-xl md:-translate-y-2">
+        <p class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-ink text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</p>
+        <h3 class="font-serif text-lg font-bold">Nova Total</h3>
+        <p class="text-4xl font-bold mt-2">€39</p>
+        <p class="text-sm text-cream/60">The house favorite</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>✔ Cut + premium wash</li>
+          <li>✔ Beard trim or toning</li>
+          <li>✔ Hydration treatment</li>
+          <li>✔ Coffee + touch-up within 15 days</li>
+        </ul>
+        <a href="#booking" class="mt-6 block text-center bg-gold text-ink font-bold rounded-full py-2.5 hover:bg-cream transition">Book</a>
+      </div>
+      <div class="bg-white border border-ink/10 rounded-2xl p-6">
+        <h3 class="font-serif text-lg font-bold">Color Pro</h3>
+        <p class="text-4xl font-bold mt-2">€65</p>
+        <p class="text-sm text-ink/60">Full makeover</p>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>✔ Balayage or full color</li>
+          <li>✔ Toning + bond protector</li>
+          <li>✔ Free trim</li>
+          <li>✔ At-home care kit</li>
+        </ul>
+        <a href="#booking" class="mt-6 block text-center border-2 border-ink font-bold rounded-full py-2.5 hover:bg-ink hover:text-cream transition">Book</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section id="reviews" class="bg-ink text-cream">
+    <div class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
+      <p class="text-gold font-bold tracking-widest text-xs sm:text-sm uppercase">Reviews</p>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">What the neighborhood says</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
+        <figure class="bg-cream/10 border border-cream/15 rounded-2xl p-5">
+          <p class="text-gold">★★★★★</p>
+          <blockquote class="mt-2 text-sm leading-relaxed text-cream/85">"The best balayage I've ever had. I walked out of the salon and three people stopped me on the street. I'll definitely be back."</blockquote>
+          <figcaption class="mt-3 text-sm font-bold">Lucia G. <span class="font-normal text-cream/50">· Balayage</span></figcaption>
+        </figure>
+        <figure class="bg-cream/10 border border-cream/15 rounded-2xl p-5">
+          <p class="text-gold">★★★★★</p>
+          <blockquote class="mt-2 text-sm leading-relaxed text-cream/85">"Punctual, professional, and the hot towel beard treatment is on another level. My go-to place for 2 years."</blockquote>
+          <figcaption class="mt-3 text-sm font-bold">Marcus R. <span class="font-normal text-cream/50">· Beard + cut</span></figcaption>
+        </figure>
+        <figure class="bg-cream/10 border border-cream/15 rounded-2xl p-5">
+          <p class="text-gold">★★★★★</p>
+          <blockquote class="mt-2 text-sm leading-relaxed text-cream/85">"They styled my hair for my sister's wedding — it held perfectly all night. Such a warm, caring team."</blockquote>
+          <figcaption class="mt-3 text-sm font-bold">Carmen D. <span class="font-normal text-cream/50">· Event updo</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking -->
+  <section id="booking" class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
+    <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch">
+      <div>
+        <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Book your appointment</p>
+        <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">We'll call you back within 2 hours</h2>
+        <p class="text-ink/60 mt-2">Leave your details and we'll confirm via WhatsApp. No upfront payment.</p>
+        <ul class="mt-6 space-y-3 text-sm">
+          <li class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-ink text-gold grid place-items-center text-xs font-bold">1</span> Choose your service and preferred time</li>
+          <li class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-ink text-gold grid place-items-center text-xs font-bold">2</span> We'll confirm via WhatsApp</li>
+          <li class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-ink text-gold grid place-items-center text-xs font-bold">3</span> Come in and enjoy a coffee ☕</li>
+        </ul>
+        <div class="mt-6 bg-sand/70 border border-ink/10 rounded-2xl p-4 text-sm">
+          <p class="font-bold">📍 24 Main Street, Madrid</p>
+          <p class="text-ink/60">Mon – Sat · 9:00 AM – 8:00 PM · Sol Metro</p>
+        </div>
+      </div>
+      <form class="bg-white border border-ink/10 rounded-2xl p-6 shadow-sm space-y-4" onsubmit="event.preventDefault(); document.getElementById('ok').classList.remove('hidden'); this.reset();">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block text-sm font-medium">Name
+            <input required type="text" placeholder="Your name" class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 outline-none focus:border-golddark focus:ring-2 focus:ring-gold/40" />
+          </label>
+          <label class="block text-sm font-medium">Phone
+            <input required type="tel" placeholder="600 123 456" class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 outline-none focus:border-golddark focus:ring-2 focus:ring-gold/40" />
+          </label>
+        </div>
+        <label class="block text-sm font-medium">Service
+          <select class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 bg-white outline-none focus:border-golddark">
+            <option>Cut + styling — €18</option>
+            <option>Nova Total (cut + beard) — €39</option>
+            <option>Color / Balayage — from €65</option>
+            <option>Beard & shave — €15</option>
+            <option>Brides & events — from €45</option>
+          </select>
+        </label>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block text-sm font-medium">Preferred date
+            <input required type="date" class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 outline-none focus:border-golddark" />
+          </label>
+          <label class="block text-sm font-medium">Time
+            <select class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 bg-white outline-none focus:border-golddark">
+              <option>Morning (9 AM – 1 PM)</option>
+              <option>Midday (1 – 4 PM)</option>
+              <option>Afternoon (4 – 8 PM)</option>
+            </select>
+          </label>
+        </div>
+        <button type="submit" class="w-full bg-ink text-cream font-bold rounded-full py-3 hover:bg-golddark transition">Confirm booking →</button>
+        <p id="ok" class="hidden text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-xl px-3 py-2">✅ Thank you! We'll message you on WhatsApp to confirm.</p>
+        <p class="text-xs text-ink/50 text-center">By booking you accept our cancellation policy (3h notice).</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="bg-ink text-cream">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid sm:grid-cols-3 gap-8 text-sm">
+      <div>
+        <p class="font-serif text-xl font-bold">Nova <span class="text-gold">Studio</span></p>
+        <p class="text-cream/60 mt-2">A neighborhood hair salon & barbershop with a runway finish. Coffee and good conversation on us.</p>
+      </div>
+      <div>
+        <p class="font-bold mb-2">Contact</p>
+        <p class="text-cream/70">24 Main Street, Madrid</p>
+        <p class="text-cream/70">910 000 000 · hello@novastudio.com</p>
+        <p class="text-cream/70">Mon – Sat · 9:00 AM – 8:00 PM</p>
+      </div>
+      <div>
+        <p class="font-bold mb-2">Follow us</p>
+        <div class="flex gap-2">
+          <a href="#" class="border border-cream/25 rounded-full px-4 py-2 hover:bg-gold hover:text-ink hover:border-gold transition">Instagram</a>
+          <a href="#" class="border border-cream/25 rounded-full px-4 py-2 hover:bg-gold hover:text-ink hover:border-gold transition">TikTok</a>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-cream/15">
+      <p class="max-w-6xl mx-auto px-4 py-4 text-xs text-cream/50">© 2026 Nova Studio · Made with scissors and love in Madrid</p>
+    </div>
+  </footer>
+
+</body>
+</html>
