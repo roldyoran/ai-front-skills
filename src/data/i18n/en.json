@@ -37,7 +37,8 @@
     "emptyTitle": "No skills found",
     "emptyDescription": "Try a different topic or category.",
     "compareAction": "Compare",
-    "compareHint": "This skill includes a before/after visual comparison"
+    "compareHint": "This skill includes a before/after visual comparison",
+    "noCompareHint": "This skill has no before/after comparison"
   },
   "detail": {
     "installation": "Installation",

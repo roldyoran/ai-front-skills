@@ -1,9 +1,10 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { marked } from 'marked';
 import type { Locale } from './i18n';
 import { t } from './i18n';
 import registrySkillsData from '@/data/registry-skills.json';
+import comparisonsData from '@/data/comparisons.json';
 import { FEATURED_SLUGS, MAX_FEATURED } from '@/data/featured';
 
 // --- Types ---
@@ -25,10 +26,8 @@ export interface RegistrySkillData {
   tags: string[];
   topics: string[];
   image?: string;
-  comparison?: {
-    before?: string;
-    after?: string;
-  };
+  /** Comparison case ids (src/data/comparisons.json). First = primary. Empty = no comparison. */
+  comparisons?: string[];
   registryPath: string;
 }
 
@@ -46,9 +45,18 @@ export interface Skill {
 /**
  * Read SKILL.md body content (everything after frontmatter)
  */
+function skillMarkdownExists(registryPath: string): boolean {
+  try {
+    return existsSync(resolve(process.cwd(), registryPath));
+  } catch {
+    return false;
+  }
+}
+
 function readSkillMarkdown(registryPath: string): string {
   try {
     const fullPath = resolve(process.cwd(), registryPath);
+    if (!existsSync(fullPath)) return '';
     const raw = readFileSync(fullPath, 'utf-8');
     // Remove YAML frontmatter (between --- delimiters)
     const body = raw.replace(/^---[\s\S]*?---\n*/, '').trim();
@@ -67,12 +75,60 @@ let registryCache: Skill[] | null = null;
 
 function getRegistrySkills(): Skill[] {
   if (registryCache) return registryCache;
-  registryCache = (registrySkillsData.skills || []).map((skill) => ({
-    id: skill.slug,
-    data: skill as RegistrySkillData,
-    body: readSkillMarkdown(skill.registryPath),
-  }));
+  // Skip registry entries whose SKILL.md no longer exists on disk,
+  // so deleted skills never render as ghost cards/pages.
+  registryCache = (registrySkillsData.skills || [])
+    .filter((skill) => skillMarkdownExists(skill.registryPath))
+    .map((skill) => ({
+      id: skill.slug,
+      data: skill as RegistrySkillData,
+      body: readSkillMarkdown(skill.registryPath),
+    }));
   return registryCache;
+}
+
+/**
+ * Resolved before/after comparison case (screenshots under public/comparisons/)
+ */
+export interface ComparisonCase {
+  id: string;
+  label: string;
+  before: string;
+  after: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * Get a skill's comparison cases in registry order.
+ * Only returns cases whose manifest entry exists AND both PNGs are on disk,
+ * so missing screenshots never render as broken sliders.
+ */
+export function getComparisonCases(slug: string): ComparisonCase[] {
+  const skill = getRegistrySkills().find((s) => s.data.slug === slug);
+  const ids = new Set(skill?.data.comparisons ?? []);
+  return (comparisonsData.cases ?? [])
+    .filter((c) => c.skill === slug && ids.has(c.id))
+    .map((c) => ({
+      id: c.id,
+      label: c.label,
+      before: `/comparisons/${slug}/${c.id}/before.png`,
+      after: `/comparisons/${slug}/${c.id}/after.png`,
+      width: c.viewport.width,
+      height: c.viewport.height,
+    }))
+    .filter(
+      (c) =>
+        existsSync(join(process.cwd(), 'public', c.before)) &&
+        existsSync(join(process.cwd(), 'public', c.after)),
+    );
+}
+
+/**
+ * Whether a skill has at least one renderable comparison case.
+ */
+export function hasComparisons(slug: string): boolean {
+  return getComparisonCases(slug).length > 0;
 }
 
 /**

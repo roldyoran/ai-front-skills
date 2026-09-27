@@ -38,7 +38,8 @@
     "emptyTitle": "No se encontraron skills",
     "emptyDescription": "Prueba con otro tema o categoría.",
     "compareAction": "Comparar",
-    "compareHint": "Esta skill incluye una comparación visual antes/después"
+    "compareHint": "Esta skill incluye una comparación visual antes/después",
+    "noCompareHint": "Esta skill no tiene comparación antes/después"
   },
   "detail": {
     "installation": "Instalación",

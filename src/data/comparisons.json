@@ -1,0 +1,12 @@
+{
+  "$schema": "./comparisons.schema.json",
+  "cases": [
+    {
+      "id": "hair-salon",
+      "skill": "frontend-design",
+      "label": "Hair salon landing",
+      "viewport": { "width": 1280, "height": 800 },
+      "fullPage": false
+    }
+  ]
+}

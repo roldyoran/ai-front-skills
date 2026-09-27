@@ -4,14 +4,9 @@
  * Slugs must exist in registry-skills.json.
  */
 export const FEATURED_SLUGS = [
-  "improve-ui",
   "frontend-design",
-  "better-ui",
-  "impeccable",
-  "design-lab",
-  "improve-animations",
-  "interaction-design",
   "ui-ux-pro-max",
+  "web-design-guidelines",
 ] as const;
 
-export const MAX_FEATURED = 8;
+export const MAX_FEATURED = 3;

@@ -1,6 +1,6 @@
 ---
 import type { Skill } from '@/lib/skills';
-import { topicSlug } from '@/lib/skills';
+import { hasComparisons, topicSlug } from '@/lib/skills';
 import { t, type Locale } from '@/lib/i18n';
 import { Badge } from '@/components/starwind/badge';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/starwind/tooltip';
@@ -16,11 +16,11 @@ interface Props {
 }
 
 const { skill, locale = 'en', variant = 'card', showCategory } = Astro.props;
-const { title, slug, description, author, topics, comparison, image } = skill.data;
+const { title, slug, description, author, topics, image } = skill.data;
 const primaryTopic = topics[0];
 
 const skillUrl = locale === 'es' ? `/es/skills/${slug}` : `/skills/${slug}`;
-const hasComparison = comparison?.before && comparison?.after;
+const hasComparison = hasComparisons(slug);
 const showBadge = showCategory ?? variant === 'card';
 // Space-separated topic slugs for the client-side topic filter on /skills.
 const topicSlugs = topics.map(topicSlug).join(' ');
@@ -34,10 +34,33 @@ const topicSlugs = topics.map(topicSlug).join(' ');
   >
     <AuthorAvatar author={author} variant="md" src={image} />
     <span class="min-w-0 flex-1">
-      <span class="block truncate text-[13px] font-medium leading-tight text-text">{slug}</span>
-      <span class="flex items-center gap-1 text-[11px] leading-tight text-text-muted">
-        <svg aria-hidden="true" class="size-3 shrink-0 text-text-dim" viewBox="0 0 98 96" fill="currentColor"><path d="M48.9 0C21.8 0 0 22.1 0 49.2c0 21.7 14 40.1 33.4 46.6 2.4.4 3.3-1 3.3-2.3v-8.2c-13.6 3-16.5-5.8-16.5-5.8-2.2-5.7-5.4-7.2-5.4-7.2-4.4-3 .3-3 .3-3 4.8.3 7.3 5 7.3 5 4.3 7.4 11.2 5.3 13.9 4 .4-3.1 1.7-5.3 3-6.5-10.9-1.2-22.4-5.5-22.4-24.3 0-5.4 1.9-9.8 5-13.3-.5-1.2-2.2-6.3.5-13.1 0 0 4.1-1.3 13.5 5.1 3.9-1.1 8.1-1.7 12.3-1.7 4.2 0 8.4.6 12.3 1.7 9.4-6.4 13.5-5.1 13.5-5.1 2.7 6.8 1 11.9.5 13.1 3.1 3.5 5 7.9 5 13.3 0 18.9-11.5 23.1-22.5 24.3 1.8 1.6 3.3 4.7 3.3 9.5v14.1c0 1.4.9 2.7 3.4 2.3C84 89.3 98 70.9 98 49.2 98 22.1 76 0 48.9 0Z" /></svg>
-        <span class="truncate">{author}</span>
+      <span class="flex min-w-0 items-center gap-1.5">
+        <span class="truncate text-[13px] font-medium leading-tight text-text">{slug}</span>
+        <span aria-hidden="true" class="shrink-0 text-lg font-black leading-none text-text-dim">•</span>
+        <span class="inline-flex shrink-0 items-center gap-1 text-[11px] leading-tight text-text-muted" title={author}>
+          <Icon name="github" size={12} class="shrink-0 text-text-dim" />
+          <span class="max-w-[100px] truncate sm:max-w-[140px]">{author}</span>
+        </span>
+        <span aria-hidden="true" class="shrink-0 text-lg font-black leading-none text-text-dim">•</span>
+        {hasComparison ? (
+          <Tooltip>
+            <TooltipTrigger>
+              <span class="inline-flex shrink-0 items-center text-text-secondary" title={t('skills.compareHint', locale)} aria-label={t('skills.compareHint', locale)} role="img">
+                <Icon name="columns-2" size={13} />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{t('skills.compareHint', locale)}</TooltipContent>
+          </Tooltip>
+        ) : (
+          <Tooltip>
+            <TooltipTrigger>
+              <span class="inline-flex shrink-0 items-center text-text-dim opacity-40" title={t('skills.noCompareHint', locale)} aria-label={t('skills.noCompareHint', locale)} role="img">
+                <Icon name="columns-2" size={13} />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{t('skills.noCompareHint', locale)}</TooltipContent>
+          </Tooltip>
+        )}
       </span>
       <span class="block truncate text-xs leading-snug text-text-secondary">{description}</span>
     </span>
@@ -56,19 +79,33 @@ const topicSlugs = topics.map(topicSlug).join(' ');
     <div class="min-w-0 flex-1">
       <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
         <h3 class="truncate text-[13px] font-semibold leading-tight text-text">{title}</h3>
-        {showBadge && primaryTopic && <Badge variant="secondary" size="sm">{primaryTopic}</Badge>}
-        {hasComparison && (
+        <span aria-hidden="true" class="shrink-0 text-lg font-black leading-none text-text-dim">•</span>
+        <span class="inline-flex shrink-0 items-center gap-1 text-[11px] leading-tight text-text-muted" title={author}>
+          <Icon name="github" size={12} class="shrink-0 text-text-dim" />
+          <span class="max-w-[100px] truncate sm:max-w-[140px]">{author}</span>
+        </span>
+        <span aria-hidden="true" class="shrink-0 text-lg font-black leading-none text-text-dim">•</span>
+        {hasComparison ? (
           <Tooltip>
             <TooltipTrigger>
-              <span class="inline-flex items-center text-text-secondary" title={t('skills.compareAction', locale)}>
+              <span class="inline-flex shrink-0 items-center text-text-secondary" title={t('skills.compareHint', locale)} aria-label={t('skills.compareHint', locale)} role="img">
                 <Icon name="columns-2" size={14} />
               </span>
             </TooltipTrigger>
             <TooltipContent>{t('skills.compareHint', locale)}</TooltipContent>
           </Tooltip>
+        ) : (
+          <Tooltip>
+            <TooltipTrigger>
+              <span class="inline-flex shrink-0 items-center text-text-dim opacity-40" title={t('skills.noCompareHint', locale)} aria-label={t('skills.noCompareHint', locale)} role="img">
+                <Icon name="columns-2" size={14} />
+              </span>
+            </TooltipTrigger>
+            <TooltipContent>{t('skills.noCompareHint', locale)}</TooltipContent>
+          </Tooltip>
         )}
+        {showBadge && primaryTopic && <Badge variant="secondary" size="sm">{primaryTopic}</Badge>}
       </div>
-      <p class="truncate text-[11px] leading-tight text-text-muted">{author}</p>
       <p class="truncate text-xs leading-snug text-text-secondary">{description}</p>
     </div>
 
