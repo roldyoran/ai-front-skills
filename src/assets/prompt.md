@@ -1,11 +1,11 @@
 Act as a meticulous front-end engineer. Your task is to improve an existing HTML file by strictly following a provided skill.
 
 Inputs:
-- Skill folder: `@packages/front-skills/skills-registry/frontend-desing/skill.md`
+- Skill folder: `@packages/front-skills/skills-registry/frontend-desing/SKILL.md`
 - Target file: `@src/assets/hair-salon.html`
 
 Instructions:
-1. Read the skill located at `@packages/front-skills/skills-registry/frontend-desing/skill.md` and every file related to that skill (rules, config, examples, assets, documentation, etc.).
+1. Read the skill located at `@packages/front-skills/skills-registry/frontend-desing/SKILL.md` and every file related to that skill (rules, config, examples, assets, documentation, etc.).
 2. Read the target file `@src/assets/hair-salon.html`.
 3. Apply every instruction, rule, and recommendation from the `frontend-desing` skill to improve `hair-salon.html`.
 4. Use only the instructions from that skill. Do not rely on external design principles, personal preferences, other libraries, or any other source of guidance.
