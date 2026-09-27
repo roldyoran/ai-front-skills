@@ -93,6 +93,7 @@ function getRegistrySkills(): Skill[] {
 export interface CaseProvenance {
   model: string;
   effort?: string;
+  agent?: string;
   prompt: string;
 }
 
@@ -103,6 +104,9 @@ export interface ComparisonCase {
   after: string;
   width: number;
   height: number;
+  /** Live full-page demo URLs (public/demos/…), for the iframe viewer. */
+  demoBefore: string;
+  demoAfter: string;
   beforeInfo: CaseProvenance;
   afterInfo: CaseProvenance;
 }
@@ -127,7 +131,7 @@ function readCaseNote(skill: string, source: string, file: 'BEFORE.md' | 'NOTES.
 export function getComparisonCases(slug: string): ComparisonCase[] {
   const skill = getRegistrySkills().find((s) => s.data.slug === slug);
   const ids = new Set(skill?.data.comparisons ?? []);
-  const sources = (comparisonsData as { sources?: Record<string, { before?: { model?: string }; after?: { model?: string; effort?: string } }> }).sources ?? {};
+  const sources = (comparisonsData as { sources?: Record<string, { before?: { model?: string; agent?: string }; after?: { model?: string; effort?: string; agent?: string } }> }).sources ?? {};
   return (comparisonsData.cases ?? [])
     .filter((c) => c.skill === slug && ids.has(c.id))
     .map((c) => {
@@ -140,13 +144,17 @@ export function getComparisonCases(slug: string): ComparisonCase[] {
         after: `/comparisons/${slug}/${c.id}/after.png`,
         width: c.viewport.width,
         height: c.viewport.height,
+        demoBefore: `/showcase/${slug}/${src}/before.html`,
+        demoAfter: `/showcase/${slug}/${src}/after.html`,
         beforeInfo: {
           model: provenance.before?.model ?? '',
+          agent: provenance.before?.agent,
           prompt: readCaseNote(slug, src, 'BEFORE.md'),
         },
         afterInfo: {
           model: provenance.after?.model ?? '',
           effort: provenance.after?.effort,
+          agent: provenance.after?.agent,
           prompt: readCaseNote(slug, src, 'NOTES.md'),
         },
       };

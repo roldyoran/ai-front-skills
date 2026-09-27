@@ -4,7 +4,11 @@ import InstallCommand from '@/components/skills/InstallCommand.astro';
 import CopyMarkdownButton from '@/components/skills/CopyMarkdownButton.astro';
 import SkillGrid from '@/components/skills/SkillGrid.astro';
 import AuthorAvatar from '@/components/skills/AuthorAvatar.astro';
+import ComparisonAttribution from '@/components/skills/ComparisonAttribution.astro';
+import Icon from '@/components/ui/Icon.astro';
 import ImageComparison from '@/components/svelte/ImageComparison.svelte';
+import { Button } from '@/components/starwind/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/starwind/tabs';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -100,81 +104,74 @@ const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
       />
     </section>
 
-    <!-- Comparison -->
-    {comparisonCases.length > 0 && (
-      <section class="mb-8">
-        <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">
-          {t('comparison.title', locale)}
-        </h2>
-        <p class="mb-3 text-xs text-text-secondary">{t('comparison.dragHint', locale)}</p>
-        {comparisonCases.map((c) => (
-          <div class="mb-6 last:mb-0">
-            {comparisonCases.length > 1 && (
-              <h3 class="mb-2 text-sm font-semibold text-text">{c.label}</h3>
-            )}
-            <ImageComparison
-              client:visible
-              beforeSrc={c.before}
-              afterSrc={c.after}
-              beforeAlt={`${title} — ${c.label} — ${t('comparison.before', locale)}`}
-              afterAlt={`${title} — ${c.label} — ${t('comparison.after', locale)}`}
-              beforeLabel={t('comparison.before', locale)}
-              afterLabel={t('comparison.after', locale)}
-              width={c.width}
-              height={c.height}
-            />
-            {(c.beforeInfo.model || c.afterInfo.model) && (
-              <div class="mt-2 space-y-1.5">
-                {c.beforeInfo.model && (
-                  c.beforeInfo.prompt ? (
-                    <details class="border border-border bg-surface px-3 py-2">
-                      <summary class="cursor-pointer text-[11px] leading-relaxed text-text-muted">
-                        {t('comparison.beforeBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.beforeInfo.model}</span>{' '}·{' '}{t('comparison.viewPrompt', locale)}
-                      </summary>
-                      <pre class="mt-2 overflow-x-auto whitespace-pre-wrap text-[11px] leading-relaxed text-text-secondary">{c.beforeInfo.prompt}</pre>
-                    </details>
-                  ) : (
-                    <p class="text-[11px] text-text-muted">
-                      {t('comparison.beforeBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.beforeInfo.model}</span>
-                    </p>
-                  )
-                )}
-                {c.afterInfo.model && (
-                  c.afterInfo.prompt ? (
-                    <details class="border border-border bg-surface px-3 py-2">
-                      <summary class="cursor-pointer text-[11px] leading-relaxed text-text-muted">
-                        {t('comparison.afterBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.afterInfo.model}</span>{c.afterInfo.effort ? ` · ${c.afterInfo.effort}` : ''}{' '}·{' '}{t('comparison.viewPrompt', locale)}
-                      </summary>
-                      <pre class="mt-2 overflow-x-auto whitespace-pre-wrap text-[11px] leading-relaxed text-text-secondary">{c.afterInfo.prompt}</pre>
-                    </details>
-                  ) : (
-                    <p class="text-[11px] text-text-muted">
-                      {t('comparison.afterBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.afterInfo.model}</span>{c.afterInfo.effort ? ` · ${c.afterInfo.effort}` : ''}
-                    </p>
-                  )
-                )}
-              </div>
-            )}
-          </div>
-        ))}
-      </section>
-    )}
+    <Tabs defaultValue="overview" class="mb-8">
+      <TabsList>
+        <TabsTrigger value="overview">{t('comparison.overviewTab', locale)}</TabsTrigger>
+        {comparisonCases.length > 0 && (
+          <TabsTrigger value="comparisons">
+            {t('comparison.comparisonsTab', locale)} ({comparisonCases.length})
+          </TabsTrigger>
+        )}
+      </TabsList>
 
-    <!-- SKILL.md Content -->
-    {contentHtml && (
-      <section class="mb-8">
-        <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
-          <h2 class="text-xs font-semibold text-text uppercase tracking-wider">SKILL.md</h2>
-          <CopyMarkdownButton
-            markdown={skill.body}
-            copyLabel={t('detail.copyMarkdown', locale)}
-            copiedLabel={t('detail.copiedLabel', locale)}
-            copiedMessage={t('detail.markdownCopied', locale)}
-          />
-        </div>
-        <Prose set:html={contentHtml} />
-      </section>
-    )}
+      <TabsContent value="overview">
+        <!-- SKILL.md Content -->
+        {contentHtml && (
+          <section>
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <h2 class="text-xs font-semibold text-text uppercase tracking-wider">SKILL.md</h2>
+              <CopyMarkdownButton
+                markdown={skill.body}
+                copyLabel={t('detail.copyMarkdown', locale)}
+                copiedLabel={t('detail.copiedLabel', locale)}
+                copiedMessage={t('detail.copied', locale)}
+              />
+            </div>
+            <Prose set:html={contentHtml} />
+          </section>
+        )}
+      </TabsContent>
+
+      {comparisonCases.length > 0 && (
+        <TabsContent value="comparisons">
+          <p class="mb-4 text-xs text-text-secondary">{t('comparison.dragHint', locale)}</p>
+          <div class="mb-6 flex flex-wrap gap-2">
+            <Button as="a" href={comparisonCases[0].demoBefore} target="_blank" rel="noopener" variant="outline" size="sm">
+              {t('comparison.beforeFull', locale)}
+              <Icon name="external-link" size={12} />
+            </Button>
+            <Button as="a" href={comparisonCases[0].demoAfter} target="_blank" rel="noopener" variant="outline" size="sm">
+              {t('comparison.afterFull', locale)}
+              <Icon name="external-link" size={12} />
+            </Button>
+          </div>
+          {comparisonCases.map((c) => (
+            <div class="mb-8 last:mb-0">
+              {comparisonCases.length > 1 && (
+                <h3 class="mb-2 text-sm font-semibold text-text">{c.label}</h3>
+              )}
+              <ImageComparison
+                client:visible
+                beforeSrc={c.before}
+                afterSrc={c.after}
+                beforeAlt={`${title} — ${c.label} — ${t('comparison.before', locale)}`}
+                afterAlt={`${title} — ${c.label} — ${t('comparison.after', locale)}`}
+                beforeLabel={t('comparison.before', locale)}
+                afterLabel={t('comparison.after', locale)}
+                width={c.width}
+                height={c.height}
+              />
+              {(c.beforeInfo.model || c.afterInfo.model) && (
+                <div class="mt-2 space-y-1.5">
+                  <ComparisonAttribution info={c.beforeInfo} kind="before" locale={locale} />
+                  <ComparisonAttribution info={c.afterInfo} kind="after" locale={locale} />
+                </div>
+              )}
+            </div>
+          ))}
+        </TabsContent>
+      )}
+    </Tabs>
 
     <!-- Related -->
     {relatedSkills.length > 0 && (

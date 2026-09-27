@@ -88,6 +88,10 @@
     "dragHint": "Drag to compare",
     "beforeBy": "Original generated with",
     "afterBy": "Redesign implemented with",
-    "viewPrompt": "View prompt"
+    "viewPrompt": "View prompt",
+    "beforeFull": "Original — full page",
+    "afterFull": "Redesign — full page",
+    "overviewTab": "Overview",
+    "comparisonsTab": "Comparisons"
   }
 }

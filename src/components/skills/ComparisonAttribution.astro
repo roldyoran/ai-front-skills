@@ -1,0 +1,30 @@
+---
+import type { CaseProvenance } from '@/lib/skills';
+import { t, type Locale } from '@/lib/i18n';
+
+interface Props {
+  info: CaseProvenance;
+  kind: 'before' | 'after';
+  locale?: Locale;
+}
+
+const { info, kind, locale = 'en' } = Astro.props;
+const byLabel = kind === 'before' ? t('comparison.beforeBy', locale) : t('comparison.afterBy', locale);
+const extra = kind === 'after' && info.effort ? ` · ${info.effort}` : '';
+const agent = info.agent ? ` · ${info.agent}` : '';
+---
+
+{info.model && (
+  info.prompt ? (
+    <details class="border border-border bg-surface px-3 py-2">
+      <summary class="cursor-pointer text-[11px] leading-relaxed text-text-muted">
+        {byLabel}{' '}<span class="font-medium text-text-secondary">{info.model}</span>{extra}{agent}{' '}·{' '}{t('comparison.viewPrompt', locale)}
+      </summary>
+      <pre class="mt-2 overflow-x-auto whitespace-pre-wrap text-[11px] leading-relaxed text-text-secondary">{info.prompt}</pre>
+    </details>
+  ) : (
+    <p class="text-[11px] text-text-muted">
+      {byLabel}{' '}<span class="font-medium text-text-secondary">{info.model}</span>{extra}{agent}
+    </p>
+  )
+)}

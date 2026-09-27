@@ -89,6 +89,10 @@
     "dragHint": "Arrastra para comparar",
     "beforeBy": "Original generado con",
     "afterBy": "Rediseño implementado con",
-    "viewPrompt": "Ver prompt"
+    "viewPrompt": "Ver prompt",
+    "beforeFull": "Original — página completa",
+    "afterFull": "Rediseño — página completa",
+    "overviewTab": "Resumen",
+    "comparisonsTab": "Comparaciones"
   }
 }

@@ -15,7 +15,8 @@
             "type": "object",
             "required": ["model"],
             "properties": {
-              "model": { "type": "string" }
+              "model": { "type": "string" },
+              "agent": { "type": "string" }
             }
           },
           "after": {
@@ -23,7 +24,8 @@
             "required": ["model"],
             "properties": {
               "model": { "type": "string" },
-              "effort": { "type": "string" }
+              "effort": { "type": "string" },
+              "agent": { "type": "string" }
             }
           }
         }

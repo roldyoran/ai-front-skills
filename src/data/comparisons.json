@@ -2,8 +2,8 @@
   "$schema": "./comparisons.schema.json",
   "sources": {
     "hair-salon": {
-      "before": { "model": "deepseek flash 4.1" },
-      "after": { "model": "muse spark 1.3", "effort": "High" }
+      "before": { "model": "deepseek flash 4.1", "agent": "PI AGENT" },
+      "after": { "model": "muse spark 1.3", "effort": "High", "agent": "PI AGENT" }
     }
   },
   "cases": [
