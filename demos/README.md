@@ -27,7 +27,8 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
    (e.g. one per page section).
 2. **Document provenance**: `BEFORE.md` (which model + prompt produced
    `before.html`) and `NOTES.md` (which skill + prompt produced `after.html`).
-   Both are shown on the site next to each slider.
+   Both are shown on the site next to each slider. If you edit any demo HTML
+   afterwards, re-publish it (step 6).
 3. **Register the case(s)** in `src/data/comparisons.json` (must match
    `src/data/comparisons.schema.json`):
    ```json
@@ -39,8 +40,8 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
    - `anchor` is optional: scrolls to that element id before capturing,
      so long pages can be compared section by section.
    - Keep `viewport` identical for before/after — it defines the slider aspect ratio.
-   - Shared model/effort provenance goes in the top-level `sources` map
-     so section cases don't repeat it.
+   - Shared model/effort/agent provenance goes in the top-level `sources` map
+     so section cases don't repeat it (`agent` = which agent ran the model).
 4. **Link it from the skill** in `src/data/registry-skills.json`:
    `"comparisons": ["<case-id>"]` (first entry = primary, used for OG image).
 5. **Capture the screenshots** (requires the `playwright-cli` binary):
@@ -49,6 +50,11 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
    ```
    Re-run without flags to capture any missing/outdated case, or with `--force`
    to recapture everything. The script skips PNGs newer than their sources.
+
+6. **Full-page routes are automatic.** `src/pages/showcase/[...path].ts` serves
+   `/showcase/<skill>/<source>/{before,after}.html` for every manifest source
+   (via the shared `demoResponse()` helper in `src/lib/demoEndpoint.ts`).
+   No files to copy per demo — adding the manifest entry + HTML is enough.
 
 ## Rules
 
