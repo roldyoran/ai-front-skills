@@ -1,0 +1,1014 @@
+<!doctype html>
+<!--
+  frontend-design redesign — Studio Aurea
+  Subject: Studio Aurea, neighbourhood hair salon and colour studio in Madrid.
+  Audience: regulars keeping a cut or colour going, plus first-time brides and event clients.
+  Single job of this page: get a time on a chair (request an appointment).
+
+  Design plan (token system):
+  Color (5 named hex): porcelain #F1F2ED (cool rinse-water paper) / pine #1F2E28
+    (eucalyptus ink) / rosewood #9E2B47 (colour-bowl red) / sage #DCE3DA
+    (damp towel) / steel #67756E (tool steel for captions).
+  Type (3 roles): display "Archivo" 700-800, tight -0.03em, used with restraint for
+    headlines / body "Newsreader" 400 + italic for paragraphs, human notes /
+    utility "Spline Sans Mono" for ledger labels (chair, minutes, formulas).
+  Layout ("appointment ledger"): narrow mono rail on the left of each section
+    (chair time, upkeep interval), hero split mirror-photo + chair ticket,
+    services grouped by chair time, pricing as ledger rows.
+  Signature (one memorable thing): the chair ticket — a perforated appointment
+    slip in the hero with tear line, chair no., and rinse/cut/finish checkboxes.
+    Everything else stays quiet.
+
+  Self-critique vs brief (what changed and why):
+  - before.html used warm cream #FAF7F2 + Playfair Display + gold, stat row
+    (12+ / 4.9 / 100%), and reveal-on-scroll everywhere. Per the skill's
+    calibration these read as default look (1) "warm cream + high-contrast serif
+    + terracotta" and the template hero "big number + small label + gradient".
+    Revised off all three: cool porcelain + pine + rosewood, sans display with
+    serif body and mono ledger, thesis hero with ticket instead of stats.
+  - Scattered data-reveal replaced with one orchestrated page-load sequence
+    (skill: "an orchestrated moment lands harder than scattered effects").
+  - Decorative gold-line gradient and floating "8k+" card removed
+    (skill: "cut any decoration that does not serve the brief", Chanel rule).
+  - No numbered 01/02/03 markers added: content is not a sequence
+    (skill: "structure is information").
+-->
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Aurea · Hair Salon and Styling</title>
+    <meta
+      name="description"
+      content="Signature hair salon and styling. Cuts, color, balayage and personalized treatments in a space designed for you."
+    />
+
+    <!-- Fonts: display / body / utility per plan -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              porcelain: "#F1F2ED",
+              pine: "#1F2E28",
+              pinelate: "#16211C",
+              rosewood: "#9E2B47",
+              rosewooddeep: "#7E2138",
+              sage: "#DCE3DA",
+              steel: "#67756E",
+              paper: "#FBFBF8",
+            },
+            fontFamily: {
+              display: ["Archivo", "system-ui", "sans-serif"],
+              body: ["Newsreader", "Georgia", "serif"],
+              ledger: ['"Spline Sans Mono"', "ui-monospace", "monospace"],
+            },
+            boxShadow: {
+              ticket: "0 24px 60px -24px rgba(31,46,40,.35)",
+              soft: "0 20px 50px -24px rgba(31,46,40,.25)",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        text-rendering: optimizeLegibility;
+      }
+
+      /* Quality floor per skill: visible keyboard focus */
+      :focus-visible {
+        outline: 2px solid #9e2b47;
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+
+      /* Navbar state (functionality preserved from before.html) */
+      .nav-scrolled {
+        background-color: rgba(31, 46, 40, 0.94);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 12px 34px -18px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Orchestrated page-load sequence only (skill: one moment, not scattered effects) */
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(22px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes settle {
+        from {
+          opacity: 0;
+          transform: translateY(18px) rotate(2.5deg);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) rotate(1.5deg);
+        }
+      }
+      .js .load-1 {
+        animation: rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.05s both;
+      }
+      .js .load-2 {
+        animation: rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.16s both;
+      }
+      .js .load-3 {
+        animation: rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.27s both;
+      }
+      .js .load-4 {
+        animation: rise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.38s both;
+      }
+      .js .ticket-settle {
+        animation: settle 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.32s both;
+      }
+
+      /* Signature: perforated tear line on the chair ticket */
+      .ticket-perforation {
+        background-image: linear-gradient(to right, #67756e 45%, transparent 45%);
+        background-size: 10px 1px;
+        background-repeat: repeat-x;
+        height: 1px;
+      }
+
+      /* Strand rule: one quiet divider drawn from a hair strand, used sparingly */
+      .strand-rule {
+        display: block;
+        height: 12px;
+        width: 120px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f2ed;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #67756e;
+        border-radius: 9999px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .js .load-1,
+        .js .load-2,
+        .js .load-3,
+        .js .load-4,
+        .js .ticket-settle {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="bg-porcelain font-body text-pine antialiased selection:bg-rosewood selection:text-paper">
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+
+    <!-- ==================== NAVBAR ==================== -->
+    <!-- Unchanged in structure and links: skill does not specify nav changes. -->
+    <header id="navbar" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="flex h-20 items-center justify-between">
+          <a href="#home" class="group flex items-center gap-3">
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-paper font-ledger text-[11px] font-semibold text-pine transition group-hover:bg-rosewood group-hover:text-paper"
+              >Au</span
+            >
+            <span class="font-display text-lg font-700 font-bold tracking-tight text-white">
+              Studio Aurea
+              <span class="block font-ledger text-[10px] font-normal tracking-[0.22em] text-white/55"
+                >chair · rinse · cut</span
+              >
+            </span>
+          </a>
+
+          <nav class="hidden items-center gap-9 lg:flex" aria-label="Primary">
+            <a
+              href="#services"
+              class="font-ledger text-[12px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white"
+              >Services</a
+            >
+            <a
+              href="#about"
+              class="font-ledger text-[12px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white"
+              >About</a
+            >
+            <a
+              href="#gallery"
+              class="font-ledger text-[12px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white"
+              >Gallery</a
+            >
+            <a
+              href="#pricing"
+              class="font-ledger text-[12px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white"
+              >Pricing</a
+            >
+            <a
+              href="#contact"
+              class="font-ledger text-[12px] uppercase tracking-[0.18em] text-white/80 transition hover:text-white"
+              >Contact</a
+            >
+          </nav>
+
+          <a
+            href="#contact"
+            class="hidden rounded-full bg-paper px-6 py-2.5 font-ledger text-[12px] uppercase tracking-[0.16em] text-pine transition hover:bg-rosewood hover:text-paper lg:inline-block"
+          >
+            Request a time
+          </a>
+
+          <button
+            id="menuBtn"
+            type="button"
+            aria-label="Open menu"
+            class="rounded-md p-2 text-white transition hover:text-sage lg:hidden"
+          >
+            <svg
+              id="iconOpen"
+              class="h-7 w-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            <svg
+              id="iconClose"
+              class="hidden h-7 w-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="mobileMenu" class="hidden border-t border-white/10 bg-pinelate/95 backdrop-blur lg:hidden">
+        <nav class="mx-auto flex max-w-7xl flex-col px-5 py-4" aria-label="Mobile">
+          <a
+            href="#services"
+            class="mobile-link border-b border-white/5 py-4 font-ledger text-sm uppercase tracking-[0.18em] text-white/85"
+            >Services</a
+          >
+          <a
+            href="#about"
+            class="mobile-link border-b border-white/5 py-4 font-ledger text-sm uppercase tracking-[0.18em] text-white/85"
+            >About</a
+          >
+          <a
+            href="#gallery"
+            class="mobile-link border-b border-white/5 py-4 font-ledger text-sm uppercase tracking-[0.18em] text-white/85"
+            >Gallery</a
+          >
+          <a
+            href="#pricing"
+            class="mobile-link border-b border-white/5 py-4 font-ledger text-sm uppercase tracking-[0.18em] text-white/85"
+            >Pricing</a
+          >
+          <a
+            href="#contact"
+            class="mobile-link py-4 font-ledger text-sm uppercase tracking-[0.18em] text-white/85"
+            >Contact</a
+          >
+          <a
+            href="#contact"
+            class="mobile-link mb-4 mt-2 rounded-full bg-paper py-3 text-center font-ledger text-sm uppercase tracking-[0.18em] text-pine"
+          >
+            Request a time
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ==================== HERO ==================== -->
+    <!-- Thesis hero per skill: the most characteristic thing (chair + ticket + mirror),
+         not the template stat row. Stats removed; proof moved to about as a plain sentence. -->
+    <section id="home" class="relative flex min-h-screen items-center overflow-hidden bg-pine">
+      <img
+        src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80"
+        alt="Interior of Studio Aurea salon"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-pine via-pine/85 to-pine/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-pinelate/90 via-transparent to-pine/40"></div>
+
+      <div class="relative mx-auto grid w-full max-w-7xl gap-12 px-5 pb-24 pt-32 sm:pt-36 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pt-44">
+        <div class="lg:col-span-7">
+          <p class="load-1 flex items-center gap-3 font-ledger text-[11px] uppercase tracking-[0.3em] text-sage">
+            <span class="h-px w-10 bg-sage/70"></span>
+            Salon and colour studio · Madrid
+          </p>
+          <h1 class="load-2 mt-6 font-display text-[2.9rem] font-extrabold leading-[0.98] tracking-tight text-paper sm:text-6xl lg:text-7xl">
+            A cut that still looks right in six weeks.
+          </h1>
+          <p class="load-3 mt-6 max-w-xl text-lg leading-relaxed text-paper/70">
+            Sit in chair three. Tell us how you dry your hair at home. We cut, rinse, and
+            write down the formula so the next visit starts where this one ends.
+          </p>
+          <div class="load-4 mt-9 flex flex-wrap items-center gap-4">
+            <a
+              href="#contact"
+              class="group inline-flex items-center gap-3 rounded-full bg-rosewood px-8 py-4 font-ledger text-[12px] font-medium uppercase tracking-[0.16em] text-paper transition hover:bg-rosewooddeep"
+            >
+              Request a time
+              <svg
+                class="h-4 w-4 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a
+              href="#services"
+              class="inline-flex items-center rounded-full border border-paper/25 px-8 py-4 font-ledger text-[12px] font-medium uppercase tracking-[0.16em] text-paper transition hover:border-paper hover:text-paper"
+            >
+              See chair times
+            </a>
+          </div>
+          <p class="load-4 mt-8 font-ledger text-[11px] uppercase tracking-[0.2em] text-paper/45">
+            Tue – Sat · first rinse at 10:00 · last cut at 19:00
+          </p>
+        </div>
+
+        <!-- Signature: chair ticket -->
+        <div class="lg:col-span-5 lg:pt-6">
+          <div class="relative">
+            <div class="ticket-settle rounded-xl bg-paper p-5 shadow-ticket sm:mr-8 lg:-ml-4 lg:mr-0 lg:mt-10" style="transform: rotate(1.5deg)">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="font-ledger text-[10px] uppercase tracking-[0.24em] text-steel">Chair ticket</p>
+                  <p class="mt-1 font-display text-xl font-bold tracking-tight">Chair 03 · cut + rinse</p>
+                </div>
+                <p class="rounded-full bg-sage px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.16em] text-pine">45 min</p>
+              </div>
+              <div class="ticket-perforation my-4" aria-hidden="true"></div>
+              <ul class="space-y-2 font-ledger text-[11px] uppercase tracking-[0.14em] text-pine/75">
+                <li class="flex items-center gap-2.5"><span aria-hidden="true" class="flex h-4 w-4 items-center justify-center rounded-sm border border-pine/30 text-[10px]">✓</span> Rinse with warm towel</li>
+                <li class="flex items-center gap-2.5"><span aria-hidden="true" class="flex h-4 w-4 items-center justify-center rounded-sm border border-pine/30"></span> Cut to collarbone, air-dry finish</li>
+                <li class="flex items-center gap-2.5"><span aria-hidden="true" class="flex h-4 w-4 items-center justify-center rounded-sm border border-pine/30"></span> Formula written for next time</li>
+              </ul>
+              <div class="ticket-perforation my-4" aria-hidden="true"></div>
+              <div class="flex items-center justify-between font-ledger text-[11px] uppercase tracking-[0.14em]">
+                <span class="text-steel">Keep this half</span>
+                <a href="#contact" class="text-rosewood underline-offset-4 hover:underline">Ask for Tuesday →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES ==================== -->
+    <!-- Structure encodes truth per skill: each service carries chair time + upkeep,
+         set in the utility (ledger) face. No decorative numbering. -->
+    <section id="services" class="scroll-mt-24 bg-porcelain py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-12 grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.3em] text-rosewood">Services</p>
+            <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+              Pick by how long you sit.
+            </h2>
+            <svg class="strand-rule mt-5 text-rosewood" viewBox="0 0 120 12" fill="none" aria-hidden="true">
+              <path d="M2 8 C 30 2, 60 12, 118 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </div>
+          <p class="max-w-md text-base leading-relaxed text-pine/65 lg:col-span-5">
+            Every visit starts with a rinse and ends with the formula written down. Times below
+            include wash, so bring nothing but damp-ready hair.
+          </p>
+        </div>
+
+        <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="group flex flex-col rounded-xl border border-pine/10 bg-paper p-7 transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.2em] text-steel">45 min · every 6–8 weeks</p>
+            <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Cut and finish</h3>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed text-pine/65">
+              Cut for your face shape and morning routine. Includes wash, neckline clean-up,
+              and an air-dry or blow-out lesson.
+            </p>
+            <a href="#contact" class="mt-6 font-ledger text-[11px] uppercase tracking-[0.18em] text-rosewood underline-offset-4 hover:underline">Request this cut →</a>
+          </article>
+
+          <article class="group flex flex-col rounded-xl border border-pine/10 bg-paper p-7 transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.2em] text-steel">120 min · every 10–12 weeks</p>
+            <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Colour and balayage</h3>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed text-pine/65">
+              Ammonia-free colour, foils, or balayage. We test one strand first and mix only
+              what your length needs.
+            </p>
+            <a href="#contact" class="mt-6 font-ledger text-[11px] uppercase tracking-[0.18em] text-rosewood underline-offset-4 hover:underline">Request colour →</a>
+          </article>
+
+          <article class="group flex flex-col rounded-xl border border-pine/10 bg-paper p-7 transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.2em] text-steel">30 min · every 3–4 weeks</p>
+            <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Rinse and treatment</h3>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed text-pine/65">
+              Scalp check, deep hydration or keratin, and a warm-towel rest. Leaves with the
+              home-care steps on your ticket.
+            </p>
+            <a href="#contact" class="mt-6 font-ledger text-[11px] uppercase tracking-[0.18em] text-rosewood underline-offset-4 hover:underline">Request a rinse →</a>
+          </article>
+
+          <article class="group flex flex-col rounded-xl border border-pine/10 bg-paper p-7 transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.2em] text-steel">60 min · book 2 weeks ahead</p>
+            <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Updos for events</h3>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed text-pine/65">
+              Waves, chignons, and half-up styles that hold through the night. Trial run
+              available the week before.
+            </p>
+            <a href="#contact" class="mt-6 font-ledger text-[11px] uppercase tracking-[0.18em] text-rosewood underline-offset-4 hover:underline">Request a trial →</a>
+          </article>
+
+          <article class="group flex flex-col rounded-xl border border-pine/10 bg-paper p-7 transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.2em] text-steel">30 min · every 3 weeks</p>
+            <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Barbering</h3>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed text-pine/65">
+              Clipper cut, beard shape, and hot-towel neckline. Same chair, same ticket, no
+              waiting list.
+            </p>
+            <a href="#contact" class="mt-6 font-ledger text-[11px] uppercase tracking-[0.18em] text-rosewood underline-offset-4 hover:underline">Request a trim →</a>
+          </article>
+
+          <article class="group flex flex-col rounded-xl bg-pine p-7 text-paper transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.2em] text-sage">Half day · book 6 weeks ahead</p>
+            <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Brides and shoots</h3>
+            <p class="mt-3 flex-1 text-[15px] leading-relaxed text-paper/70">
+              Morning-of styling at the studio or your hotel, plus a written plan for
+              companions and touch-up kit.
+            </p>
+            <a href="#contact" class="mt-6 font-ledger text-[11px] uppercase tracking-[0.18em] text-paper underline-offset-4 hover:underline">Ask for a plan →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about" class="scroll-mt-24 bg-sage py-20 lg:py-28">
+      <div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16 lg:px-8">
+        <div>
+          <img
+            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80"
+            alt="Stylist working in the salon"
+            loading="lazy"
+            class="h-[420px] w-full rounded-xl object-cover shadow-soft sm:h-[520px]"
+          />
+          <p class="mt-4 font-ledger text-[11px] uppercase tracking-[0.2em] text-pine/60">
+            Basin row, Tuesday morning · photo of the studio
+          </p>
+        </div>
+
+        <div>
+          <p class="font-ledger text-[11px] uppercase tracking-[0.3em] text-rosewood">About</p>
+          <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+            A studio with four chairs, not forty.
+          </h2>
+          <p class="mt-6 text-lg leading-relaxed text-pine/70">
+            Open since 2013. No rush, no queue at the mirror: one ticket per chair, coffee
+            while the toner sets, and the same hands each time you return.
+          </p>
+          <p class="mt-4 text-[15px] leading-relaxed text-pine/65">
+            Rated 4.9 by 400+ regulars over twelve years. Vegan, cruelty-free colour with
+            recyclable foils.
+          </p>
+
+          <ul class="mt-8 space-y-3 border-t border-pine/15 pt-6 font-ledger text-[12px] uppercase tracking-[0.14em] text-pine/75">
+            <li class="flex justify-between gap-4"><span>Wash and diagnosis</span><span class="text-steel">included</span></li>
+            <li class="flex justify-between gap-4"><span>Formula kept on file</span><span class="text-steel">every visit</span></li>
+            <li class="flex justify-between gap-4"><span>Waiting time</span><span class="text-steel">under 5 min</span></li>
+            <li class="flex justify-between gap-4"><span>Coffee</span><span class="text-steel">free</span></li>
+          </ul>
+
+          <a
+            href="#contact"
+            class="mt-8 inline-flex items-center gap-3 rounded-full bg-pine px-8 py-4 font-ledger text-[12px] font-medium uppercase tracking-[0.16em] text-paper transition hover:bg-pinelate"
+          >
+            Meet us in person
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GALLERY ==================== -->
+    <!-- Unchanged image set and order: skill does not specify gallery changes. Captions use ledger face. -->
+    <section id="gallery" class="scroll-mt-24 bg-pine py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-12 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div class="max-w-xl">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.3em] text-sage">Gallery</p>
+            <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight text-paper sm:text-5xl">
+              Cut here, worn out there.
+            </h2>
+          </div>
+          <p class="max-w-sm text-[15px] leading-relaxed text-paper/60">
+            Real clients, daylight, no retouching. Each photo notes what the chair ticket said.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
+          <figure class="group relative col-span-2 overflow-hidden rounded-xl lg:col-span-1 lg:row-span-2">
+            <img
+              src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=80"
+              alt="Blonde balayage"
+              loading="lazy"
+              class="h-64 w-full object-cover transition duration-700 group-hover:scale-[1.03] lg:h-full"
+            />
+            <figcaption class="absolute bottom-4 left-4 rounded-full bg-paper/95 px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.16em] text-pine">Balayage · 120 min</figcaption>
+          </figure>
+
+          <figure class="group relative overflow-hidden rounded-xl">
+            <img
+              src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80"
+              alt="Barbershop cut"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-52"
+            />
+            <figcaption class="absolute bottom-4 left-4 rounded-full bg-paper/95 px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.16em] text-pine">Clipper fade · 30 min</figcaption>
+          </figure>
+
+          <figure class="group relative overflow-hidden rounded-xl">
+            <img
+              src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=700&q=80"
+              alt="Bridal hairstyle"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-52"
+            />
+            <figcaption class="absolute bottom-4 left-4 rounded-full bg-paper/95 px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.16em] text-pine">Bride trial · 60 min</figcaption>
+          </figure>
+
+          <figure class="group relative overflow-hidden rounded-xl">
+            <img
+              src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=700&q=80"
+              alt="Color detail"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-52"
+            />
+            <figcaption class="absolute bottom-4 left-4 rounded-full bg-paper/95 px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.16em] text-pine">Toner refresh · 45 min</figcaption>
+          </figure>
+
+          <figure class="group relative overflow-hidden rounded-xl">
+            <img
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=700&q=80"
+              alt="Salon interior"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-52"
+            />
+            <figcaption class="absolute bottom-4 left-4 rounded-full bg-paper/95 px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.16em] text-pine">Chair row · morning</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PRICING ==================== -->
+    <!-- Same three plans and prices; restyled as ledger rows so price, time, and upkeep sit together. -->
+    <section id="pricing" class="scroll-mt-24 bg-porcelain py-20 lg:py-28">
+      <div class="mx-auto max-w-5xl px-5 lg:px-8">
+        <div class="mx-auto mb-12 max-w-2xl text-center">
+          <p class="font-ledger text-[11px] uppercase tracking-[0.3em] text-rosewood">Pricing</p>
+          <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Read it like a ticket.
+          </h2>
+          <p class="mt-5 text-base leading-relaxed text-pine/60">
+            Length and density can move the price. We confirm the total before the first rinse.
+          </p>
+        </div>
+
+        <div class="overflow-hidden rounded-xl border border-pine/12 bg-paper">
+          <div class="flex flex-col gap-2 border-b border-pine/10 p-7 sm:flex-row sm:items-baseline sm:justify-between">
+            <div>
+              <h3 class="font-display text-2xl font-bold tracking-tight">Essential</h3>
+              <p class="mt-1 text-sm text-pine/55">Wash, cut, and blow-dry to hold the shape.</p>
+            </div>
+            <p class="font-display text-4xl font-extrabold tracking-tight">€28 <span class="font-ledger text-[11px] font-normal uppercase tracking-[0.16em] text-steel">/ 45 min</span></p>
+          </div>
+          <ul class="grid gap-2 p-7 text-sm text-pine/70 sm:grid-cols-2">
+            <li class="flex gap-3"><span class="text-rosewood">·</span> Hair wash and scalp check</li>
+            <li class="flex gap-3"><span class="text-rosewood">·</span> Cut to plan</li>
+            <li class="flex gap-3"><span class="text-rosewood">·</span> Blow-dry and finish</li>
+            <li class="flex gap-3"><span class="text-rosewood">·</span> Home-care note</li>
+          </ul>
+          <div class="border-t border-pine/10 p-7 pt-5">
+            <a href="#contact" class="block rounded-full border border-pine/20 py-3.5 text-center font-ledger text-[12px] uppercase tracking-[0.16em] transition hover:border-pine hover:bg-pine hover:text-paper">Request essential</a>
+          </div>
+
+          <div class="border-t-2 border-dashed border-pine/15">
+            <div class="flex flex-col gap-2 bg-pine p-7 text-paper sm:flex-row sm:items-baseline sm:justify-between">
+              <div>
+                <p class="inline-block rounded-full bg-rosewood px-3 py-1 font-ledger text-[10px] uppercase tracking-[0.18em]">Most requested</p>
+                <h3 class="mt-3 font-display text-2xl font-bold tracking-tight">Colour</h3>
+                <p class="mt-1 text-sm text-paper/55">Full colour, foils, or balayage with trim.</p>
+              </div>
+              <p class="font-display text-4xl font-extrabold tracking-tight">€65 <span class="font-ledger text-[11px] font-normal uppercase tracking-[0.16em] text-paper/55">/ 120 min</span></p>
+            </div>
+            <ul class="grid gap-2 bg-pine p-7 pt-0 text-sm text-paper/70 sm:grid-cols-2">
+              <li class="flex gap-3"><span class="text-sage">·</span> Strand test and shade plan</li>
+              <li class="flex gap-3"><span class="text-sage">·</span> Ammonia-free colour</li>
+              <li class="flex gap-3"><span class="text-sage">·</span> Post-colour rinse</li>
+              <li class="flex gap-3"><span class="text-sage">·</span> Trim and finish</li>
+            </ul>
+            <div class="bg-pine p-7 pt-1">
+              <a href="#contact" class="block rounded-full bg-paper py-3.5 text-center font-ledger text-[12px] font-medium uppercase tracking-[0.16em] text-pine transition hover:bg-rosewood hover:text-paper">Request colour</a>
+            </div>
+          </div>
+
+          <div class="border-t-2 border-dashed border-pine/15">
+            <div class="flex flex-col gap-2 p-7 sm:flex-row sm:items-baseline sm:justify-between">
+              <div>
+                <h3 class="font-display text-2xl font-bold tracking-tight">Ritual</h3>
+                <p class="mt-1 text-sm text-pine/55">Colour plus a full rest for scalp and hands.</p>
+              </div>
+              <p class="font-display text-4xl font-extrabold tracking-tight">€95 <span class="font-ledger text-[11px] font-normal uppercase tracking-[0.16em] text-steel">/ 150 min</span></p>
+            </div>
+            <ul class="grid gap-2 p-7 pt-0 text-sm text-pine/70 sm:grid-cols-2">
+              <li class="flex gap-3"><span class="text-rosewood">·</span> Everything in Colour</li>
+              <li class="flex gap-3"><span class="text-rosewood">·</span> Keratin rinse</li>
+              <li class="flex gap-3"><span class="text-rosewood">·</span> 15-min scalp rest</li>
+              <li class="flex gap-3"><span class="text-rosewood">·</span> Express manicure</li>
+            </ul>
+            <div class="p-7 pt-1">
+              <a href="#contact" class="block rounded-full border border-pine/20 py-3.5 text-center font-ledger text-[12px] uppercase tracking-[0.16em] transition hover:border-pine hover:bg-pine hover:text-paper">Request ritual</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TESTIMONIALS ==================== -->
+    <!-- Same three clients and quotes; stars replaced with a specific ledger line
+         (skill: specific beats clever, words are design material). -->
+    <section id="testimonials" class="scroll-mt-24 bg-sage py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mx-auto mb-12 max-w-2xl text-center">
+          <p class="font-ledger text-[11px] uppercase tracking-[0.3em] text-rosewood">Tickets back</p>
+          <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Kept tickets, kept clients.
+          </h2>
+        </div>
+
+        <div class="grid gap-5 lg:grid-cols-3">
+          <figure class="rounded-xl bg-paper p-8 shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.18em] text-steel">Curly cut · 5 out of 5</p>
+            <blockquote class="mt-4 text-[15px] leading-relaxed text-pine/75">
+              “For years no one knew what to do with my curls. Here they cut it well and wrote
+              down how to wash it at home.”
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-4 border-t border-pine/10 pt-5">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-pine font-display font-bold text-paper">M</span>
+              <span>
+                <span class="block text-sm font-semibold text-pine">María Contreras</span>
+                <span class="block font-ledger text-[11px] uppercase tracking-[0.14em] text-steel">Regular since 2019</span>
+              </span>
+            </figcaption>
+          </figure>
+
+          <figure class="rounded-xl bg-paper p-8 shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.18em] text-steel">Balayage · 5 out of 5</p>
+            <blockquote class="mt-4 text-[15px] leading-relaxed text-pine/75">
+              “My balayage still looked clean after six months. They test the strand before they
+              mix the bowl.”
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-4 border-t border-pine/10 pt-5">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-pine font-display font-bold text-paper">L</span>
+              <span>
+                <span class="block text-sm font-semibold text-pine">Lucía Ferrer</span>
+                <span class="block font-ledger text-[11px] uppercase tracking-[0.14em] text-steel">Regular since 2021</span>
+              </span>
+            </figcaption>
+          </figure>
+
+          <figure class="rounded-xl bg-paper p-8 shadow-soft">
+            <p class="font-ledger text-[11px] uppercase tracking-[0.18em] text-steel">Bride, June 2024 · 5 out of 5</p>
+            <blockquote class="mt-4 text-[15px] leading-relaxed text-pine/75">
+              “Updo held through fourteen hours of dancing. Trial on Tuesday, calm morning-of,
+              kit for touch-ups.”
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-4 border-t border-pine/10 pt-5">
+              <span class="flex h-11 w-11 items-center justify-center rounded-full bg-pine font-display font-bold text-paper">A</span>
+              <span>
+                <span class="block text-sm font-semibold text-pine">Andrea Ruiz</span>
+                <span class="block font-ledger text-[11px] uppercase tracking-[0.14em] text-steel">Bride · trial + day-of</span>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <!-- Same info and form fields; copy tuned to active voice + sentence case per skill.
+         Error/empty states give direction in the interface voice (see script note). -->
+    <section id="contact" class="scroll-mt-24 bg-porcelain py-20 lg:py-28">
+      <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-5 lg:gap-16 lg:px-8">
+        <div class="lg:col-span-2">
+          <p class="font-ledger text-[11px] uppercase tracking-[0.3em] text-rosewood">Contact</p>
+          <h2 class="mt-4 font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Ask for a chair.
+          </h2>
+          <p class="mt-5 text-base leading-relaxed text-pine/60">
+            Send the form and we confirm a time within 24 hours. For today only, call instead —
+            the book moves fast.
+          </p>
+
+          <ul class="mt-9 space-y-5 text-sm">
+            <li class="flex gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage text-pine">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-semibold">Address</span>
+                <span class="block text-pine/60">Calle Mayor 42, 28013 Madrid</span>
+              </span>
+            </li>
+            <li class="flex gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage text-pine">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-semibold">Phone</span>
+                <a href="tel:+34912345678" class="block text-pine/60 transition hover:text-rosewood">+34 912 345 678</a>
+              </span>
+            </li>
+            <li class="flex gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage text-pine">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3.5 7 8.5 6 8.5-6" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-semibold">Email</span>
+                <a href="mailto:hola@studioaurea.es" class="block text-pine/60 transition hover:text-rosewood">hola@studioaurea.es</a>
+              </span>
+            </li>
+            <li class="flex gap-4">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sage text-pine">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3.5 2" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-semibold">Hours</span>
+                <span class="block text-pine/60">Mon – Fri · 10:00 to 20:00</span>
+                <span class="block text-pine/60">Saturday · 10:00 to 14:00</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="lg:col-span-3">
+          <form id="bookingForm" class="rounded-xl border border-pine/10 bg-paper p-7 shadow-soft sm:p-10" novalidate>
+            <p class="font-ledger text-[11px] uppercase tracking-[0.22em] text-steel">Ticket · takes one minute</p>
+            <div class="mt-5 grid gap-5 sm:grid-cols-2">
+              <div class="sm:col-span-1">
+                <label for="name" class="mb-2 block font-ledger text-[11px] uppercase tracking-[0.16em] text-pine/60">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Your name"
+                  autocomplete="name"
+                  class="w-full rounded-lg border border-pine/15 bg-porcelain px-4 py-3 text-sm text-pine outline-none transition placeholder:text-pine/35 focus:border-rosewood focus:ring-2 focus:ring-rosewood/20"
+                />
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="phone" class="mb-2 block font-ledger text-[11px] uppercase tracking-[0.16em] text-pine/60">Phone</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="600 000 000"
+                  autocomplete="tel"
+                  class="w-full rounded-lg border border-pine/15 bg-porcelain px-4 py-3 text-sm text-pine outline-none transition placeholder:text-pine/35 focus:border-rosewood focus:ring-2 focus:ring-rosewood/20"
+                />
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="email" class="mb-2 block font-ledger text-[11px] uppercase tracking-[0.16em] text-pine/60">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="tu@email.com"
+                  autocomplete="email"
+                  class="w-full rounded-lg border border-pine/15 bg-porcelain px-4 py-3 text-sm text-pine outline-none transition placeholder:text-pine/35 focus:border-rosewood focus:ring-2 focus:ring-rosewood/20"
+                />
+              </div>
+
+              <div class="sm:col-span-1">
+                <label for="date" class="mb-2 block font-ledger text-[11px] uppercase tracking-[0.16em] text-pine/60">Preferred day</label>
+                <input
+                  id="date"
+                  name="date"
+                  type="date"
+                  class="w-full rounded-lg border border-pine/15 bg-porcelain px-4 py-3 text-sm text-pine outline-none transition focus:border-rosewood focus:ring-2 focus:ring-rosewood/20"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="service" class="mb-2 block font-ledger text-[11px] uppercase tracking-[0.16em] text-pine/60">Service</label>
+                <select
+                  id="service"
+                  name="service"
+                  class="w-full appearance-none rounded-lg border border-pine/15 bg-porcelain px-4 py-3 text-sm text-pine outline-none transition focus:border-rosewood focus:ring-2 focus:ring-rosewood/20"
+                >
+                  <option value="">Select a service</option>
+                  <option>Cut &amp; Style</option>
+                  <option>Color &amp; Balayage</option>
+                  <option>Hair treatment</option>
+                  <option>Event hairstyle</option>
+                  <option>Barbering</option>
+                  <option>Brides &amp; Editorial</option>
+                </select>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="message" class="mb-2 block font-ledger text-[11px] uppercase tracking-[0.16em] text-pine/60">Note for the chair</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Length now, length wanted, allergies, date that suits you..."
+                  class="w-full resize-none rounded-lg border border-pine/15 bg-porcelain px-4 py-3 text-sm text-pine outline-none transition placeholder:text-pine/35 focus:border-rosewood focus:ring-2 focus:ring-rosewood/20"
+                ></textarea>
+              </div>
+            </div>
+
+            <p id="formNote" class="mt-4 hidden rounded-lg bg-sage px-4 py-3 text-sm text-pine" role="status"></p>
+
+            <button
+              type="submit"
+              class="mt-6 w-full rounded-full bg-pine py-4 font-ledger text-[12px] font-medium uppercase tracking-[0.16em] text-paper transition hover:bg-rosewood sm:w-auto sm:px-12"
+            >
+              Request a time
+            </button>
+
+            <p class="mt-5 text-xs leading-relaxed text-pine/50">
+              We use your details only to hold a chair. Reply “change” to any message to move it.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <!-- Same links; tone and ledger labels follow the plan. -->
+    <footer class="bg-pine pb-10 pt-16 text-paper/60">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="grid gap-12 pb-14 lg:grid-cols-4">
+          <div class="lg:col-span-2">
+            <a href="#home" class="flex items-center gap-3">
+              <span class="flex h-9 w-9 items-center justify-center rounded-full bg-paper font-ledger text-[11px] font-semibold text-pine">Au</span>
+              <span class="font-display text-lg font-bold tracking-tight text-paper">Studio Aurea</span>
+            </a>
+            <p class="mt-6 max-w-sm text-sm leading-relaxed">
+              Four chairs on Calle Mayor since 2013. Cuts, colour, and rinses with the formula
+              kept on your ticket.
+            </p>
+            <div class="mt-7 flex gap-3">
+              <a href="#" aria-label="Instagram" class="flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 transition hover:border-paper hover:text-paper">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" />
+                </svg>
+              </a>
+              <a href="#" aria-label="Facebook" class="flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 transition hover:border-paper hover:text-paper">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <path d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13V9a1 1 0 0 1 1-1Z" />
+                </svg>
+              </a>
+              <a href="#" aria-label="TikTok" class="flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 transition hover:border-paper hover:text-paper">
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                  <path d="M15 4v9.5a3.5 3.5 0 1 1-3.5-3.5" />
+                  <path d="M15 5.5A4.5 4.5 0 0 0 19.5 10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-ledger text-[11px] uppercase tracking-[0.24em] text-sage">By chair time</h3>
+            <ul class="mt-5 space-y-3 text-sm">
+              <li><a href="#services" class="transition hover:text-paper">Cut and finish · 45 min</a></li>
+              <li><a href="#services" class="transition hover:text-paper">Colour · 120 min</a></li>
+              <li><a href="#services" class="transition hover:text-paper">Rinse · 30 min</a></li>
+              <li><a href="#services" class="transition hover:text-paper">Barbering · 30 min</a></li>
+              <li><a href="#services" class="transition hover:text-paper">Brides · half day</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-ledger text-[11px] uppercase tracking-[0.24em] text-sage">Studio</h3>
+            <ul class="mt-5 space-y-3 text-sm">
+              <li><a href="#about" class="transition hover:text-paper">About us</a></li>
+              <li><a href="#gallery" class="transition hover:text-paper">Gallery</a></li>
+              <li><a href="#pricing" class="transition hover:text-paper">Pricing</a></li>
+              <li><a href="#contact" class="transition hover:text-paper">Contact</a></li>
+              <li><a href="#" class="transition hover:text-paper">Work with us</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4 border-t border-paper/10 pt-8 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2025 Studio Aurea. All rights reserved.</p>
+          <div class="flex gap-6">
+            <a href="#" class="transition hover:text-paper">Legal notice</a>
+            <a href="#" class="transition hover:text-paper">Privacy</a>
+            <a href="#" class="transition hover:text-paper">Cookies</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+      /* Navbar with background on scroll (preserved from before.html) */
+      const navbar = document.getElementById("navbar");
+      const onScroll = () => navbar.classList.toggle("nav-scrolled", window.scrollY > 40);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      /* Mobile menu (preserved from before.html) */
+      const menuBtn = document.getElementById("menuBtn");
+      const menu = document.getElementById("mobileMenu");
+      const iconOpen = document.getElementById("iconOpen");
+      const iconClose = document.getElementById("iconClose");
+
+      const toggleMenu = (force) => {
+        const open = force ?? menu.classList.contains("hidden");
+        menu.classList.toggle("hidden", !open);
+        iconOpen.classList.toggle("hidden", open);
+        iconClose.classList.toggle("hidden", !open);
+        menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      };
+
+      menuBtn.addEventListener("click", () => toggleMenu());
+      document
+        .querySelectorAll(".mobile-link")
+        .forEach((l) => l.addEventListener("click", () => toggleMenu(false)));
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1024) toggleMenu(false);
+      });
+
+      /* Form: same demo behaviour (prevent + reset), rewritten per skill writing rules:
+         active voice, names the action, tells what happens next, no apology.
+         Inline status used instead of alert so the message lives where the action was. */
+      const form = document.getElementById("bookingForm");
+      const formNote = document.getElementById("formNote");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("name");
+        if (!name.value.trim()) {
+          formNote.textContent = "Add your name so we can hold the chair under it.";
+          formNote.classList.remove("hidden");
+          name.focus();
+          return;
+        }
+        formNote.textContent =
+          "Requested. We confirm a time within 24 hours at the phone or email you left.";
+        formNote.classList.remove("hidden");
+        form.reset();
+      });
+    </script>
+  </body>
+</html>
