@@ -90,6 +90,12 @@ function getRegistrySkills(): Skill[] {
 /**
  * Resolved before/after comparison case (screenshots under public/comparisons/)
  */
+export interface CaseProvenance {
+  model: string;
+  effort?: string;
+  prompt: string;
+}
+
 export interface ComparisonCase {
   id: string;
   label: string;
@@ -97,6 +103,20 @@ export interface ComparisonCase {
   after: string;
   width: number;
   height: number;
+  beforeInfo: CaseProvenance;
+  afterInfo: CaseProvenance;
+}
+
+/**
+ * Read a provenance note (BEFORE.md / NOTES.md) from a demo source folder.
+ * Missing files resolve to empty string — the UI hides those rows.
+ */
+function readCaseNote(skill: string, source: string, file: 'BEFORE.md' | 'NOTES.md'): string {
+  try {
+    return readFileSync(join(process.cwd(), 'demos', skill, source, file), 'utf-8').trim();
+  } catch {
+    return '';
+  }
 }
 
 /**
@@ -107,16 +127,30 @@ export interface ComparisonCase {
 export function getComparisonCases(slug: string): ComparisonCase[] {
   const skill = getRegistrySkills().find((s) => s.data.slug === slug);
   const ids = new Set(skill?.data.comparisons ?? []);
+  const sources = (comparisonsData as { sources?: Record<string, { before?: { model?: string }; after?: { model?: string; effort?: string } }> }).sources ?? {};
   return (comparisonsData.cases ?? [])
     .filter((c) => c.skill === slug && ids.has(c.id))
-    .map((c) => ({
-      id: c.id,
-      label: c.label,
-      before: `/comparisons/${slug}/${c.id}/before.png`,
-      after: `/comparisons/${slug}/${c.id}/after.png`,
-      width: c.viewport.width,
-      height: c.viewport.height,
-    }))
+    .map((c) => {
+      const src = (c as { source?: string }).source ?? c.id;
+      const provenance = sources[src] ?? {};
+      return {
+        id: c.id,
+        label: c.label,
+        before: `/comparisons/${slug}/${c.id}/before.png`,
+        after: `/comparisons/${slug}/${c.id}/after.png`,
+        width: c.viewport.width,
+        height: c.viewport.height,
+        beforeInfo: {
+          model: provenance.before?.model ?? '',
+          prompt: readCaseNote(slug, src, 'BEFORE.md'),
+        },
+        afterInfo: {
+          model: provenance.after?.model ?? '',
+          effort: provenance.after?.effort,
+          prompt: readCaseNote(slug, src, 'NOTES.md'),
+        },
+      };
+    })
     .filter(
       (c) =>
         existsSync(join(process.cwd(), 'public', c.before)) &&

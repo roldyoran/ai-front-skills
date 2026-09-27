@@ -123,6 +123,38 @@ const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
               width={c.width}
               height={c.height}
             />
+            {(c.beforeInfo.model || c.afterInfo.model) && (
+              <div class="mt-2 space-y-1.5">
+                {c.beforeInfo.model && (
+                  c.beforeInfo.prompt ? (
+                    <details class="border border-border bg-surface px-3 py-2">
+                      <summary class="cursor-pointer text-[11px] leading-relaxed text-text-muted">
+                        {t('comparison.beforeBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.beforeInfo.model}</span>{' '}·{' '}{t('comparison.viewPrompt', locale)}
+                      </summary>
+                      <pre class="mt-2 overflow-x-auto whitespace-pre-wrap text-[11px] leading-relaxed text-text-secondary">{c.beforeInfo.prompt}</pre>
+                    </details>
+                  ) : (
+                    <p class="text-[11px] text-text-muted">
+                      {t('comparison.beforeBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.beforeInfo.model}</span>
+                    </p>
+                  )
+                )}
+                {c.afterInfo.model && (
+                  c.afterInfo.prompt ? (
+                    <details class="border border-border bg-surface px-3 py-2">
+                      <summary class="cursor-pointer text-[11px] leading-relaxed text-text-muted">
+                        {t('comparison.afterBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.afterInfo.model}</span>{c.afterInfo.effort ? ` · ${c.afterInfo.effort}` : ''}{' '}·{' '}{t('comparison.viewPrompt', locale)}
+                      </summary>
+                      <pre class="mt-2 overflow-x-auto whitespace-pre-wrap text-[11px] leading-relaxed text-text-secondary">{c.afterInfo.prompt}</pre>
+                    </details>
+                  ) : (
+                    <p class="text-[11px] text-text-muted">
+                      {t('comparison.afterBy', locale)}{' '}<span class="font-medium text-text-secondary">{c.afterInfo.model}</span>{c.afterInfo.effort ? ` · ${c.afterInfo.effort}` : ''}
+                    </p>
+                  )
+                )}
+              </div>
+            )}
           </div>
         ))}
       </section>

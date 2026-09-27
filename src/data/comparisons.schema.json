@@ -4,6 +4,31 @@
   "type": "object",
   "required": ["cases"],
   "properties": {
+    "sources": {
+      "type": "object",
+      "description": "Shared provenance per demo source folder (demos/<skill>/<source>/). Prompts live in BEFORE.md / NOTES.md inside each folder.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["before", "after"],
+        "properties": {
+          "before": {
+            "type": "object",
+            "required": ["model"],
+            "properties": {
+              "model": { "type": "string" }
+            }
+          },
+          "after": {
+            "type": "object",
+            "required": ["model"],
+            "properties": {
+              "model": { "type": "string" },
+              "effort": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
     "cases": {
       "type": "array",
       "items": {
@@ -12,7 +37,16 @@
         "properties": {
           "id": { "type": "string" },
           "skill": { "type": "string" },
+          "source": {
+            "type": "string",
+            "default": "same as id",
+            "description": "Demo folder under demos/<skill>/. Defaults to the case id."
+          },
           "label": { "type": "string" },
+          "anchor": {
+            "type": "string",
+            "description": "Element id to scroll to before capturing (section cases)."
+          },
           "viewport": {
             "type": "object",
             "required": ["width", "height"],

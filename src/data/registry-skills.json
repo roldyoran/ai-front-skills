@@ -21,7 +21,7 @@
         "Motion",
         "Interaction"
       ],
-      "comparisons": ["hair-salon"],
+      "comparisons": ["hero", "services", "about", "gallery", "pricing", "testimonials", "contact"],
       "registryPath": "packages/front-skills/skills-registry/frontend-design/SKILL.md"
     },
     {

@@ -86,6 +86,9 @@
     "title": "Comparación",
     "before": "Antes",
     "after": "Después",
-    "dragHint": "Arrastra para comparar"
+    "dragHint": "Arrastra para comparar",
+    "beforeBy": "Original generado con",
+    "afterBy": "Rediseño implementado con",
+    "viewPrompt": "Ver prompt"
   }
 }
