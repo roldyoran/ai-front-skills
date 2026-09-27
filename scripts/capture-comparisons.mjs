@@ -92,10 +92,11 @@ function pngSize(p) {
   }
 }
 
-async function captureSide({ skill, id, side, viewport, force }) {
-  const htmlPath = join(ROOT, 'demos', skill, id, `${side}.html`);
+async function captureSide({ skill, id, source, anchor, side, viewport, force }) {
+  const src = source ?? id;
+  const htmlPath = join(ROOT, 'demos', skill, src, `${side}.html`);
   if (!existsSync(htmlPath)) {
-    console.error(`  ✖ missing source: demos/${skill}/${id}/${side}.html`);
+    console.error(`  ✖ missing source: demos/${skill}/${src}/${side}.html`);
     return false;
   }
   const outDir = join(ROOT, 'public', 'comparisons', skill, id);
@@ -106,7 +107,8 @@ async function captureSide({ skill, id, side, viewport, force }) {
     return true;
   }
   mkdirSync(outDir, { recursive: true });
-  const url = `${globalThis.__CAPTURE_BASE__}/demos/${skill}/${id}/${side}.html`;
+  const hash = anchor ? `#${anchor}` : '';
+  const url = `${globalThis.__CAPTURE_BASE__}/demos/${skill}/${src}/${side}.html${hash}`;
   await pw(['goto', url]);
   const { stdout } = await pw(['run-code', `--filename=${WAIT_FILE}`]);
   if (!stdout.includes('ready')) {
