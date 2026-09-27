@@ -1,321 +1,1331 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nova Studio — Hair Salon & Barbershop</title>
-  <meta name="description" content="Downtown hair salon: cuts, color, beard trims and event styling. Book your appointment in 1 minute." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#111110',
-            cream: '#FAF7F2',
-            sand: '#EDE6DA',
-            gold: '#C9A227',
-            golddark: '#A3861F',
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Studio Aurea · Peluquería y Estilismo</title>
+    <meta
+      name="description"
+      content="Peluquería y estilismo de autor. Cortes, color, balayage y tratamientos personalizados en un espacio diseñado para ti."
+    />
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              ink: "#141210",
+              coal: "#1f1b17",
+              cream: "#faf7f2",
+              sand: "#efe8dd",
+              gold: {
+                300: "#e3c88b",
+                400: "#d4af6a",
+                500: "#c19a4b",
+                600: "#a67c2e",
+              },
+            },
+            fontFamily: {
+              display: ['"Playfair Display"', "Georgia", "serif"],
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 20px 50px -20px rgba(20,18,16,.25)",
+            },
           },
-          fontFamily: {
-            serif: ['Georgia', 'Times New Roman', 'serif'],
-            sans: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
-          }
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Barra de navegación con fondo al hacer scroll */
+      .nav-scrolled {
+        background-color: rgba(20, 18, 16, 0.92);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 12px 34px -18px rgba(0, 0, 0, 0.8);
+      }
+
+      /* Animación de aparición (solo si JS está activo) */
+      .js [data-reveal] {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+          transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      .js [data-reveal].is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Línea decorativa dorada */
+      .gold-line::after {
+        content: "";
+        display: block;
+        width: 56px;
+        height: 1px;
+        background: linear-gradient(90deg, #d4af6a, transparent);
+        margin-top: 1.25rem;
+      }
+
+      /* Scrollbar sutil */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #faf7f2;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #d4af6a;
+        border-radius: 9999px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .js [data-reveal] {
+          opacity: 1;
+          transform: none;
+          transition: none;
         }
       }
-    }
-  </script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
-    .hero-bg {
-      background:
-        linear-gradient(rgba(17,17,16,.72), rgba(17,17,16,.55)),
-        url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1600&auto=format&fit=crop') center / cover no-repeat;
-    }
-    .card-img { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-    }
-  </style>
-</head>
-<body class="bg-cream text-ink antialiased">
+    </style>
+  </head>
 
-  <!-- Top bar -->
-  <div class="bg-ink text-cream text-xs sm:text-sm">
-    <div class="max-w-6xl mx-auto px-4 py-2 flex flex-col sm:flex-row items-center justify-between gap-1">
-      <p class="tracking-wide">✂️ Mon – Sat · 9:00 AM – 8:00 PM · 24 Main Street, Madrid</p>
-      <a href="tel:+34910000000" class="font-semibold text-gold hover:text-cream transition">📞 910 000 000</a>
-    </div>
-  </div>
+  <body class="bg-cream font-sans text-ink antialiased selection:bg-gold-400 selection:text-ink">
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-ink/10">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-2">
-        <span class="w-9 h-9 rounded-full bg-ink text-gold grid place-items-center font-serif text-xl font-bold">N</span>
-        <span class="font-serif text-xl font-bold tracking-tight">Nova <span class="text-golddark">Studio</span></span>
-      </a>
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-        <a href="#services" class="hover:text-golddark transition">Services</a>
-        <a href="#gallery" class="hover:text-golddark transition">Gallery</a>
-        <a href="#pricing" class="hover:text-golddark transition">Pricing</a>
-        <a href="#reviews" class="hover:text-golddark transition">Reviews</a>
-        <a href="#contact" class="hover:text-golddark transition">Contact</a>
-      </nav>
-      <div class="flex items-center gap-2">
-        <a href="#booking" class="bg-ink text-cream text-sm font-semibold px-4 py-2 rounded-full hover:bg-golddark transition">Book now</a>
+    <!-- ==================== NAVBAR ==================== -->
+    <header id="navbar" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="flex h-20 items-center justify-between">
+          <!-- Logo -->
+          <a href="#inicio" class="group flex items-center gap-2.5">
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full border border-gold-400/60 font-display text-sm text-gold-400 transition group-hover:bg-gold-400 group-hover:text-ink"
+              >A</span
+            >
+            <span class="font-display text-xl tracking-wide text-white">
+              Studio <span class="text-gold-400">Aurea</span>
+            </span>
+          </a>
+
+          <!-- Navegación escritorio -->
+          <nav class="hidden items-center gap-9 lg:flex">
+            <a
+              href="#servicios"
+              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
+              >Servicios</a
+            >
+            <a
+              href="#nosotros"
+              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
+              >Nosotros</a
+            >
+            <a
+              href="#galeria"
+              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
+              >Galería</a
+            >
+            <a
+              href="#precios"
+              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
+              >Precios</a
+            >
+            <a
+              href="#contacto"
+              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
+              >Contacto</a
+            >
+          </nav>
+
+          <a
+            href="#contacto"
+            class="hidden rounded-full border border-gold-400 px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] text-gold-400 transition hover:bg-gold-400 hover:text-ink lg:inline-block"
+          >
+            Reservar cita
+          </a>
+
+          <!-- Botón menú móvil -->
+          <button
+            id="menuBtn"
+            type="button"
+            aria-label="Abrir menú"
+            class="rounded-md p-2 text-white transition hover:text-gold-400 lg:hidden"
+          >
+            <svg
+              id="iconOpen"
+              class="h-7 w-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            <svg
+              id="iconClose"
+              class="hidden h-7 w-7"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
-    <!-- Mobile nav -->
-    <nav class="md:hidden border-t border-ink/10 px-4 py-2 flex gap-4 overflow-x-auto text-sm font-medium whitespace-nowrap">
-      <a href="#services" class="hover:text-golddark">Services</a>
-      <a href="#gallery" class="hover:text-golddark">Gallery</a>
-      <a href="#pricing" class="hover:text-golddark">Pricing</a>
-      <a href="#reviews" class="hover:text-golddark">Reviews</a>
-      <a href="#contact" class="hover:text-golddark">Contact</a>
-    </nav>
-  </header>
 
-  <!-- Hero -->
-  <section id="home" class="hero-bg text-cream">
-    <div class="max-w-6xl mx-auto px-4 py-20 sm:py-28 flex flex-col gap-6 max-w-2xl">
-      <p class="inline-flex w-fit items-center gap-2 bg-cream/15 border border-cream/25 rounded-full px-4 py-1.5 text-xs sm:text-sm tracking-wide">★ 4.9 on Google · 2,400+ happy clients</p>
-      <h1 class="font-serif text-4xl sm:text-6xl font-bold leading-tight">Your hair,<br />our <span class="text-gold italic">masterpiece.</span></h1>
-      <p class="text-cream/85 text-base sm:text-lg leading-relaxed">Cuts, color and beard care with a free consultation. Air-conditioned salon, complimentary coffee and guaranteed punctuality: your appointment starts on time.</p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <a href="#booking" class="bg-gold text-ink font-bold px-6 py-3 rounded-full text-center hover:bg-cream transition">Book appointment →</a>
-        <a href="#pricing" class="border border-cream/40 font-semibold px-6 py-3 rounded-full text-center hover:bg-cream hover:text-ink transition">See pricing</a>
+      <!-- Menú móvil -->
+      <div
+        id="mobileMenu"
+        class="hidden border-t border-white/10 bg-ink/98 backdrop-blur lg:hidden"
+      >
+        <nav class="mx-auto flex max-w-7xl flex-col px-5 py-4">
+          <a
+            href="#servicios"
+            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
+            >Servicios</a
+          >
+          <a
+            href="#nosotros"
+            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
+            >Nosotros</a
+          >
+          <a
+            href="#galeria"
+            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
+            >Galería</a
+          >
+          <a
+            href="#precios"
+            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
+            >Precios</a
+          >
+          <a
+            href="#contacto"
+            class="mobile-link py-4 text-sm uppercase tracking-[0.18em] text-white/85"
+            >Contacto</a
+          >
+          <a
+            href="#contacto"
+            class="mobile-link mb-4 mt-2 rounded-full bg-gold-400 py-3 text-center text-sm uppercase tracking-[0.18em] text-ink"
+          >
+            Reservar cita
+          </a>
+        </nav>
       </div>
-      <div class="flex flex-wrap gap-x-8 gap-y-3 pt-2 text-sm text-cream/80">
-        <p><span class="text-gold font-bold text-lg">12</span> years of craft</p>
-        <p><span class="text-gold font-bold text-lg">6</span> expert stylists</p>
-        <p><span class="text-gold font-bold text-lg">0</span> min waiting time</p>
+    </header>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="inicio" class="relative flex min-h-screen items-center overflow-hidden">
+      <img
+        src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80"
+        alt="Interior de la peluquería Studio Aurea"
+        class="absolute inset-0 h-full w-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-ink/50"></div>
+
+      <div class="relative mx-auto w-full max-w-7xl px-5 pb-24 pt-36 lg:px-8">
+        <div class="max-w-2xl">
+          <p
+            data-reveal
+            class="mb-6 flex items-center gap-3 text-[12px] uppercase tracking-[0.35em] text-gold-400"
+          >
+            <span class="h-px w-10 bg-gold-400"></span>
+            Peluquería &amp; Estilismo
+          </p>
+
+          <h1
+            data-reveal
+            class="font-display text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl"
+          >
+            Tu cabello,
+            <span class="block italic text-gold-400">tu mejor versión</span>
+          </h1>
+
+          <p data-reveal class="mt-7 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
+            Cortes de autor, color personalizado y tratamientos que cuidan tu fibra capilar. Un
+            espacio íntimo donde cada detalle está pensado para que salgas renovada.
+          </p>
+
+          <div data-reveal class="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href="#contacto"
+              class="group inline-flex items-center gap-3 rounded-full bg-gold-400 px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-300"
+            >
+              Reserva tu cita
+              <svg
+                class="h-4 w-4 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
+            <a
+              href="#servicios"
+              class="inline-flex items-center rounded-full border border-white/25 px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:border-gold-400 hover:text-gold-400"
+            >
+              Ver servicios
+            </a>
+          </div>
+
+          <div
+            data-reveal
+            class="mt-14 flex flex-wrap items-center gap-x-10 gap-y-5 border-t border-white/10 pt-8"
+          >
+            <div>
+              <p class="font-display text-2xl text-gold-400">12+</p>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">
+                Años de experiencia
+              </p>
+            </div>
+            <div>
+              <p class="font-display text-2xl text-gold-400">4.9★</p>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Valoración media</p>
+            </div>
+            <div>
+              <p class="font-display text-2xl text-gold-400">100%</p>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Producto vegano</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Services -->
-  <section id="services" class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
-    <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Our services</p>
-    <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">Everything your look needs</h2>
-    <p class="text-ink/60 mt-2 max-w-xl">Free consultation with every visit. We use professional ammonia-free products.</p>
+    <!-- ==================== SERVICIOS ==================== -->
+    <section id="servicios" class="scroll-mt-24 bg-cream py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-16 max-w-2xl">
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Servicios</p>
+          <h2
+            data-reveal
+            class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
+          >
+            Todo lo que tu pelo necesita
+          </h2>
+          <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
+            Trabajamos con diagnóstico previo y productos profesionales. Cada servicio se adapta a
+            tu tipo de cabello, tu rutina y tu estilo de vida.
+          </p>
+        </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8">
-      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
-        <img class="card-img" src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=800&auto=format&fit=crop" alt="Haircut" loading="lazy" />
-        <div class="p-5">
-          <h3 class="font-serif text-xl font-bold">Cut & Style</h3>
-          <p class="text-sm text-ink/60 mt-1">Tailored cut, premium wash and styled finish. For men and women.</p>
-          <p class="mt-3 font-bold">from €18</p>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Card 1 -->
+          <article
+            data-reveal
+            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
+          >
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="6" cy="6" r="2.5" />
+                <circle cx="6" cy="18" r="2.5" />
+                <path d="M8.2 7.7 20 18M8.2 16.3 20 6" />
+              </svg>
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-ink">Corte &amp; Estilo</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Corte personalizado según la forma de tu rostro, textura y rutina. Incluye lavado,
+              masaje y peinado final.
+            </p>
+          </article>
+
+          <!-- Card 2 -->
+          <article
+            data-reveal
+            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
+          >
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M12 3s6 6.2 6 10a6 6 0 1 1-12 0c0-3.8 6-10 6-10Z" />
+              </svg>
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-ink">Color &amp; Balayage</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Coloración sin amoniaco, mechas, balayage y corrección de color. Estudio de tono
+              previo para un resultado natural.
+            </p>
+          </article>
+
+          <!-- Card 3 -->
+          <article
+            data-reveal
+            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
+          >
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"
+                />
+              </svg>
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-ink">Tratamientos</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Hidratación profunda, keratina, botox capilar y anticaída. Diagnóstico del cuero
+              cabelludo incluido.
+            </p>
+          </article>
+
+          <!-- Card 4 -->
+          <article
+            data-reveal
+            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
+          >
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8Z" />
+              </svg>
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-ink">Peinados de evento</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Recogidos, ondas y semirecogidos para bodas, graduaciones y celebraciones. Prueba
+              previa disponible.
+            </p>
+          </article>
+
+          <!-- Card 5 -->
+          <article
+            data-reveal
+            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
+          >
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+              </svg>
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-ink">Barbería</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Corte masculino, arreglo de barba, perfilado y afeitado clásico con navaja y toalla
+              caliente.
+            </p>
+          </article>
+
+          <!-- Card 6 -->
+          <article
+            data-reveal
+            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
+          >
+            <span
+              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 20s-7-4.3-7-9.3A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7 3.1c0 5-7 9.3-7 9.3Z"
+                />
+              </svg>
+            </span>
+            <h3 class="mt-6 font-display text-2xl text-ink">Novias &amp; Editorial</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Asesoría integral para tu gran día, con desplazamiento a domicilio y paquetes para
+              acompañantes.
+            </p>
+          </article>
         </div>
-      </article>
-      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
-        <img class="card-img" src="https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800&auto=format&fit=crop" alt="Color and highlights" loading="lazy" />
-        <div class="p-5">
-          <h3 class="font-serif text-xl font-bold">Color & Highlights</h3>
-          <p class="text-sm text-ink/60 mt-1">Balayage, babylights, full color and toning. Allergy test included.</p>
-          <p class="mt-3 font-bold">from €35</p>
+      </div>
+    </section>
+
+    <!-- ==================== NOSOTROS ==================== -->
+    <section id="nosotros" class="scroll-mt-24 bg-sand py-24 lg:py-32">
+      <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-20 lg:px-8">
+        <div data-reveal class="relative">
+          <img
+            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80"
+            alt="Estilista trabajando en el salón"
+            loading="lazy"
+            class="h-[420px] w-full rounded-2xl object-cover shadow-soft sm:h-[520px]"
+          />
+          <!-- Tarjeta flotante -->
+          <div
+            class="absolute -bottom-6 -right-4 hidden rounded-2xl bg-ink p-6 text-center shadow-soft sm:block lg:-right-8"
+          >
+            <p class="font-display text-4xl text-gold-400">8k+</p>
+            <p class="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">
+              Clientes felices
+            </p>
+          </div>
         </div>
-      </article>
-      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
-        <img class="card-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop" alt="Beard trim" loading="lazy" />
-        <div class="p-5">
-          <h3 class="font-serif text-xl font-bold">Beard & Shave</h3>
-          <p class="text-sm text-ink/60 mt-1">Straight-razor shaping, hot towel and essential oils. 30-min ritual.</p>
-          <p class="mt-3 font-bold">from €15</p>
-        </div>
-      </article>
-      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
-        <img class="card-img" src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop" alt="Event styling" loading="lazy" />
-        <div class="p-5">
-          <h3 class="font-serif text-xl font-bold">Brides & Events</h3>
-          <p class="text-sm text-ink/60 mt-1">Updos, waves and a preview trial. Home service available.</p>
-          <p class="mt-3 font-bold">from €45</p>
-        </div>
-      </article>
-      <article class="bg-white rounded-2xl overflow-hidden border border-ink/10 shadow-sm hover:shadow-lg transition">
-        <img class="card-img" src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=800&auto=format&fit=crop" alt="Hair treatment" loading="lazy" />
-        <div class="p-5">
-          <h3 class="font-serif text-xl font-bold">Treatments</h3>
-          <p class="text-sm text-ink/60 mt-1">Keratin, hair botox and deep hydration for damaged hair.</p>
-          <p class="mt-3 font-bold">from €30</p>
-        </div>
-      </article>
-      <article class="bg-ink text-cream rounded-2xl p-6 flex flex-col justify-between">
+
         <div>
-          <h3 class="font-serif text-xl font-bold">Not sure what to pick?</h3>
-          <p class="text-sm text-cream/70 mt-1">Get a free 10-minute consultation and honest advice, no commitment.</p>
-        </div>
-        <a href="#booking" class="mt-6 bg-gold text-ink font-bold px-5 py-2.5 rounded-full text-center text-sm hover:bg-cream transition">Get a free consultation</a>
-      </article>
-    </div>
-  </section>
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Nosotros</p>
+          <h2
+            data-reveal
+            class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
+          >
+            Un estudio, no una peluquería cualquiera
+          </h2>
 
-  <!-- Gallery -->
-  <section id="gallery" class="bg-sand/60 border-y border-ink/10">
-    <div class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
-      <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Gallery</p>
-      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">Real work, real clients</h2>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-8">
-        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=600&auto=format&fit=crop" alt="Salon interior" loading="lazy" />
-        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=600&auto=format&fit=crop" alt="Modern haircut" loading="lazy" />
-        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=600&auto=format&fit=crop" alt="Professional styling" loading="lazy" />
-        <img class="rounded-xl object-cover w-full h-48 sm:h-64" src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=600&auto=format&fit=crop" alt="Beard detail" loading="lazy" />
-      </div>
-    </div>
-  </section>
+          <p data-reveal class="mt-7 text-base leading-relaxed text-ink/65">
+            Nacimos en 2013 con una idea sencilla: recuperar el tiempo para una misma. En Studio
+            Aurea no hay prisa, hay conversación, café y manos expertas que escuchan antes de
+            cortar.
+          </p>
+          <p data-reveal class="mt-5 text-base leading-relaxed text-ink/65">
+            Formamos parte de un programa de belleza sostenible: trabajamos con marcas veganas,
+            libres de crueldad animal y con envases reciclables.
+          </p>
 
-  <!-- Pricing -->
-  <section id="pricing" class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
-    <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Transparent pricing</p>
-    <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">No surprises at checkout</h2>
+          <ul data-reveal class="mt-9 grid gap-4 sm:grid-cols-2">
+            <li class="flex items-start gap-3 text-sm text-ink/75">
+              <svg
+                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Diagnóstico personalizado
+            </li>
+            <li class="flex items-start gap-3 text-sm text-ink/75">
+              <svg
+                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Producto profesional vegano
+            </li>
+            <li class="flex items-start gap-3 text-sm text-ink/75">
+              <svg
+                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Sin listas de espera eternas
+            </li>
+            <li class="flex items-start gap-3 text-sm text-ink/75">
+              <svg
+                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20 6 9 17l-5-5" />
+              </svg>
+              Café de especialidad gratis
+            </li>
+          </ul>
 
-    <div class="grid md:grid-cols-3 gap-4 sm:gap-6 mt-8">
-      <div class="bg-white border border-ink/10 rounded-2xl p-6">
-        <h3 class="font-serif text-lg font-bold">Essential</h3>
-        <p class="text-4xl font-bold mt-2">€18</p>
-        <p class="text-sm text-ink/60">Quick maintenance</p>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li>✔ Cut + wash</li>
-          <li>✔ Styled finish</li>
-          <li>✔ Style advice</li>
-          <li class="text-ink/40">✘ Hydration treatment</li>
-        </ul>
-        <a href="#booking" class="mt-6 block text-center border-2 border-ink font-bold rounded-full py-2.5 hover:bg-ink hover:text-cream transition">Book</a>
-      </div>
-      <div class="bg-ink text-cream rounded-2xl p-6 relative shadow-xl md:-translate-y-2">
-        <p class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gold text-ink text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</p>
-        <h3 class="font-serif text-lg font-bold">Nova Total</h3>
-        <p class="text-4xl font-bold mt-2">€39</p>
-        <p class="text-sm text-cream/60">The house favorite</p>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li>✔ Cut + premium wash</li>
-          <li>✔ Beard trim or toning</li>
-          <li>✔ Hydration treatment</li>
-          <li>✔ Coffee + touch-up within 15 days</li>
-        </ul>
-        <a href="#booking" class="mt-6 block text-center bg-gold text-ink font-bold rounded-full py-2.5 hover:bg-cream transition">Book</a>
-      </div>
-      <div class="bg-white border border-ink/10 rounded-2xl p-6">
-        <h3 class="font-serif text-lg font-bold">Color Pro</h3>
-        <p class="text-4xl font-bold mt-2">€65</p>
-        <p class="text-sm text-ink/60">Full makeover</p>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li>✔ Balayage or full color</li>
-          <li>✔ Toning + bond protector</li>
-          <li>✔ Free trim</li>
-          <li>✔ At-home care kit</li>
-        </ul>
-        <a href="#booking" class="mt-6 block text-center border-2 border-ink font-bold rounded-full py-2.5 hover:bg-ink hover:text-cream transition">Book</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Reviews -->
-  <section id="reviews" class="bg-ink text-cream">
-    <div class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
-      <p class="text-gold font-bold tracking-widest text-xs sm:text-sm uppercase">Reviews</p>
-      <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">What the neighborhood says</h2>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-        <figure class="bg-cream/10 border border-cream/15 rounded-2xl p-5">
-          <p class="text-gold">★★★★★</p>
-          <blockquote class="mt-2 text-sm leading-relaxed text-cream/85">"The best balayage I've ever had. I walked out of the salon and three people stopped me on the street. I'll definitely be back."</blockquote>
-          <figcaption class="mt-3 text-sm font-bold">Lucia G. <span class="font-normal text-cream/50">· Balayage</span></figcaption>
-        </figure>
-        <figure class="bg-cream/10 border border-cream/15 rounded-2xl p-5">
-          <p class="text-gold">★★★★★</p>
-          <blockquote class="mt-2 text-sm leading-relaxed text-cream/85">"Punctual, professional, and the hot towel beard treatment is on another level. My go-to place for 2 years."</blockquote>
-          <figcaption class="mt-3 text-sm font-bold">Marcus R. <span class="font-normal text-cream/50">· Beard + cut</span></figcaption>
-        </figure>
-        <figure class="bg-cream/10 border border-cream/15 rounded-2xl p-5">
-          <p class="text-gold">★★★★★</p>
-          <blockquote class="mt-2 text-sm leading-relaxed text-cream/85">"They styled my hair for my sister's wedding — it held perfectly all night. Such a warm, caring team."</blockquote>
-          <figcaption class="mt-3 text-sm font-bold">Carmen D. <span class="font-normal text-cream/50">· Event updo</span></figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- Booking -->
-  <section id="booking" class="max-w-6xl mx-auto px-4 py-14 sm:py-20">
-    <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch">
-      <div>
-        <p class="text-golddark font-bold tracking-widest text-xs sm:text-sm uppercase">Book your appointment</p>
-        <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-1">We'll call you back within 2 hours</h2>
-        <p class="text-ink/60 mt-2">Leave your details and we'll confirm via WhatsApp. No upfront payment.</p>
-        <ul class="mt-6 space-y-3 text-sm">
-          <li class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-ink text-gold grid place-items-center text-xs font-bold">1</span> Choose your service and preferred time</li>
-          <li class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-ink text-gold grid place-items-center text-xs font-bold">2</span> We'll confirm via WhatsApp</li>
-          <li class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-ink text-gold grid place-items-center text-xs font-bold">3</span> Come in and enjoy a coffee ☕</li>
-        </ul>
-        <div class="mt-6 bg-sand/70 border border-ink/10 rounded-2xl p-4 text-sm">
-          <p class="font-bold">📍 24 Main Street, Madrid</p>
-          <p class="text-ink/60">Mon – Sat · 9:00 AM – 8:00 PM · Sol Metro</p>
+          <a
+            href="#contacto"
+            class="mt-10 inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-coal"
+          >
+            Conócenos en persona
+            <svg
+              class="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </a>
         </div>
       </div>
-      <form class="bg-white border border-ink/10 rounded-2xl p-6 shadow-sm space-y-4" onsubmit="event.preventDefault(); document.getElementById('ok').classList.remove('hidden'); this.reset();">
-        <div class="grid sm:grid-cols-2 gap-4">
-          <label class="block text-sm font-medium">Name
-            <input required type="text" placeholder="Your name" class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 outline-none focus:border-golddark focus:ring-2 focus:ring-gold/40" />
-          </label>
-          <label class="block text-sm font-medium">Phone
-            <input required type="tel" placeholder="600 123 456" class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 outline-none focus:border-golddark focus:ring-2 focus:ring-gold/40" />
-          </label>
-        </div>
-        <label class="block text-sm font-medium">Service
-          <select class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 bg-white outline-none focus:border-golddark">
-            <option>Cut + styling — €18</option>
-            <option>Nova Total (cut + beard) — €39</option>
-            <option>Color / Balayage — from €65</option>
-            <option>Beard & shave — €15</option>
-            <option>Brides & events — from €45</option>
-          </select>
-        </label>
-        <div class="grid sm:grid-cols-2 gap-4">
-          <label class="block text-sm font-medium">Preferred date
-            <input required type="date" class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 outline-none focus:border-golddark" />
-          </label>
-          <label class="block text-sm font-medium">Time
-            <select class="mt-1 w-full border border-ink/20 rounded-xl px-3 py-2.5 bg-white outline-none focus:border-golddark">
-              <option>Morning (9 AM – 1 PM)</option>
-              <option>Midday (1 – 4 PM)</option>
-              <option>Afternoon (4 – 8 PM)</option>
-            </select>
-          </label>
-        </div>
-        <button type="submit" class="w-full bg-ink text-cream font-bold rounded-full py-3 hover:bg-golddark transition">Confirm booking →</button>
-        <p id="ok" class="hidden text-sm font-semibold text-green-700 bg-green-50 border border-green-200 rounded-xl px-3 py-2">✅ Thank you! We'll message you on WhatsApp to confirm.</p>
-        <p class="text-xs text-ink/50 text-center">By booking you accept our cancellation policy (3h notice).</p>
-      </form>
-    </div>
-  </section>
+    </section>
 
-  <!-- Footer -->
-  <footer id="contact" class="bg-ink text-cream">
-    <div class="max-w-6xl mx-auto px-4 py-10 grid sm:grid-cols-3 gap-8 text-sm">
-      <div>
-        <p class="font-serif text-xl font-bold">Nova <span class="text-gold">Studio</span></p>
-        <p class="text-cream/60 mt-2">A neighborhood hair salon & barbershop with a runway finish. Coffee and good conversation on us.</p>
-      </div>
-      <div>
-        <p class="font-bold mb-2">Contact</p>
-        <p class="text-cream/70">24 Main Street, Madrid</p>
-        <p class="text-cream/70">910 000 000 · hello@novastudio.com</p>
-        <p class="text-cream/70">Mon – Sat · 9:00 AM – 8:00 PM</p>
-      </div>
-      <div>
-        <p class="font-bold mb-2">Follow us</p>
-        <div class="flex gap-2">
-          <a href="#" class="border border-cream/25 rounded-full px-4 py-2 hover:bg-gold hover:text-ink hover:border-gold transition">Instagram</a>
-          <a href="#" class="border border-cream/25 rounded-full px-4 py-2 hover:bg-gold hover:text-ink hover:border-gold transition">TikTok</a>
+    <!-- ==================== GALERÍA ==================== -->
+    <section id="galeria" class="scroll-mt-24 bg-ink py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <div class="max-w-xl">
+            <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-400">Galería</p>
+            <h2
+              data-reveal
+              class="gold-line mt-4 font-display text-4xl leading-tight text-white sm:text-5xl"
+            >
+              Nuestro trabajo habla
+            </h2>
+          </div>
+          <p data-reveal class="max-w-sm text-sm leading-relaxed text-white/50">
+            Una selección de transformaciones reales hechas en el estudio. Síguenos en Instagram
+            para ver más.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
+          <a
+            href="#"
+            class="group relative col-span-2 overflow-hidden rounded-2xl lg:col-span-1 lg:row-span-2"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=80"
+              alt="Balayage rubio"
+              loading="lazy"
+              class="h-64 w-full object-cover transition duration-700 group-hover:scale-105 lg:h-full"
+            />
+            <span
+              class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent opacity-0 transition group-hover:opacity-100"
+            ></span>
+            <span
+              class="absolute bottom-5 left-5 translate-y-3 text-sm uppercase tracking-[0.2em] text-white opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+              >Balayage</span
+            >
+          </a>
+
+          <a href="#" class="group relative overflow-hidden rounded-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80"
+              alt="Corte de barbería"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
+            />
+            <span
+              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
+            ></span>
+          </a>
+
+          <a href="#" class="group relative overflow-hidden rounded-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=700&q=80"
+              alt="Peinado de novia"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
+            />
+            <span
+              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
+            ></span>
+          </a>
+
+          <a href="#" class="group relative overflow-hidden rounded-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=700&q=80"
+              alt="Detalle de color"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
+            />
+            <span
+              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
+            ></span>
+          </a>
+
+          <a href="#" class="group relative overflow-hidden rounded-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=700&q=80"
+              alt="Interior del salón"
+              loading="lazy"
+              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
+            />
+            <span
+              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
+            ></span>
+          </a>
         </div>
       </div>
-    </div>
-    <div class="border-t border-cream/15">
-      <p class="max-w-6xl mx-auto px-4 py-4 text-xs text-cream/50">© 2026 Nova Studio · Made with scissors and love in Madrid</p>
-    </div>
-  </footer>
+    </section>
 
-</body>
+    <!-- ==================== PRECIOS ==================== -->
+    <section id="precios" class="scroll-mt-24 bg-cream py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mx-auto mb-16 max-w-2xl text-center">
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Tarifas</p>
+          <h2 data-reveal class="mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl">
+            Precios claros, sin sorpresas
+          </h2>
+          <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
+            El precio final puede variar según la longitud y densidad del cabello. Te confirmamos
+            todo antes de empezar.
+          </p>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-3">
+          <!-- Plan 1 -->
+          <div
+            data-reveal
+            class="flex flex-col rounded-2xl border border-ink/10 bg-white p-9 transition hover:shadow-soft"
+          >
+            <h3 class="font-display text-2xl text-ink">Esencial</h3>
+            <p class="mt-2 text-sm text-ink/55">Para mantener tu estilo al día</p>
+            <p class="mt-7 font-display text-5xl text-ink">
+              <span class="align-top text-2xl text-gold-500">€</span>28
+            </p>
+            <ul class="mt-8 flex-1 space-y-3.5 text-sm text-ink/70">
+              <li class="flex gap-3">
+                <span class="text-gold-500">—</span> Lavado y masaje capilar
+              </li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Corte personalizado</li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Secado y peinado</li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Asesoría de producto</li>
+            </ul>
+            <a
+              href="#contacto"
+              class="mt-9 rounded-full border border-ink/20 py-3.5 text-center text-[13px] uppercase tracking-[0.18em] text-ink transition hover:border-ink hover:bg-ink hover:text-white"
+            >
+              Reservar
+            </a>
+          </div>
+
+          <!-- Plan 2 (destacado) -->
+          <div
+            data-reveal
+            class="relative flex flex-col rounded-2xl bg-ink p-9 shadow-soft lg:-mt-4 lg:mb-4"
+          >
+            <span
+              class="absolute right-8 top-8 rounded-full bg-gold-400 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink"
+            >
+              Más pedido
+            </span>
+            <h3 class="font-display text-2xl text-white">Color</h3>
+            <p class="mt-2 text-sm text-white/50">Color, mechas o balayage</p>
+            <p class="mt-7 font-display text-5xl text-white">
+              <span class="align-top text-2xl text-gold-400">€</span>65
+            </p>
+            <ul class="mt-8 flex-1 space-y-3.5 text-sm text-white/70">
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Diagnóstico de tono</li>
+              <li class="flex gap-3">
+                <span class="text-gold-400">—</span> Coloración sin amoniaco
+              </li>
+              <li class="flex gap-3">
+                <span class="text-gold-400">—</span> Tratamiento post-color
+              </li>
+              <li class="flex gap-3">
+                <span class="text-gold-400">—</span> Corte de puntas incluido
+              </li>
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Peinado final</li>
+            </ul>
+            <a
+              href="#contacto"
+              class="mt-9 rounded-full bg-gold-400 py-3.5 text-center text-[13px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-300"
+            >
+              Reservar
+            </a>
+          </div>
+
+          <!-- Plan 3 -->
+          <div
+            data-reveal
+            class="flex flex-col rounded-2xl border border-ink/10 bg-white p-9 transition hover:shadow-soft"
+          >
+            <h3 class="font-display text-2xl text-ink">Ritual</h3>
+            <p class="mt-2 text-sm text-ink/55">Experiencia completa de cuidado</p>
+            <p class="mt-7 font-display text-5xl text-ink">
+              <span class="align-top text-2xl text-gold-500">€</span>95
+            </p>
+            <ul class="mt-8 flex-1 space-y-3.5 text-sm text-ink/70">
+              <li class="flex gap-3">
+                <span class="text-gold-500">—</span> Todo lo del plan Color
+              </li>
+              <li class="flex gap-3">
+                <span class="text-gold-500">—</span> Tratamiento de keratina
+              </li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Masaje capilar 15 min</li>
+              <li class="flex gap-3">
+                <span class="text-gold-500">—</span> Manicura exprés de regalo
+              </li>
+            </ul>
+            <a
+              href="#contacto"
+              class="mt-9 rounded-full border border-ink/20 py-3.5 text-center text-[13px] uppercase tracking-[0.18em] text-ink transition hover:border-ink hover:bg-ink hover:text-white"
+            >
+              Reservar
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TESTIMONIOS ==================== -->
+    <section class="bg-sand py-24 lg:py-32">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="mx-auto mb-16 max-w-2xl text-center">
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">
+            Testimonios
+          </p>
+          <h2 data-reveal class="mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl">
+            Lo que dicen nuestras clientas
+          </h2>
+        </div>
+
+        <div class="grid gap-6 lg:grid-cols-3">
+          <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
+            <div class="flex gap-1 text-gold-500" aria-label="5 de 5 estrellas">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
+              "Llevaba años sin encontrar un sitio donde entendieran mi rizo. Aquí no solo me lo
+              cortaron bien, me enseñaron a cuidarlo en casa."
+            </blockquote>
+            <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
+              <span
+                class="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-display text-gold-400"
+                >M</span
+              >
+              <span>
+                <span class="block text-sm font-medium text-ink">María Contreras</span>
+                <span class="block text-xs text-ink/50">Clienta desde 2019</span>
+              </span>
+            </figcaption>
+          </figure>
+
+          <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
+            <div class="flex gap-1 text-gold-500" aria-label="5 de 5 estrellas">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
+              "El balayage me duró impecable más de seis meses. Se nota que trabajan el color con
+              muchísimo criterio y cuidan la fibra."
+            </blockquote>
+            <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
+              <span
+                class="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-display text-gold-400"
+                >L</span
+              >
+              <span>
+                <span class="block text-sm font-medium text-ink">Lucía Ferrer</span>
+                <span class="block text-xs text-ink/50">Clienta desde 2021</span>
+              </span>
+            </figcaption>
+          </figure>
+
+          <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
+            <div class="flex gap-1 text-gold-500" aria-label="5 de 5 estrellas">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+            </div>
+            <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
+              "Me peinaron para mi boda y fue perfecto: aguantó 14 horas de baile. Además el trato
+              fue cercanísimo de principio a fin."
+            </blockquote>
+            <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
+              <span
+                class="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-display text-gold-400"
+                >A</span
+              >
+              <span>
+                <span class="block text-sm font-medium text-ink">Andrea Ruiz</span>
+                <span class="block text-xs text-ink/50">Novia · Junio 2024</span>
+              </span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACTO ==================== -->
+    <section id="contacto" class="scroll-mt-24 bg-cream py-24 lg:py-32">
+      <div class="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-5 lg:gap-20 lg:px-8">
+        <!-- Info -->
+        <div class="lg:col-span-2">
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Contacto</p>
+          <h2
+            data-reveal
+            class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
+          >
+            Reserva tu cita
+          </h2>
+          <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
+            Rellena el formulario y te confirmamos disponibilidad en menos de 24 horas. Si lo
+            prefieres, llámanos o escríbenos por WhatsApp.
+          </p>
+
+          <ul data-reveal class="mt-10 space-y-6 text-sm">
+            <li class="flex gap-4">
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-medium text-ink">Dirección</span>
+                <span class="block text-ink/60">Calle Mayor 42, 28013 Madrid</span>
+              </span>
+            </li>
+            <li class="flex gap-4">
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"
+                  />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-medium text-ink">Teléfono</span>
+                <a href="tel:+34912345678" class="block text-ink/60 transition hover:text-gold-600"
+                  >+34 912 345 678</a
+                >
+              </span>
+            </li>
+            <li class="flex gap-4">
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3.5 7 8.5 6 8.5-6" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-medium text-ink">Email</span>
+                <a
+                  href="mailto:hola@studioaurea.es"
+                  class="block text-ink/60 transition hover:text-gold-600"
+                  >hola@studioaurea.es</a
+                >
+              </span>
+            </li>
+            <li class="flex gap-4">
+              <span
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3.5 2" />
+                </svg>
+              </span>
+              <span>
+                <span class="block font-medium text-ink">Horario</span>
+                <span class="block text-ink/60">Lun – Vie · 10:00 a 20:00</span>
+                <span class="block text-ink/60">Sábado · 10:00 a 14:00</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Formulario -->
+        <div data-reveal class="lg:col-span-3">
+          <form class="rounded-2xl border border-ink/8 bg-white p-7 shadow-soft sm:p-10" novalidate>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="sm:col-span-1">
+                <label
+                  for="nombre"
+                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
+                  >Nombre</label
+                >
+                <input
+                  id="nombre"
+                  name="nombre"
+                  type="text"
+                  placeholder="Tu nombre"
+                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
+                />
+              </div>
+
+              <div class="sm:col-span-1">
+                <label
+                  for="telefono"
+                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
+                  >Teléfono</label
+                >
+                <input
+                  id="telefono"
+                  name="telefono"
+                  type="tel"
+                  placeholder="600 000 000"
+                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
+                />
+              </div>
+
+              <div class="sm:col-span-1">
+                <label
+                  for="email"
+                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
+                  >Email</label
+                >
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="tu@email.com"
+                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
+                />
+              </div>
+
+              <div class="sm:col-span-1">
+                <label
+                  for="fecha"
+                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
+                  >Fecha deseada</label
+                >
+                <input
+                  id="fecha"
+                  name="fecha"
+                  type="date"
+                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label
+                  for="servicio"
+                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
+                  >Servicio</label
+                >
+                <select
+                  id="servicio"
+                  name="servicio"
+                  class="w-full appearance-none rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
+                >
+                  <option value="">Selecciona un servicio</option>
+                  <option>Corte &amp; Estilo</option>
+                  <option>Color &amp; Balayage</option>
+                  <option>Tratamiento capilar</option>
+                  <option>Peinado de evento</option>
+                  <option>Barbería</option>
+                  <option>Novias &amp; Editorial</option>
+                </select>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label
+                  for="mensaje"
+                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
+                  >Mensaje</label
+                >
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  rows="4"
+                  placeholder="Cuéntanos qué necesitas..."
+                  class="w-full resize-none rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
+                ></textarea>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="mt-7 w-full rounded-full bg-ink py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-gold-500 hover:text-ink sm:w-auto sm:px-12"
+            >
+              Enviar solicitud
+            </button>
+
+            <p class="mt-5 text-xs leading-relaxed text-ink/45">
+              Al enviar aceptas nuestra política de privacidad. Solo usaremos tus datos para
+              gestionar tu cita.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-ink pt-20 pb-10 text-white/60">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="grid gap-12 pb-14 lg:grid-cols-4">
+          <div class="lg:col-span-2">
+            <a href="#inicio" class="flex items-center gap-2.5">
+              <span
+                class="flex h-9 w-9 items-center justify-center rounded-full border border-gold-400/60 font-display text-sm text-gold-400"
+                >A</span
+              >
+              <span class="font-display text-xl tracking-wide text-white"
+                >Studio <span class="text-gold-400">Aurea</span></span
+              >
+            </a>
+            <p class="mt-6 max-w-sm text-sm leading-relaxed">
+              Peluquería y estilismo de autor en el centro de Madrid. Color, corte y tratamientos
+              con producto vegano desde 2013.
+            </p>
+
+            <div class="mt-7 flex gap-3">
+              <a
+                href="#"
+                aria-label="Instagram"
+                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition hover:border-gold-400 hover:text-gold-400"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" />
+                </svg>
+              </a>
+              <a
+                href="#"
+                aria-label="Facebook"
+                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition hover:border-gold-400 hover:text-gold-400"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13V9a1 1 0 0 1 1-1Z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="#"
+                aria-label="TikTok"
+                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition hover:border-gold-400 hover:text-gold-400"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M15 4v9.5a3.5 3.5 0 1 1-3.5-3.5" />
+                  <path d="M15 5.5A4.5 4.5 0 0 0 19.5 10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Servicios</h3>
+            <ul class="mt-5 space-y-3 text-sm">
+              <li>
+                <a href="#servicios" class="transition hover:text-gold-400">Corte &amp; Estilo</a>
+              </li>
+              <li>
+                <a href="#servicios" class="transition hover:text-gold-400">Color &amp; Balayage</a>
+              </li>
+              <li><a href="#servicios" class="transition hover:text-gold-400">Tratamientos</a></li>
+              <li><a href="#servicios" class="transition hover:text-gold-400">Barbería</a></li>
+              <li><a href="#servicios" class="transition hover:text-gold-400">Novias</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Estudio</h3>
+            <ul class="mt-5 space-y-3 text-sm">
+              <li><a href="#nosotros" class="transition hover:text-gold-400">Sobre nosotros</a></li>
+              <li><a href="#galeria" class="transition hover:text-gold-400">Galería</a></li>
+              <li><a href="#precios" class="transition hover:text-gold-400">Tarifas</a></li>
+              <li><a href="#contacto" class="transition hover:text-gold-400">Contacto</a></li>
+              <li><a href="#" class="transition hover:text-gold-400">Trabaja con nosotros</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row sm:items-center sm:justify-between"
+        >
+          <p>© 2025 Studio Aurea. Todos los derechos reservados.</p>
+          <div class="flex gap-6">
+            <a href="#" class="transition hover:text-gold-400">Aviso legal</a>
+            <a href="#" class="transition hover:text-gold-400">Privacidad</a>
+            <a href="#" class="transition hover:text-gold-400">Cookies</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Botón flotante WhatsApp -->
+    <a
+      href="https://wa.me/34912345678"
+      target="_blank"
+      rel="noopener"
+      aria-label="Escríbenos por WhatsApp"
+      class="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-gold-400 text-ink shadow-soft transition hover:scale-105 hover:bg-gold-300"
+    >
+      <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.32 4.94L2 22l5.36-1.4c1.45.79 3.08 1.2 4.68 1.2h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.76 9.76 0 0 0 12.04 2Zm0 17.98h-.01c-1.4 0-2.78-.38-3.98-1.09l-.29-.17-2.96.78.79-2.89-.19-.3a8.15 8.15 0 0 1-1.25-4.35c0-4.52 3.68-8.2 8.2-8.2 2.19 0 4.25.86 5.79 2.4a8.14 8.14 0 0 1 2.4 5.8c0 4.52-3.68 8.19-8.2 8.19Zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.39-.13-.55.12-.17.25-.64.8-.78.97-.14.16-.29.18-.54.06-.25-.13-1.04-.39-1.99-1.23-.73-.66-1.23-1.46-1.37-1.71-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.33-.75-1.82-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.31-.22.25-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.52.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.47-.28Z"
+        />
+      </svg>
+    </a>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+      /* ---------- Navbar con fondo al hacer scroll ---------- */
+      const navbar = document.getElementById("navbar");
+      const onScroll = () => navbar.classList.toggle("nav-scrolled", window.scrollY > 40);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      /* ---------- Menú móvil ---------- */
+      const menuBtn = document.getElementById("menuBtn");
+      const menu = document.getElementById("mobileMenu");
+      const iconOpen = document.getElementById("iconOpen");
+      const iconClose = document.getElementById("iconClose");
+
+      const toggleMenu = (force) => {
+        const abrir = force ?? menu.classList.contains("hidden");
+        menu.classList.toggle("hidden", !abrir);
+        iconOpen.classList.toggle("hidden", abrir);
+        iconClose.classList.toggle("hidden", !abrir);
+        menuBtn.setAttribute("aria-label", abrir ? "Cerrar menú" : "Abrir menú");
+      };
+
+      menuBtn.addEventListener("click", () => toggleMenu());
+      document
+        .querySelectorAll(".mobile-link")
+        .forEach((l) => l.addEventListener("click", () => toggleMenu(false)));
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 1024) toggleMenu(false);
+      });
+
+      /* ---------- Animación de aparición al hacer scroll ---------- */
+      const elementos = document.querySelectorAll("[data-reveal]");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entradas) => {
+            entradas.forEach((entrada, i) => {
+              if (entrada.isIntersecting) {
+                entrada.target.style.transitionDelay = Math.min(i * 90, 360) + "ms";
+                entrada.target.classList.add("is-visible");
+                observer.unobserve(entrada.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+        );
+
+        elementos.forEach((el) => observer.observe(el));
+      } else {
+        elementos.forEach((el) => el.classList.add("is-visible"));
+      }
+
+      /* ---------- Formulario (demo) ---------- */
+      document.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert(
+          "¡Gracias! Hemos recibido tu solicitud. Te confirmaremos la cita en menos de 24 horas.",
+        );
+        e.target.reset();
+      });
+    </script>
+  </body>
 </html>
