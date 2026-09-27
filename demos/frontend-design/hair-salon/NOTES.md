@@ -1,6 +1,3 @@
-> Recipe used to generate `after.html` from `before.html` for the
-> `frontend-design / hair-salon` comparison case.
-
 Act as a meticulous front-end engineer. Your task is to improve an existing HTML file by strictly following a provided skill.
 
 Inputs:

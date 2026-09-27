@@ -6,10 +6,11 @@ Each case is a folder with a `before` (original) and an `after` (skill applied):
 ```
 demos/
   <skill-slug>/
-    <case-id>/
+    <source-id>/
       before.html   # original, self-contained
       after.html    # improved with the skill, self-contained
-      NOTES.md      # recipe: prompt + skill used (optional but recommended)
+      BEFORE.md     # how before.html was made: model + prompt
+      NOTES.md      # recipe: prompt + skill used for after.html
 ```
 
 Screenshots are generated from these files into
@@ -20,17 +21,26 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
 
 ## Add a new comparison (5 steps)
 
-1. **Create the case folder** with self-contained `before.html` and `after.html`
+1. **Create the source folder** with self-contained `before.html` and `after.html`
    (inline CSS/JS; remote fonts and images are fine):
-   `demos/<skill-slug>/<case-id>/`
-2. **Document the recipe** in `NOTES.md` (which skill + prompt produced `after.html`).
-3. **Register the case** in `src/data/comparisons.json` (must match
+   `demos/<skill-slug>/<source-id>/`. One source can feed several cases
+   (e.g. one per page section).
+2. **Document provenance**: `BEFORE.md` (which model + prompt produced
+   `before.html`) and `NOTES.md` (which skill + prompt produced `after.html`).
+   Both are shown on the site next to each slider.
+3. **Register the case(s)** in `src/data/comparisons.json` (must match
    `src/data/comparisons.schema.json`):
    ```json
-   { "id": "<case-id>", "skill": "<skill-slug>", "label": "Human readable label",
+   { "id": "<case-id>", "skill": "<skill-slug>", "source": "<source-id>",
+     "label": "Human readable label", "anchor": "<element-id>",
      "viewport": { "width": 1280, "height": 800 }, "fullPage": false }
    ```
-   Keep `viewport` identical for before/after — it defines the slider aspect ratio.
+   - `source` defaults to the case id when one folder = one case.
+   - `anchor` is optional: scrolls to that element id before capturing,
+     so long pages can be compared section by section.
+   - Keep `viewport` identical for before/after — it defines the slider aspect ratio.
+   - Shared model/effort provenance goes in the top-level `sources` map
+     so section cases don't repeat it.
 4. **Link it from the skill** in `src/data/registry-skills.json`:
    `"comparisons": ["<case-id>"]` (first entry = primary, used for OG image).
 5. **Capture the screenshots** (requires the `playwright-cli` binary):
