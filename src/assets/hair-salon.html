@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Studio Aurea · Peluquería y Estilismo</title>
+    <title>Studio Aurea · Hair Salon and Styling</title>
     <meta
       name="description"
-      content="Peluquería y estilismo de autor. Cortes, color, balayage y tratamientos personalizados en un espacio diseñado para ti."
+      content="Signature hair salon and styling. Cuts, color, balayage and personalized treatments in a space designed for you."
     />
 
-    <!-- Fuentes -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -52,7 +52,7 @@
         scroll-behavior: smooth;
       }
 
-      /* Barra de navegación con fondo al hacer scroll */
+      /* Navbar with background on scroll */
       .nav-scrolled {
         background-color: rgba(20, 18, 16, 0.92);
         backdrop-filter: blur(12px);
@@ -60,7 +60,7 @@
         box-shadow: 0 12px 34px -18px rgba(0, 0, 0, 0.8);
       }
 
-      /* Animación de aparición (solo si JS está activo) */
+      /* Reveal animation (only if JS is active) */
       .js [data-reveal] {
         opacity: 0;
         transform: translateY(26px);
@@ -73,7 +73,7 @@
         transform: none;
       }
 
-      /* Línea decorativa dorada */
+      /* Decorative gold line */
       .gold-line::after {
         content: "";
         display: block;
@@ -83,7 +83,7 @@
         margin-top: 1.25rem;
       }
 
-      /* Scrollbar sutil */
+      /* Subtle scrollbar */
       ::-webkit-scrollbar {
         width: 10px;
       }
@@ -128,32 +128,32 @@
             </span>
           </a>
 
-          <!-- Navegación escritorio -->
+          <!-- Desktop navigation -->
           <nav class="hidden items-center gap-9 lg:flex">
             <a
               href="#servicios"
               class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Servicios</a
+              >Services</a
             >
             <a
               href="#nosotros"
               class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Nosotros</a
+              >About</a
             >
             <a
               href="#galeria"
               class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Galería</a
+              >Gallery</a
             >
             <a
               href="#precios"
               class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Precios</a
+              >Pricing</a
             >
             <a
               href="#contacto"
               class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Contacto</a
+              >Contact</a
             >
           </nav>
 
@@ -161,14 +161,14 @@
             href="#contacto"
             class="hidden rounded-full border border-gold-400 px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] text-gold-400 transition hover:bg-gold-400 hover:text-ink lg:inline-block"
           >
-            Reservar cita
+            Book appointment
           </a>
 
-          <!-- Botón menú móvil -->
+          <!-- Mobile menu button -->
           <button
             id="menuBtn"
             type="button"
-            aria-label="Abrir menú"
+            aria-label="Open menu"
             class="rounded-md p-2 text-white transition hover:text-gold-400 lg:hidden"
           >
             <svg
@@ -195,7 +195,7 @@
         </div>
       </div>
 
-      <!-- Menú móvil -->
+      <!-- Mobile menu -->
       <div
         id="mobileMenu"
         class="hidden border-t border-white/10 bg-ink/98 backdrop-blur lg:hidden"
@@ -204,33 +204,33 @@
           <a
             href="#servicios"
             class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Servicios</a
+            >Services</a
           >
           <a
             href="#nosotros"
             class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Nosotros</a
+            >About</a
           >
           <a
             href="#galeria"
             class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Galería</a
+            >Gallery</a
           >
           <a
             href="#precios"
             class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Precios</a
+            >Pricing</a
           >
           <a
             href="#contacto"
             class="mobile-link py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Contacto</a
+            >Contact</a
           >
           <a
             href="#contacto"
             class="mobile-link mb-4 mt-2 rounded-full bg-gold-400 py-3 text-center text-sm uppercase tracking-[0.18em] text-ink"
           >
-            Reservar cita
+            Book appointment
           </a>
         </nav>
       </div>
@@ -240,7 +240,7 @@
     <section id="inicio" class="relative flex min-h-screen items-center overflow-hidden">
       <img
         src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80"
-        alt="Interior de la peluquería Studio Aurea"
+        alt="Interior of Studio Aurea salon"
         class="absolute inset-0 h-full w-full object-cover"
       />
       <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30"></div>
@@ -253,20 +253,20 @@
             class="mb-6 flex items-center gap-3 text-[12px] uppercase tracking-[0.35em] text-gold-400"
           >
             <span class="h-px w-10 bg-gold-400"></span>
-            Peluquería &amp; Estilismo
+            Hair Salon &amp; Styling
           </p>
 
           <h1
             data-reveal
             class="font-display text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl"
           >
-            Tu cabello,
-            <span class="block italic text-gold-400">tu mejor versión</span>
+            Your hair,
+            <span class="block italic text-gold-400">your best version</span>
           </h1>
 
           <p data-reveal class="mt-7 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-            Cortes de autor, color personalizado y tratamientos que cuidan tu fibra capilar. Un
-            espacio íntimo donde cada detalle está pensado para que salgas renovada.
+            Signature cuts, personalized color and treatments that care for your hair fiber. An
+            intimate space where every detail is designed for you to leave feeling renewed.
           </p>
 
           <div data-reveal class="mt-10 flex flex-wrap items-center gap-4">
@@ -274,7 +274,7 @@
               href="#contacto"
               class="group inline-flex items-center gap-3 rounded-full bg-gold-400 px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-300"
             >
-              Reserva tu cita
+              Book your appointment
               <svg
                 class="h-4 w-4 transition-transform group-hover:translate-x-1"
                 fill="none"
@@ -289,7 +289,7 @@
               href="#servicios"
               class="inline-flex items-center rounded-full border border-white/25 px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:border-gold-400 hover:text-gold-400"
             >
-              Ver servicios
+              View services
             </a>
           </div>
 
@@ -300,36 +300,36 @@
             <div>
               <p class="font-display text-2xl text-gold-400">12+</p>
               <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">
-                Años de experiencia
+                Years of experience
               </p>
             </div>
             <div>
               <p class="font-display text-2xl text-gold-400">4.9★</p>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Valoración media</p>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Average rating</p>
             </div>
             <div>
               <p class="font-display text-2xl text-gold-400">100%</p>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Producto vegano</p>
+              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Vegan products</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== SERVICIOS ==================== -->
+    <!-- ==================== SERVICES ==================== -->
     <section id="servicios" class="scroll-mt-24 bg-cream py-24 lg:py-32">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="mb-16 max-w-2xl">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Servicios</p>
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Services</p>
           <h2
             data-reveal
             class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
           >
-            Todo lo que tu pelo necesita
+            Everything your hair needs
           </h2>
           <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
-            Trabajamos con diagnóstico previo y productos profesionales. Cada servicio se adapta a
-            tu tipo de cabello, tu rutina y tu estilo de vida.
+            We work with a prior diagnosis and professional products. Each service adapts to your
+            hair type, routine and lifestyle.
           </p>
         </div>
 
@@ -356,10 +356,10 @@
                 <path d="M8.2 7.7 20 18M8.2 16.3 20 6" />
               </svg>
             </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Corte &amp; Estilo</h3>
+            <h3 class="mt-6 font-display text-2xl text-ink">Cut &amp; Style</h3>
             <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Corte personalizado según la forma de tu rostro, textura y rutina. Incluye lavado,
-              masaje y peinado final.
+              Personalized haircut based on your face shape, texture and routine. Includes wash,
+              massage and final styling.
             </p>
           </article>
 
@@ -385,8 +385,8 @@
             </span>
             <h3 class="mt-6 font-display text-2xl text-ink">Color &amp; Balayage</h3>
             <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Coloración sin amoniaco, mechas, balayage y corrección de color. Estudio de tono
-              previo para un resultado natural.
+              Ammonia-free coloring, highlights, balayage and color correction. Prior tone study for
+              a natural result.
             </p>
           </article>
 
@@ -412,10 +412,9 @@
                 />
               </svg>
             </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Tratamientos</h3>
+            <h3 class="mt-6 font-display text-2xl text-ink">Treatments</h3>
             <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Hidratación profunda, keratina, botox capilar y anticaída. Diagnóstico del cuero
-              cabelludo incluido.
+              Deep hydration, keratin, hair botox and anti-hair loss. Scalp diagnosis included.
             </p>
           </article>
 
@@ -439,10 +438,10 @@
                 <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8Z" />
               </svg>
             </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Peinados de evento</h3>
+            <h3 class="mt-6 font-display text-2xl text-ink">Event hairstyles</h3>
             <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Recogidos, ondas y semirecogidos para bodas, graduaciones y celebraciones. Prueba
-              previa disponible.
+              Updos, waves and half-up styles for weddings, graduations and celebrations. Trial
+              available.
             </p>
           </article>
 
@@ -467,10 +466,9 @@
                 <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
               </svg>
             </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Barbería</h3>
+            <h3 class="mt-6 font-display text-2xl text-ink">Barbering</h3>
             <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Corte masculino, arreglo de barba, perfilado y afeitado clásico con navaja y toalla
-              caliente.
+              Men's cut, beard trim, lining and classic straight-razor shave with hot towel.
             </p>
           </article>
 
@@ -496,54 +494,51 @@
                 />
               </svg>
             </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Novias &amp; Editorial</h3>
+            <h3 class="mt-6 font-display text-2xl text-ink">Brides &amp; Editorial</h3>
             <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Asesoría integral para tu gran día, con desplazamiento a domicilio y paquetes para
-              acompañantes.
+              Comprehensive advice for your big day, with home service and packages for companions.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ==================== NOSOTROS ==================== -->
+    <!-- ==================== ABOUT ==================== -->
     <section id="nosotros" class="scroll-mt-24 bg-sand py-24 lg:py-32">
       <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-20 lg:px-8">
         <div data-reveal class="relative">
           <img
             src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80"
-            alt="Estilista trabajando en el salón"
+            alt="Stylist working in the salon"
             loading="lazy"
             class="h-[420px] w-full rounded-2xl object-cover shadow-soft sm:h-[520px]"
           />
-          <!-- Tarjeta flotante -->
+          <!-- Floating card -->
           <div
             class="absolute -bottom-6 -right-4 hidden rounded-2xl bg-ink p-6 text-center shadow-soft sm:block lg:-right-8"
           >
             <p class="font-display text-4xl text-gold-400">8k+</p>
-            <p class="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">
-              Clientes felices
-            </p>
+            <p class="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">Happy clients</p>
           </div>
         </div>
 
         <div>
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Nosotros</p>
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">About</p>
           <h2
             data-reveal
             class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
           >
-            Un estudio, no una peluquería cualquiera
+            A studio, not just any salon
           </h2>
 
           <p data-reveal class="mt-7 text-base leading-relaxed text-ink/65">
-            Nacimos en 2013 con una idea sencilla: recuperar el tiempo para una misma. En Studio
-            Aurea no hay prisa, hay conversación, café y manos expertas que escuchan antes de
-            cortar.
+            We were born in 2013 with a simple idea: to reclaim time for yourself. At Studio Aurea
+            there is no rush, there is conversation, coffee and expert hands that listen before
+            cutting.
           </p>
           <p data-reveal class="mt-5 text-base leading-relaxed text-ink/65">
-            Formamos parte de un programa de belleza sostenible: trabajamos con marcas veganas,
-            libres de crueldad animal y con envases reciclables.
+            We are part of a sustainable beauty program: we work with vegan, cruelty-free brands
+            with recyclable packaging.
           </p>
 
           <ul data-reveal class="mt-9 grid gap-4 sm:grid-cols-2">
@@ -559,7 +554,7 @@
               >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
-              Diagnóstico personalizado
+              Personalized diagnosis
             </li>
             <li class="flex items-start gap-3 text-sm text-ink/75">
               <svg
@@ -573,7 +568,7 @@
               >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
-              Producto profesional vegano
+              Professional vegan products
             </li>
             <li class="flex items-start gap-3 text-sm text-ink/75">
               <svg
@@ -587,7 +582,7 @@
               >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
-              Sin listas de espera eternas
+              No endless waiting lists
             </li>
             <li class="flex items-start gap-3 text-sm text-ink/75">
               <svg
@@ -601,7 +596,7 @@
               >
                 <path d="M20 6 9 17l-5-5" />
               </svg>
-              Café de especialidad gratis
+              Free specialty coffee
             </li>
           </ul>
 
@@ -609,7 +604,7 @@
             href="#contacto"
             class="mt-10 inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-coal"
           >
-            Conócenos en persona
+            Meet us in person
             <svg
               class="h-4 w-4"
               fill="none"
@@ -624,22 +619,22 @@
       </div>
     </section>
 
-    <!-- ==================== GALERÍA ==================== -->
+    <!-- ==================== GALLERY ==================== -->
     <section id="galeria" class="scroll-mt-24 bg-ink py-24 lg:py-32">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div class="max-w-xl">
-            <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-400">Galería</p>
+            <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-400">Gallery</p>
             <h2
               data-reveal
               class="gold-line mt-4 font-display text-4xl leading-tight text-white sm:text-5xl"
             >
-              Nuestro trabajo habla
+              Our work speaks for itself
             </h2>
           </div>
           <p data-reveal class="max-w-sm text-sm leading-relaxed text-white/50">
-            Una selección de transformaciones reales hechas en el estudio. Síguenos en Instagram
-            para ver más.
+            A selection of real transformations done in the studio. Follow us on Instagram to see
+            more.
           </p>
         </div>
 
@@ -650,7 +645,7 @@
           >
             <img
               src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=80"
-              alt="Balayage rubio"
+              alt="Blonde balayage"
               loading="lazy"
               class="h-64 w-full object-cover transition duration-700 group-hover:scale-105 lg:h-full"
             />
@@ -666,7 +661,7 @@
           <a href="#" class="group relative overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80"
-              alt="Corte de barbería"
+              alt="Barbershop cut"
               loading="lazy"
               class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
             />
@@ -678,7 +673,7 @@
           <a href="#" class="group relative overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=700&q=80"
-              alt="Peinado de novia"
+              alt="Bridal hairstyle"
               loading="lazy"
               class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
             />
@@ -690,7 +685,7 @@
           <a href="#" class="group relative overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=700&q=80"
-              alt="Detalle de color"
+              alt="Color detail"
               loading="lazy"
               class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
             />
@@ -702,7 +697,7 @@
           <a href="#" class="group relative overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=700&q=80"
-              alt="Interior del salón"
+              alt="Salon interior"
               loading="lazy"
               class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
             />
@@ -714,17 +709,17 @@
       </div>
     </section>
 
-    <!-- ==================== PRECIOS ==================== -->
+    <!-- ==================== PRICING ==================== -->
     <section id="precios" class="scroll-mt-24 bg-cream py-24 lg:py-32">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="mx-auto mb-16 max-w-2xl text-center">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Tarifas</p>
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Pricing</p>
           <h2 data-reveal class="mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl">
-            Precios claros, sin sorpresas
+            Clear prices, no surprises
           </h2>
           <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
-            El precio final puede variar según la longitud y densidad del cabello. Te confirmamos
-            todo antes de empezar.
+            The final price may vary depending on hair length and density. We confirm everything
+            before starting.
           </p>
         </div>
 
@@ -734,28 +729,28 @@
             data-reveal
             class="flex flex-col rounded-2xl border border-ink/10 bg-white p-9 transition hover:shadow-soft"
           >
-            <h3 class="font-display text-2xl text-ink">Esencial</h3>
-            <p class="mt-2 text-sm text-ink/55">Para mantener tu estilo al día</p>
+            <h3 class="font-display text-2xl text-ink">Essential</h3>
+            <p class="mt-2 text-sm text-ink/55">To keep your style up to date</p>
             <p class="mt-7 font-display text-5xl text-ink">
               <span class="align-top text-2xl text-gold-500">€</span>28
             </p>
             <ul class="mt-8 flex-1 space-y-3.5 text-sm text-ink/70">
               <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Lavado y masaje capilar
+                <span class="text-gold-500">—</span> Hair wash and scalp massage
               </li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Corte personalizado</li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Secado y peinado</li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Asesoría de producto</li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Personalized haircut</li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Blow-dry and styling</li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Product advice</li>
             </ul>
             <a
               href="#contacto"
               class="mt-9 rounded-full border border-ink/20 py-3.5 text-center text-[13px] uppercase tracking-[0.18em] text-ink transition hover:border-ink hover:bg-ink hover:text-white"
             >
-              Reservar
+              Book
             </a>
           </div>
 
-          <!-- Plan 2 (destacado) -->
+          <!-- Plan 2 (featured) -->
           <div
             data-reveal
             class="relative flex flex-col rounded-2xl bg-ink p-9 shadow-soft lg:-mt-4 lg:mb-4"
@@ -763,31 +758,25 @@
             <span
               class="absolute right-8 top-8 rounded-full bg-gold-400 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink"
             >
-              Más pedido
+              Most booked
             </span>
             <h3 class="font-display text-2xl text-white">Color</h3>
-            <p class="mt-2 text-sm text-white/50">Color, mechas o balayage</p>
+            <p class="mt-2 text-sm text-white/50">Color, highlights or balayage</p>
             <p class="mt-7 font-display text-5xl text-white">
               <span class="align-top text-2xl text-gold-400">€</span>65
             </p>
             <ul class="mt-8 flex-1 space-y-3.5 text-sm text-white/70">
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Diagnóstico de tono</li>
-              <li class="flex gap-3">
-                <span class="text-gold-400">—</span> Coloración sin amoniaco
-              </li>
-              <li class="flex gap-3">
-                <span class="text-gold-400">—</span> Tratamiento post-color
-              </li>
-              <li class="flex gap-3">
-                <span class="text-gold-400">—</span> Corte de puntas incluido
-              </li>
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Peinado final</li>
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Tone diagnosis</li>
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Ammonia-free coloring</li>
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Post-color treatment</li>
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Trim included</li>
+              <li class="flex gap-3"><span class="text-gold-400">—</span> Final styling</li>
             </ul>
             <a
               href="#contacto"
               class="mt-9 rounded-full bg-gold-400 py-3.5 text-center text-[13px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-300"
             >
-              Reservar
+              Book
             </a>
           </div>
 
@@ -797,53 +786,51 @@
             class="flex flex-col rounded-2xl border border-ink/10 bg-white p-9 transition hover:shadow-soft"
           >
             <h3 class="font-display text-2xl text-ink">Ritual</h3>
-            <p class="mt-2 text-sm text-ink/55">Experiencia completa de cuidado</p>
+            <p class="mt-2 text-sm text-ink/55">Complete care experience</p>
             <p class="mt-7 font-display text-5xl text-ink">
               <span class="align-top text-2xl text-gold-500">€</span>95
             </p>
             <ul class="mt-8 flex-1 space-y-3.5 text-sm text-ink/70">
               <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Todo lo del plan Color
+                <span class="text-gold-500">—</span> Everything in the Color plan
               </li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> Keratin treatment</li>
+              <li class="flex gap-3"><span class="text-gold-500">—</span> 15-min scalp massage</li>
               <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Tratamiento de keratina
-              </li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Masaje capilar 15 min</li>
-              <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Manicura exprés de regalo
+                <span class="text-gold-500">—</span> Complimentary express manicure
               </li>
             </ul>
             <a
               href="#contacto"
               class="mt-9 rounded-full border border-ink/20 py-3.5 text-center text-[13px] uppercase tracking-[0.18em] text-ink transition hover:border-ink hover:bg-ink hover:text-white"
             >
-              Reservar
+              Book
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== TESTIMONIOS ==================== -->
+    <!-- ==================== TESTIMONIALS ==================== -->
     <section class="bg-sand py-24 lg:py-32">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
         <div class="mx-auto mb-16 max-w-2xl text-center">
           <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">
-            Testimonios
+            Testimonials
           </p>
           <h2 data-reveal class="mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl">
-            Lo que dicen nuestras clientas
+            What our clients say
           </h2>
         </div>
 
         <div class="grid gap-6 lg:grid-cols-3">
           <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
-            <div class="flex gap-1 text-gold-500" aria-label="5 de 5 estrellas">
+            <div class="flex gap-1 text-gold-500" aria-label="5 out of 5 stars">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
             <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
-              "Llevaba años sin encontrar un sitio donde entendieran mi rizo. Aquí no solo me lo
-              cortaron bien, me enseñaron a cuidarlo en casa."
+              "For years I couldn't find a place that understood my curls. Here they didn't just cut
+              it well, they taught me how to care for it at home."
             </blockquote>
             <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
               <span
@@ -852,18 +839,18 @@
               >
               <span>
                 <span class="block text-sm font-medium text-ink">María Contreras</span>
-                <span class="block text-xs text-ink/50">Clienta desde 2019</span>
+                <span class="block text-xs text-ink/50">Client since 2019</span>
               </span>
             </figcaption>
           </figure>
 
           <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
-            <div class="flex gap-1 text-gold-500" aria-label="5 de 5 estrellas">
+            <div class="flex gap-1 text-gold-500" aria-label="5 out of 5 stars">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
             <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
-              "El balayage me duró impecable más de seis meses. Se nota que trabajan el color con
-              muchísimo criterio y cuidan la fibra."
+              "My balayage stayed flawless for more than six months. You can tell they work color
+              with great expertise and care for the hair fiber."
             </blockquote>
             <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
               <span
@@ -872,18 +859,18 @@
               >
               <span>
                 <span class="block text-sm font-medium text-ink">Lucía Ferrer</span>
-                <span class="block text-xs text-ink/50">Clienta desde 2021</span>
+                <span class="block text-xs text-ink/50">Client since 2021</span>
               </span>
             </figcaption>
           </figure>
 
           <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
-            <div class="flex gap-1 text-gold-500" aria-label="5 de 5 estrellas">
+            <div class="flex gap-1 text-gold-500" aria-label="5 out of 5 stars">
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
             </div>
             <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
-              "Me peinaron para mi boda y fue perfecto: aguantó 14 horas de baile. Además el trato
-              fue cercanísimo de principio a fin."
+              "They styled my hair for my wedding and it was perfect: it lasted 14 hours of dancing.
+              The service was also incredibly warm from start to finish."
             </blockquote>
             <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
               <span
@@ -892,7 +879,7 @@
               >
               <span>
                 <span class="block text-sm font-medium text-ink">Andrea Ruiz</span>
-                <span class="block text-xs text-ink/50">Novia · Junio 2024</span>
+                <span class="block text-xs text-ink/50">Bride · June 2024</span>
               </span>
             </figcaption>
           </figure>
@@ -900,21 +887,21 @@
       </div>
     </section>
 
-    <!-- ==================== CONTACTO ==================== -->
+    <!-- ==================== CONTACT ==================== -->
     <section id="contacto" class="scroll-mt-24 bg-cream py-24 lg:py-32">
       <div class="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-5 lg:gap-20 lg:px-8">
         <!-- Info -->
         <div class="lg:col-span-2">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Contacto</p>
+          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Contact</p>
           <h2
             data-reveal
             class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
           >
-            Reserva tu cita
+            Book your appointment
           </h2>
           <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
-            Rellena el formulario y te confirmamos disponibilidad en menos de 24 horas. Si lo
-            prefieres, llámanos o escríbenos por WhatsApp.
+            Fill out the form and we will confirm availability within 24 hours. If you prefer, call
+            us or message us on WhatsApp.
           </p>
 
           <ul data-reveal class="mt-10 space-y-6 text-sm">
@@ -936,7 +923,7 @@
                 </svg>
               </span>
               <span>
-                <span class="block font-medium text-ink">Dirección</span>
+                <span class="block font-medium text-ink">Address</span>
                 <span class="block text-ink/60">Calle Mayor 42, 28013 Madrid</span>
               </span>
             </li>
@@ -959,7 +946,7 @@
                 </svg>
               </span>
               <span>
-                <span class="block font-medium text-ink">Teléfono</span>
+                <span class="block font-medium text-ink">Phone</span>
                 <a href="tel:+34912345678" class="block text-ink/60 transition hover:text-gold-600"
                   >+34 912 345 678</a
                 >
@@ -1009,15 +996,15 @@
                 </svg>
               </span>
               <span>
-                <span class="block font-medium text-ink">Horario</span>
-                <span class="block text-ink/60">Lun – Vie · 10:00 a 20:00</span>
-                <span class="block text-ink/60">Sábado · 10:00 a 14:00</span>
+                <span class="block font-medium text-ink">Hours</span>
+                <span class="block text-ink/60">Mon – Fri · 10:00 to 20:00</span>
+                <span class="block text-ink/60">Saturday · 10:00 to 14:00</span>
               </span>
             </li>
           </ul>
         </div>
 
-        <!-- Formulario -->
+        <!-- Form -->
         <div data-reveal class="lg:col-span-3">
           <form class="rounded-2xl border border-ink/8 bg-white p-7 shadow-soft sm:p-10" novalidate>
             <div class="grid gap-5 sm:grid-cols-2">
@@ -1025,13 +1012,13 @@
                 <label
                   for="nombre"
                   class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Nombre</label
+                  >Name</label
                 >
                 <input
                   id="nombre"
                   name="nombre"
                   type="text"
-                  placeholder="Tu nombre"
+                  placeholder="Your name"
                   class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
                 />
               </div>
@@ -1040,7 +1027,7 @@
                 <label
                   for="telefono"
                   class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Teléfono</label
+                  >Phone</label
                 >
                 <input
                   id="telefono"
@@ -1070,7 +1057,7 @@
                 <label
                   for="fecha"
                   class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Fecha deseada</label
+                  >Desired date</label
                 >
                 <input
                   id="fecha"
@@ -1084,20 +1071,20 @@
                 <label
                   for="servicio"
                   class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Servicio</label
+                  >Service</label
                 >
                 <select
                   id="servicio"
                   name="servicio"
                   class="w-full appearance-none rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
                 >
-                  <option value="">Selecciona un servicio</option>
-                  <option>Corte &amp; Estilo</option>
+                  <option value="">Select a service</option>
+                  <option>Cut &amp; Style</option>
                   <option>Color &amp; Balayage</option>
-                  <option>Tratamiento capilar</option>
-                  <option>Peinado de evento</option>
-                  <option>Barbería</option>
-                  <option>Novias &amp; Editorial</option>
+                  <option>Hair treatment</option>
+                  <option>Event hairstyle</option>
+                  <option>Barbering</option>
+                  <option>Brides &amp; Editorial</option>
                 </select>
               </div>
 
@@ -1105,13 +1092,13 @@
                 <label
                   for="mensaje"
                   class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Mensaje</label
+                  >Message</label
                 >
                 <textarea
                   id="mensaje"
                   name="mensaje"
                   rows="4"
-                  placeholder="Cuéntanos qué necesitas..."
+                  placeholder="Tell us what you need..."
                   class="w-full resize-none rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
                 ></textarea>
               </div>
@@ -1121,12 +1108,12 @@
               type="submit"
               class="mt-7 w-full rounded-full bg-ink py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-gold-500 hover:text-ink sm:w-auto sm:px-12"
             >
-              Enviar solicitud
+              Send request
             </button>
 
             <p class="mt-5 text-xs leading-relaxed text-ink/45">
-              Al enviar aceptas nuestra política de privacidad. Solo usaremos tus datos para
-              gestionar tu cita.
+              By submitting you accept our privacy policy. We will only use your data to manage your
+              appointment.
             </p>
           </form>
         </div>
@@ -1148,8 +1135,8 @@
               >
             </a>
             <p class="mt-6 max-w-sm text-sm leading-relaxed">
-              Peluquería y estilismo de autor en el centro de Madrid. Color, corte y tratamientos
-              con producto vegano desde 2013.
+              Signature hair salon and styling in central Madrid. Color, cuts and treatments with
+              vegan products since 2013.
             </p>
 
             <div class="mt-7 flex gap-3">
@@ -1213,28 +1200,28 @@
           </div>
 
           <div>
-            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Servicios</h3>
+            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Services</h3>
             <ul class="mt-5 space-y-3 text-sm">
               <li>
-                <a href="#servicios" class="transition hover:text-gold-400">Corte &amp; Estilo</a>
+                <a href="#servicios" class="transition hover:text-gold-400">Cut &amp; Style</a>
               </li>
               <li>
                 <a href="#servicios" class="transition hover:text-gold-400">Color &amp; Balayage</a>
               </li>
-              <li><a href="#servicios" class="transition hover:text-gold-400">Tratamientos</a></li>
-              <li><a href="#servicios" class="transition hover:text-gold-400">Barbería</a></li>
-              <li><a href="#servicios" class="transition hover:text-gold-400">Novias</a></li>
+              <li><a href="#servicios" class="transition hover:text-gold-400">Treatments</a></li>
+              <li><a href="#servicios" class="transition hover:text-gold-400">Barbering</a></li>
+              <li><a href="#servicios" class="transition hover:text-gold-400">Brides</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Estudio</h3>
+            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Studio</h3>
             <ul class="mt-5 space-y-3 text-sm">
-              <li><a href="#nosotros" class="transition hover:text-gold-400">Sobre nosotros</a></li>
-              <li><a href="#galeria" class="transition hover:text-gold-400">Galería</a></li>
-              <li><a href="#precios" class="transition hover:text-gold-400">Tarifas</a></li>
-              <li><a href="#contacto" class="transition hover:text-gold-400">Contacto</a></li>
-              <li><a href="#" class="transition hover:text-gold-400">Trabaja con nosotros</a></li>
+              <li><a href="#nosotros" class="transition hover:text-gold-400">About us</a></li>
+              <li><a href="#galeria" class="transition hover:text-gold-400">Gallery</a></li>
+              <li><a href="#precios" class="transition hover:text-gold-400">Pricing</a></li>
+              <li><a href="#contacto" class="transition hover:text-gold-400">Contact</a></li>
+              <li><a href="#" class="transition hover:text-gold-400">Work with us</a></li>
             </ul>
           </div>
         </div>
@@ -1242,22 +1229,22 @@
         <div
           class="flex flex-col gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row sm:items-center sm:justify-between"
         >
-          <p>© 2025 Studio Aurea. Todos los derechos reservados.</p>
+          <p>© 2025 Studio Aurea. All rights reserved.</p>
           <div class="flex gap-6">
-            <a href="#" class="transition hover:text-gold-400">Aviso legal</a>
-            <a href="#" class="transition hover:text-gold-400">Privacidad</a>
+            <a href="#" class="transition hover:text-gold-400">Legal notice</a>
+            <a href="#" class="transition hover:text-gold-400">Privacy</a>
             <a href="#" class="transition hover:text-gold-400">Cookies</a>
           </div>
         </div>
       </div>
     </footer>
 
-    <!-- Botón flotante WhatsApp -->
+    <!-- Floating WhatsApp button -->
     <a
       href="https://wa.me/34912345678"
       target="_blank"
       rel="noopener"
-      aria-label="Escríbenos por WhatsApp"
+      aria-label="Message us on WhatsApp"
       class="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-gold-400 text-ink shadow-soft transition hover:scale-105 hover:bg-gold-300"
     >
       <svg class="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
@@ -1269,24 +1256,24 @@
 
     <!-- ==================== SCRIPTS ==================== -->
     <script>
-      /* ---------- Navbar con fondo al hacer scroll ---------- */
+      /* ---------- Navbar with background on scroll ---------- */
       const navbar = document.getElementById("navbar");
       const onScroll = () => navbar.classList.toggle("nav-scrolled", window.scrollY > 40);
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
 
-      /* ---------- Menú móvil ---------- */
+      /* ---------- Mobile menu ---------- */
       const menuBtn = document.getElementById("menuBtn");
       const menu = document.getElementById("mobileMenu");
       const iconOpen = document.getElementById("iconOpen");
       const iconClose = document.getElementById("iconClose");
 
       const toggleMenu = (force) => {
-        const abrir = force ?? menu.classList.contains("hidden");
-        menu.classList.toggle("hidden", !abrir);
-        iconOpen.classList.toggle("hidden", abrir);
-        iconClose.classList.toggle("hidden", !abrir);
-        menuBtn.setAttribute("aria-label", abrir ? "Cerrar menú" : "Abrir menú");
+        const open = force ?? menu.classList.contains("hidden");
+        menu.classList.toggle("hidden", !open);
+        iconOpen.classList.toggle("hidden", open);
+        iconClose.classList.toggle("hidden", !open);
+        menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
       };
 
       menuBtn.addEventListener("click", () => toggleMenu());
@@ -1297,32 +1284,32 @@
         if (window.innerWidth >= 1024) toggleMenu(false);
       });
 
-      /* ---------- Animación de aparición al hacer scroll ---------- */
-      const elementos = document.querySelectorAll("[data-reveal]");
+      /* ---------- Scroll reveal animation ---------- */
+      const elements = document.querySelectorAll("[data-reveal]");
       if ("IntersectionObserver" in window) {
         const observer = new IntersectionObserver(
-          (entradas) => {
-            entradas.forEach((entrada, i) => {
-              if (entrada.isIntersecting) {
-                entrada.target.style.transitionDelay = Math.min(i * 90, 360) + "ms";
-                entrada.target.classList.add("is-visible");
-                observer.unobserve(entrada.target);
+          (entries) => {
+            entries.forEach((entry, i) => {
+              if (entry.isIntersecting) {
+                entry.target.style.transitionDelay = Math.min(i * 90, 360) + "ms";
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
               }
             });
           },
           { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
         );
 
-        elementos.forEach((el) => observer.observe(el));
+        elements.forEach((el) => observer.observe(el));
       } else {
-        elementos.forEach((el) => el.classList.add("is-visible"));
+        elements.forEach((el) => el.classList.add("is-visible"));
       }
 
-      /* ---------- Formulario (demo) ---------- */
+      /* ---------- Form (demo) ---------- */
       document.querySelector("form").addEventListener("submit", (e) => {
         e.preventDefault();
         alert(
-          "¡Gracias! Hemos recibido tu solicitud. Te confirmaremos la cita en menos de 24 horas.",
+          "Thank you! We have received your request. We will confirm your appointment within 24 hours.",
         );
         e.target.reset();
       });
