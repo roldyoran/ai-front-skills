@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://front-skills.dev/sitemap-index.xml

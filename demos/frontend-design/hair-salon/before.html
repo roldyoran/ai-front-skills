@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio Aurea | Beauty Salon</title>
+    <meta name="description" content="Cuts, color, balayage and personalized treatments." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --dark: #201c18;
+        --cream: #faf7f2;
+        --sand: #efe8dd;
+        --gold: #c19a4b;
+        --text: #292521;
+        --muted: #716b64;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--cream);
+        font-family: "Inter", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 400;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin: 0 0 1rem;
+      }
+      p {
+        margin: 0 0 1rem;
+      }
+      .container {
+        width: min(1120px, 90%);
+        margin: auto;
+      }
+      .section {
+        padding: 90px 0;
+      }
+      .eyebrow {
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .button {
+        display: inline-block;
+        padding: 14px 25px;
+        background: var(--gold);
+        color: white;
+        border: 1px solid var(--gold);
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.8rem;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .button:hover {
+        background: transparent;
+        color: var(--gold);
+      }
+
+      header {
+        background: var(--dark);
+        color: white;
+      }
+      .nav {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .logo {
+        font:
+          1.7rem "Playfair Display",
+          Georgia,
+          serif;
+      }
+      .logo span {
+        color: var(--gold);
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+      }
+      nav a {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      nav a:hover {
+        color: var(--gold);
+      }
+
+      .hero {
+        min-height: 580px;
+        display: flex;
+        align-items: center;
+        color: white;
+        background:
+          linear-gradient(90deg, rgba(32, 28, 24, 0.94), rgba(32, 28, 24, 0.55)),
+          url("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1800&q=85")
+            center/cover;
+      }
+      .hero-content {
+        max-width: 650px;
+        padding: 100px 0;
+      }
+      .hero h1 {
+        font-size: clamp(3rem, 7vw, 5.5rem);
+        margin: 18px 0;
+      }
+      .hero h1 span {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .hero p {
+        max-width: 540px;
+        color: #e5dfd8;
+        font-size: 1.05rem;
+        margin-bottom: 30px;
+      }
+
+      .section-heading {
+        text-align: center;
+        max-width: 650px;
+        margin: 0 auto 45px;
+      }
+      .section-heading h2 {
+        margin-top: 10px;
+      }
+      .section-heading h2::after {
+        content: "";
+        display: block;
+        width: 60px;
+        height: 2px;
+        background: var(--gold);
+        margin: 22px auto 0;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .service {
+        background: white;
+        border: 1px solid #e9e2d8;
+        border-radius: 8px;
+        padding: 30px;
+      }
+      .service .symbol {
+        color: var(--gold);
+        font-size: 1.8rem;
+      }
+      .service h3 {
+        font-size: 1.5rem;
+        margin: 14px 0 8px;
+      }
+      .service p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      .about {
+        background: var(--sand);
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 55px;
+      }
+      .about img {
+        width: 100%;
+        height: 430px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .about p {
+        color: var(--muted);
+      }
+      .about .button {
+        margin-top: 12px;
+        background: var(--dark);
+        border-color: var(--dark);
+      }
+      .about .button:hover {
+        background: transparent;
+        color: var(--dark);
+      }
+
+      .gallery {
+        background: var(--dark);
+        color: white;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .gallery-grid img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+
+      .prices {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .price-card {
+        padding: 30px;
+        background: white;
+        border: 1px solid #e9e2d8;
+        border-radius: 8px;
+      }
+      .price-card h3 {
+        font-size: 1.6rem;
+        margin: 0;
+      }
+      .price {
+        font:
+          2.8rem "Playfair Display",
+          Georgia,
+          serif;
+        margin: 18px 0;
+      }
+      .price-card ul {
+        padding-left: 20px;
+        color: var(--muted);
+      }
+      .price-card .button {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .contact {
+        background: var(--sand);
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 50px;
+      }
+      .contact-info p {
+        color: var(--muted);
+      }
+      form {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      label {
+        display: block;
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #dcd5cb;
+        border-radius: 4px;
+        background: var(--cream);
+        font: inherit;
+      }
+      textarea {
+        resize: vertical;
+      }
+      .full {
+        grid-column: 1 / -1;
+      }
+      form button {
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      footer {
+        padding: 28px 0;
+        background: var(--dark);
+        color: #c8c0b6;
+        font-size: 0.85rem;
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 760px) {
+        .nav {
+          padding: 18px 0;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        nav {
+          gap: 12px 18px;
+        }
+        .section {
+          padding: 65px 0;
+        }
+        .services,
+        .prices {
+          grid-template-columns: 1fr 1fr;
+        }
+        .about-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+        .about img {
+          height: 320px;
+        }
+      }
+      @media (max-width: 520px) {
+        .services,
+        .prices,
+        .gallery-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .gallery-grid img {
+          height: 230px;
+        }
+        .full {
+          grid-column: auto;
+        }
+        .hero {
+          min-height: 520px;
+        }
+        .hero-content {
+          padding: 75px 0;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="logo" href="#home">Studio <span>Aurea</span></a>
+        <nav aria-label="Main navigation">
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#prices">Prices</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-content">
+            <span class="eyebrow">Beauty salon and styling</span>
+            <h1>Your hair,<br /><span>your best version</span></h1>
+            <p>
+              Cuts, color and personalized treatments to care for your hair and highlight your
+              style.
+            </p>
+            <a class="button" href="#contact">Book an appointment</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">Our services</span>
+            <h2>Everything your hair needs</h2>
+            <p>Services tailored to your hair type, style and routine.</p>
+          </div>
+          <div class="services">
+            <article class="service">
+              <span class="symbol">✂</span>
+              <h3>Cut and styling</h3>
+              <p>Personalized cuts, wash and styling for every look.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">◒</span>
+              <h3>Color</h3>
+              <p>Coloring, highlights and corrections for a natural result.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">〰</span>
+              <h3>Balayage</h3>
+              <p>Soft lightening and gradients that add dimension.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">✧</span>
+              <h3>Treatments</h3>
+              <p>Hydration and care for soft, healthy hair.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">♧</span>
+              <h3>Event hairstyles</h3>
+              <p>Updos, waves and hairstyles for special occasions.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">◇</span>
+              <h3>Barbershop</h3>
+              <p>Men's cuts, line-ups and beard grooming.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section about" id="about">
+        <div class="container about-grid">
+          <img
+            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80"
+            alt="Salon interior and styling work"
+            loading="lazy"
+          />
+          <div>
+            <span class="eyebrow">About us</span>
+            <h2>A space for you</h2>
+            <p>
+              At Studio Aurea we believe that caring for your hair is also taking time for yourself.
+              We listen to what you are looking for and recommend the right service.
+            </p>
+            <p>We work with professional products and put hair care first in every service.</p>
+            <a class="button" href="#contact">Get to know us</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section gallery" id="gallery">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">Gallery</span>
+            <h2>Our work</h2>
+            <p>A showcase of styles, colors and results.</p>
+          </div>
+          <div class="gallery-grid">
+            <img
+              src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=700&q=80"
+              alt="Color work"
+              loading="lazy"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80"
+              alt="Haircut"
+              loading="lazy"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=700&q=80"
+              alt="Hairstyle"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="prices">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">Prices</span>
+            <h2>Simple rates</h2>
+            <p>The final price may vary depending on hair length and thickness.</p>
+          </div>
+          <div class="prices">
+            <article class="price-card">
+              <h3>Essential</h3>
+              <p>Cut and styling</p>
+              <div class="price">€28</div>
+              <ul>
+                <li>Wash</li>
+                <li>Personalized cut</li>
+                <li>Blow-dry and styling</li>
+              </ul>
+              <a class="button" href="#contact">Book</a>
+            </article>
+            <article class="price-card">
+              <h3>Color</h3>
+              <p>Coloring and highlights</p>
+              <div class="price">€65</div>
+              <ul>
+                <li>Color consultation</li>
+                <li>Coloring</li>
+                <li>Treatment and styling</li>
+              </ul>
+              <a class="button" href="#contact">Book</a>
+            </article>
+            <article class="price-card">
+              <h3>Ritual</h3>
+              <p>Complete care</p>
+              <div class="price">€95</div>
+              <ul>
+                <li>Color service</li>
+                <li>Hair treatment</li>
+                <li>Scalp massage</li>
+              </ul>
+              <a class="button" href="#contact">Book</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section contact" id="contact">
+        <div class="container contact-grid">
+          <div class="contact-info">
+            <span class="eyebrow">Contact</span>
+            <h2>Book your appointment</h2>
+            <p>Write to us to check availability and book your next service.</p>
+            <p><strong>Address:</strong><br />42 Mayor Street, Madrid</p>
+            <p><strong>Phone:</strong><br /><a href="tel:+34912345678">+34 912 345 678</a></p>
+            <p>
+              <strong>Email:</strong><br /><a href="mailto:hello@studioaurea.es"
+                >hello@studioaurea.es</a
+              >
+            </p>
+            <p>
+              <strong>Hours:</strong><br />Monday to Friday: 10:00–20:00<br />Saturday: 10:00–14:00
+            </p>
+          </div>
+          <form action="#" method="post">
+            <div class="form-grid">
+              <div>
+                <label for="name">Name</label><input id="name" name="name" type="text" required />
+              </div>
+              <div>
+                <label for="phone">Phone</label
+                ><input id="phone" name="phone" type="tel" required />
+              </div>
+              <div>
+                <label for="email">Email address</label
+                ><input id="email" name="email" type="email" required />
+              </div>
+              <div>
+                <label for="date">Preferred date</label><input id="date" name="date" type="date" />
+              </div>
+              <div class="full">
+                <label for="service">Service</label
+                ><select id="service" name="service" required>
+                  <option value="">Select a service</option>
+                  <option>Cut and styling</option>
+                  <option>Color</option>
+                  <option>Balayage</option>
+                  <option>Treatment</option>
+                  <option>Event hairstyle</option>
+                  <option>Barbershop</option>
+                </select>
+              </div>
+              <div class="full">
+                <label for="message">Message</label
+                ><textarea id="message" name="message" rows="4"></textarea>
+              </div>
+            </div>
+            <button class="button" type="submit">Send request</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <span>© 2026 Studio Aurea</span>
+        <span>Beauty salon and styling</span>
+      </div>
+    </footer>
+  </body>
+</html>

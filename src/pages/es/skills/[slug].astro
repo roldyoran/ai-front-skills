@@ -1,9 +1,26 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Badge from '@/components/ui/Badge.astro';
+import InstallTabs from '@/components/skills/InstallTabs.astro';
+import CopyMarkdownButton from '@/components/skills/CopyMarkdownButton.astro';
+import SkillGrid from '@/components/skills/SkillGrid.astro';
+import AuthorAvatar from '@/components/skills/AuthorAvatar.astro';
+import ComparisonAttribution from '@/components/skills/ComparisonAttribution.astro';
 import Icon from '@/components/ui/Icon.astro';
 import ImageComparison from '@/components/svelte/ImageComparison.svelte';
-import { getAllSkills, getCategoryInfo, renderMarkdown } from '@/lib/skills';
+import { Button } from '@/components/starwind/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/starwind/tabs';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/starwind/breadcrumb';
+import { Badge } from '@/components/starwind/badge';
+import { Separator } from '@/components/starwind/separator';
+import { Prose } from '@/components/starwind/prose';
+import { getAllSkills, getComparisonCases, getRelatedSkills, getPrevNextSkills, renderMarkdown } from '@/lib/skills';
 import { t } from '@/lib/i18n';
 
 export async function getStaticPaths() {
@@ -16,112 +33,172 @@ export async function getStaticPaths() {
 
 const { skill } = Astro.props;
 const locale = 'es' as const;
-const { title, slug, category, description, comparison, author } = skill.data;
-
-const categoryInfo = getCategoryInfo(category, locale);
+const { title, slug, description, author, topics, image } = skill.data;
+const comparisonCases = getComparisonCases(slug);
 
 // Render markdown body
 const contentHtml = renderMarkdown(skill.body);
 
-const installCommand = `npx skills add front-skills@${slug}`;
+const installPkg = `front-skills@${slug}`;
+
+const relatedSkills = await getRelatedSkills(slug, 4);
+const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
 ---
 
 <BaseLayout
   title={`${title} - Front Skills`}
   description={description}
+  image={comparisonCases[0]?.after}
   type="article"
 >
   <article class="container-page pt-24 pb-12">
-    <!-- Breadcrumb -->
-    <nav class="mb-6 text-xs text-text-dim">
-      <a href="/es/" class="hover:text-text-secondary transition-colors">Inicio</a>
-      <span class="mx-1.5">/</span>
-      <a href="/es/skills" class="hover:text-text-secondary transition-colors">Skills</a>
-      <span class="mx-1.5">/</span>
-      <span class="text-text-muted">{title}</span>
-    </nav>
+    <Breadcrumb class="mb-6">
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/es/">Inicio</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/es/skills">Skills</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{title}</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
 
     <!-- Header -->
-    <header class="mb-8">
-      <div class="flex items-center gap-2 mb-3">
-        <Badge variant="category">
-          <Icon name={categoryInfo.icon as any} size={11} class="mr-1" />
-          {categoryInfo.label}
-        </Badge>
-        <span class="text-[11px] text-text-dim">por {author}</span>
+    <header class="mb-6">
+      <div class="flex flex-wrap items-center gap-1.5 mb-3">
+        {topics.map((topic) => (
+          <Badge variant="secondary" size="sm">{topic}</Badge>
+        ))}
+        <span class="inline-flex items-center gap-1.5 ml-1">
+          <AuthorAvatar author={author} variant="sm" src={image} />
+          <span class="text-[11px] text-text-muted">{author}</span>
+        </span>
       </div>
 
       <h1 class="text-2xl sm:text-3xl font-bold text-text tracking-tight mb-3">
         {title}
       </h1>
 
-      <p class="text-sm text-text-secondary">
+      <p class="text-sm text-text-secondary leading-relaxed">
         {description}
       </p>
     </header>
 
-    <!-- Installation -->
-    <section class="mb-8">
-      <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">Instalación</h2>
-      <div class="flex items-center gap-3 border border-border bg-surface px-4 py-3">
-        <span class="text-text-dim text-sm">$</span>
-        <code class="text-text text-sm font-mono flex-1 truncate">{installCommand}</code>
-        <button
-          data-copy={installCommand}
-          class="copy-btn border border-border bg-bg-secondary px-3 py-1.5 text-xs text-text-secondary hover:text-text transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
-        >
-          <Icon name="copy" size={14} />
-          <span class="copy-label">Copy</span>
-        </button>
-      </div>
-    </section>
+    <Separator class="mb-8" />
 
-    <!-- Summary -->
-    <section class="mb-8">
-      <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">Resumen</h2>
-      <div class="text-sm text-text-secondary leading-relaxed">
-        <p class="font-medium text-text mb-2">{description}</p>
-      </div>
-    </section>
+    <Tabs defaultValue="overview" class="mb-8">
+      {comparisonCases.length > 0 && (
+        <TabsList class="w-full justify-start gap-0.5 border border-border-subtle bg-bg-secondary p-0.5">
+          <TabsTrigger value="overview" class="px-2.5 py-1 text-xs">{t('comparison.overviewTab', locale)}</TabsTrigger>
+          <TabsTrigger value="comparisons" class="px-2.5 py-1 text-xs">
+            {t('comparison.comparisonsTab', locale)} ({comparisonCases.length})
+          </TabsTrigger>
+        </TabsList>
+      )}
 
-    <!-- Comparison -->
-    {comparison?.before && comparison?.after && (
-      <section class="mb-10">
-        <h2 class="mb-3 text-base font-semibold text-text">{t('comparison.title', locale)}</h2>
-        <p class="mb-3 text-xs text-text-secondary">{t('comparison.dragHint', locale)}</p>
-
-        <ImageComparison
-          client:visible
-          beforeSrc={comparison.before}
-          afterSrc={comparison.after}
-          beforeAlt={`${title} - Antes`}
-          afterAlt={`${title} - Después`}
-          width={800}
-          height={500}
+      <!-- Installation -->
+      <section class={comparisonCases.length > 0 ? "mb-8 mt-6" : "mb-8"}>
+        <h2 class="mb-3 text-xs font-semibold text-text uppercase tracking-wider">
+          {t('detail.installation', locale)}
+        </h2>
+        <InstallTabs
+          pkg={installPkg}
+          copyLabel={t('detail.copy', locale)}
+          copiedLabel={t('detail.copiedLabel', locale)}
+          copiedMessage={t('detail.copied', locale)}
         />
+      </section>
+
+      <TabsContent value="overview">
+        <!-- SKILL.md Content -->
+        {contentHtml && (
+          <section>
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <h2 class="text-xs font-semibold text-text uppercase tracking-wider">SKILL.md</h2>
+              <CopyMarkdownButton
+                markdown={skill.body}
+                copyLabel={t('detail.copyMarkdown', locale)}
+                copiedLabel={t('detail.copiedLabel', locale)}
+                copiedMessage={t('detail.copied', locale)}
+              />
+            </div>
+            <Prose set:html={contentHtml} />
+          </section>
+        )}
+      </TabsContent>
+
+      {comparisonCases.length > 0 && (
+        <TabsContent value="comparisons">
+          <p class="mb-4 text-xs text-text-secondary">{t('comparison.dragHint', locale)}</p>
+          <div class="mb-6 flex flex-wrap gap-2">
+            <Button as="a" href={comparisonCases[0].demoBefore} target="_blank" rel="noopener" variant="outline" size="sm">
+              {t('comparison.beforeFull', locale)}
+              <Icon name="external-link" size={12} />
+            </Button>
+            <Button as="a" href={comparisonCases[0].demoAfter} target="_blank" rel="noopener" variant="outline" size="sm">
+              {t('comparison.afterFull', locale)}
+              <Icon name="external-link" size={12} />
+            </Button>
+          </div>
+          {comparisonCases.map((c) => (
+            <div class="mb-8 last:mb-0">
+              {comparisonCases.length > 1 && (
+                <h3 class="mb-2 text-sm font-semibold text-text">{c.label}</h3>
+              )}
+              <ImageComparison
+                client:visible
+                beforeSrc={c.before}
+                afterSrc={c.after}
+                beforeAlt={`${title} — ${c.label} — ${t('comparison.before', locale)}`}
+                afterAlt={`${title} — ${c.label} — ${t('comparison.after', locale)}`}
+                beforeLabel={t('comparison.before', locale)}
+                afterLabel={t('comparison.after', locale)}
+                width={c.width}
+                height={c.height}
+              />
+              {(c.beforeInfo.model || c.afterInfo.model) && (
+                <div class="mt-2 space-y-1.5">
+                  <ComparisonAttribution info={c.beforeInfo} kind="before" locale={locale} />
+                  <ComparisonAttribution info={c.afterInfo} kind="after" locale={locale} />
+                </div>
+              )}
+            </div>
+          ))}
+        </TabsContent>
+      )}
+    </Tabs>
+
+    <!-- Related -->
+    {relatedSkills.length > 0 && (
+      <section>
+        <Separator class="mb-8" />
+        <h2 class="mb-4 text-xs font-semibold text-text uppercase tracking-wider">
+          {t('detail.related', locale)}
+        </h2>
+        <SkillGrid skills={relatedSkills} locale={locale} variant="list" />
       </section>
     )}
 
-    <!-- SKILL.md Content -->
-    {contentHtml && (
-      <section class="mb-8">
-        <h2 class="mb-4 text-xs font-semibold text-text uppercase tracking-wider">SKILL.md</h2>
-        <div class="prose" set:html={contentHtml} />
-      </section>
+    {(prevSkill || nextSkill) && (
+      <nav class="mt-8 flex items-center justify-between gap-2" aria-label="Skill navigation">
+        {prevSkill ? (
+          <a href={`/es/skills/${prevSkill.data.slug}`} class="inline-flex min-w-0 items-center gap-2 text-xs text-text-muted hover:text-text">
+            <span aria-hidden="true">←</span>
+            <span class="truncate">{prevSkill.data.title}</span>
+          </a>
+        ) : <span />}
+        {nextSkill ? (
+          <a href={`/es/skills/${nextSkill.data.slug}`} class="inline-flex min-w-0 items-center gap-2 text-xs text-text-muted hover:text-text">
+            <span class="truncate">{nextSkill.data.title}</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        ) : <span />}
+      </nav>
     )}
   </article>
 </BaseLayout>
-
-<script>
-  document.querySelectorAll('.copy-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const command = btn.getAttribute('data-copy');
-      if (!command) return;
-      navigator.clipboard.writeText(command).then(() => {
-        const label = btn.querySelector('.copy-label');
-        if (label) label.textContent = 'Copiado!';
-        setTimeout(() => { if (label) label.textContent = 'Copy'; }, 2000);
-      });
-    });
-  });
-</script>

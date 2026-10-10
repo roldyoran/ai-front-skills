@@ -1,4 +1,6 @@
 ---
+import { getLocaleUrl, locales, defaultLocale, type Locale } from '@/lib/i18n';
+
 interface Props {
   title: string;
   description: string;
@@ -18,7 +20,15 @@ const {
 const siteTitle = 'Front Skills';
 const fullTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 const currentURL = canonicalURL || Astro.url.href;
-const imageURL = new URL(image, Astro.site).href;
+// Only absolute/resolvable images — no broken default (there is no og-default.png in public/)
+const imageURL = image ? new URL(image, Astro.site).href : undefined;
+
+// hreflang alternates for every locale + x-default (points at the default locale URL)
+const alternates = locales.map((locale: Locale) => ({
+  hreflang: locale,
+  href: new URL(getLocaleUrl(Astro.url.pathname, locale), Astro.site).href,
+}));
+const xDefaultHref = new URL(getLocaleUrl(Astro.url.pathname, defaultLocale), Astro.site).href;
 ---
 
 <!-- Primary Meta -->
@@ -26,13 +36,17 @@ const imageURL = new URL(image, Astro.site).href;
 <meta name="description" content={description} />
 <meta name="generator" content={Astro.generator} />
 <link rel="canonical" href={currentURL} />
+{alternates.map(({ hreflang, href }) => (
+  <link rel="alternate" hreflang={hreflang} href={href} />
+))}
+<link rel="alternate" hreflang="x-default" href={xDefaultHref} />
 
 <!-- Open Graph -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={currentURL} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={imageURL} />
+{imageURL && <meta property="og:image" content={imageURL} />}
 <meta property="og:site_name" content={siteTitle} />
 
 <!-- Twitter -->
@@ -40,7 +54,7 @@ const imageURL = new URL(image, Astro.site).href;
 <meta name="twitter:url" content={currentURL} />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={imageURL} />
+{imageURL && <meta name="twitter:image" content={imageURL} />}
 
 <!-- JSON-LD Structured Data -->
 <script
@@ -51,10 +65,5 @@ const imageURL = new URL(image, Astro.site).href;
     name: siteTitle,
     description,
     url: currentURL,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: new URL('/search', Astro.site).href + '?q={search_term_string}',
-      'query-input': 'required name=search_term_string',
-    },
   })}
 />

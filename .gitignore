@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 # vscode
 .vscode/
+
+# playwright-cli session artifacts
+.playwright-cli/

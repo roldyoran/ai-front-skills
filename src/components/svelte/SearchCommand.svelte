@@ -2,8 +2,8 @@
   interface SkillResult {
     title: string;
     slug: string;
-    category: string;
     description: string;
+    topics: string[];
   }
 
   interface SearchLabels {
@@ -35,12 +35,14 @@
 
   let results = $derived(
     query.trim()
-      ? skills.filter(
-          (s) =>
-            s.title.toLowerCase().includes(query.toLowerCase()) ||
-            s.category.toLowerCase().includes(query.toLowerCase()) ||
-            s.description.toLowerCase().includes(query.toLowerCase())
-        )
+      ? skills.filter((s) => {
+          const q = query.toLowerCase();
+          return (
+            s.title.toLowerCase().includes(q) ||
+            s.description.toLowerCase().includes(q) ||
+            s.topics.some((t) => t.toLowerCase().includes(q))
+          );
+        })
       : skills.slice(0, 6)
   );
 
@@ -123,13 +125,8 @@
     };
   });
 
-  const categoryIcons: Record<string, string> = {
-    css: 'C',
-    react: 'R',
-    astro: 'A',
-    tailwind: 'T',
-    tools: 'H',
-  };
+  const topicInitial = (skill: SkillResult) =>
+    (skill.topics[0]?.charAt(0) ?? skill.title.charAt(0)).toUpperCase();
 </script>
 
 <svelte:window onkeydown={handleWindowKeyDown} />
@@ -144,7 +141,7 @@
       <path stroke-linecap="square" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
     </svg>
     <span>{labels.trigger}</span>
-    <kbd class="ml-8 flex items-center gap-1 border border-border bg-bg-secondary px-1.5 py-0.5 text-[10px] text-text-dim">
+    <kbd class="ml-8 flex items-center gap-1 border border-border bg-bg-secondary px-1.5 py-0.5 text-[10px] text-text-muted">
       <span>⌘</span>
       <span>K</span>
     </kbd>
@@ -174,7 +171,7 @@
     >
       <!-- Input -->
       <div class="search-input-wrapper">
-        <svg class="h-5 w-5 text-text-dim" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={2}>
+        <svg class="h-5 w-5 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={2}>
           <path stroke-linecap="square" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
@@ -207,16 +204,18 @@
               }}
               onmouseenter={() => activeIndex = index}
             >
-              <span class="search-result-icon flex items-center justify-center w-6 h-6 border border-border bg-bg-secondary text-[10px] font-bold text-text-dim">
-                {categoryIcons[skill.category] || '?'}
+              <span class="search-result-icon flex items-center justify-center w-6 h-6 border border-border bg-bg-secondary text-[10px] font-bold text-text-muted">
+                {topicInitial(skill)}
               </span>
               <div class="flex-1 min-w-0">
                 <div class="text-sm font-medium truncate">{skill.title}</div>
-                <div class="text-xs text-text-dim truncate">{skill.description}</div>
+                <div class="text-xs text-text-muted truncate">{skill.description}</div>
               </div>
-              <span class="flex-shrink-0 text-[10px] text-text-dim uppercase tracking-wider border border-border px-1.5 py-0.5">
-                {skill.category}
-              </span>
+              {#if skill.topics[0]}
+                <span class="flex-shrink-0 text-[10px] text-text-muted uppercase tracking-wider border border-border px-1.5 py-0.5">
+                  {skill.topics[0]}
+                </span>
+              {/if}
             </a>
           {/each}
         {/if}

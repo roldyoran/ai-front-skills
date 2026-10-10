@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Comparison cases manifest",
+  "type": "object",
+  "required": ["cases"],
+  "properties": {
+    "sources": {
+      "type": "object",
+      "description": "Shared provenance per demo source folder (demos/<skill>/<source>/). Prompts live in BEFORE.md / NOTES.md inside each folder.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["before", "after"],
+        "properties": {
+          "before": {
+            "type": "object",
+            "required": ["model"],
+            "properties": {
+              "model": { "type": "string" },
+              "agent": { "type": "string" }
+            }
+          },
+          "after": {
+            "type": "object",
+            "required": ["model"],
+            "properties": {
+              "model": { "type": "string" },
+              "effort": { "type": "string" },
+              "agent": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "skill", "label", "viewport"],
+        "properties": {
+          "id": { "type": "string" },
+          "skill": { "type": "string" },
+          "source": {
+            "type": "string",
+            "default": "same as id",
+            "description": "Demo folder under demos/<skill>/. Defaults to the case id."
+          },
+          "label": { "type": "string" },
+          "anchor": {
+            "type": "string",
+            "description": "Element id to scroll to before capturing (section cases)."
+          },
+          "viewport": {
+            "type": "object",
+            "required": ["width", "height"],
+            "properties": {
+              "width": { "type": "integer", "minimum": 320 },
+              "height": { "type": "integer", "minimum": 200 }
+            }
+          },
+          "fullPage": { "type": "boolean", "default": false }
+        }
+      }
+    }
+  }
+}

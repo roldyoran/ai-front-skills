@@ -1,0 +1,72 @@
+---
+import InstallCommand from '@/components/skills/InstallCommand.astro';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/starwind/tabs';
+
+interface Props {
+  /** Package reference, e.g. "front-skills" or "front-skills@my-slug" */
+  pkg: string;
+  copyLabel?: string;
+  copiedLabel?: string;
+  copiedMessage?: string;
+}
+
+const {
+  pkg,
+  copyLabel = 'Copy',
+  copiedLabel = 'Copied',
+  copiedMessage = 'Copied to clipboard',
+} = Astro.props;
+
+const commands = [
+  { pm: 'pnpm', command: `pnpm dlx skills add ${pkg}` },
+  { pm: 'npm', command: `npx skills add ${pkg}` },
+  { pm: 'bun', command: `bunx skills add ${pkg}` },
+];
+---
+
+<Tabs defaultValue="pnpm" syncKey="package-manager" class="install-pm">
+  <TabsList aria-label="Package manager">
+    {commands.map(({ pm }) => (
+      <TabsTrigger value={pm}>{pm}</TabsTrigger>
+    ))}
+  </TabsList>
+  {commands.map(({ pm, command }) => (
+    <TabsContent value={pm} class="mt-3">
+      <InstallCommand
+        variant="minimal"
+        command={command}
+        copyLabel={copyLabel}
+        copiedLabel={copiedLabel}
+        copiedMessage={copiedMessage}
+      />
+    </TabsContent>
+  ))}
+</Tabs>
+
+<style>
+  /* Underline-only package manager tabs: no pill background,
+     bottom border marks the selected tab. Unlayered, so it wins
+     over the layered Starwind utilities. */
+  .install-pm [data-slot='tabs-list'] {
+    background: transparent;
+    padding: 0;
+    gap: 1.25rem;
+  }
+  .install-pm [data-slot='tabs-trigger'] {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    box-shadow: none;
+    padding: 0 0 0.35rem;
+    color: var(--color-text-dim);
+  }
+  .install-pm [data-slot='tabs-trigger']:hover {
+    color: var(--color-text-secondary);
+  }
+  .install-pm [data-slot='tabs-trigger'][data-state='active'] {
+    background: transparent;
+    border-bottom-color: var(--color-text);
+    box-shadow: none;
+    color: var(--color-text);
+  }
+</style>

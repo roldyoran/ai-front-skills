@@ -6,6 +6,8 @@
     afterSrc,
     beforeAlt = 'Before',
     afterAlt = 'After',
+    beforeLabel = 'Before',
+    afterLabel = 'After',
     width = 800,
     height = 500
   } = $props<{
@@ -13,6 +15,8 @@
     afterSrc: string;
     beforeAlt?: string;
     afterAlt?: string;
+    beforeLabel?: string;
+    afterLabel?: string;
     width?: number;
     height?: number;
   }>();
@@ -21,11 +25,13 @@
   let isDragging = $state(false);
   let containerEl = $state<HTMLDivElement | null>(null);
 
+  const clamp = (v: number) => Math.max(0, Math.min(100, v));
+
   function handleMove(clientX: number) {
     if (!containerEl) return;
     const rect = containerEl.getBoundingClientRect();
     const x = clientX - rect.left;
-    sliderPosition = Math.max(0, Math.min(100, (x / rect.width) * 100));
+    sliderPosition = clamp((x / rect.width) * 100);
   }
 
   function handleMouseDown(e: MouseEvent | TouchEvent) {
@@ -46,12 +52,30 @@
     handleMove(e.touches[0].clientX);
   }
 
-  // Manage document listeners with $effect in Svelte 5
+  function handleSliderKeyDown(e: KeyboardEvent) {
+    const step = e.shiftKey ? 10 : 4;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      sliderPosition = clamp(sliderPosition - step);
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      sliderPosition = clamp(sliderPosition + step);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      sliderPosition = 0;
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      sliderPosition = 100;
+    }
+  }
+
+  // Manage document listeners with $effect in Svelte 5.
+  // touchmove is passive (we never preventDefault) so page scroll stays smooth.
   $effect(() => {
     if (isDragging) {
       document.addEventListener('mousemove', handleMouseMove);
       document.addEventListener('mouseup', handleMouseUp);
-      document.addEventListener('touchmove', handleTouchMove);
+      document.addEventListener('touchmove', handleTouchMove, { passive: true });
       document.addEventListener('touchend', handleMouseUp);
     } else {
       document.removeEventListener('mousemove', handleMouseMove);
@@ -83,6 +107,10 @@
   <img
     src={afterSrc}
     alt={afterAlt}
+    width={width}
+    height={height}
+    loading="lazy"
+    decoding="async"
     class="absolute inset-0 h-full w-full object-cover"
     draggable="false"
   />
@@ -95,36 +123,51 @@
     <img
       src={beforeSrc}
       alt={beforeAlt}
+      width={width}
+      height={height}
+      loading="lazy"
+      decoding="async"
       class="h-full w-full object-cover"
       style="width: {(100 / sliderPosition) * 100}%; max-width: none;"
       draggable="false"
     />
   </div>
 
-  <!-- Slider Line -->
+  <!-- Slider Line + Handle (keyboard operable) -->
   <div
     class="absolute top-0 h-full w-0.5 bg-text"
     style="left: {sliderPosition}%; transform: translateX(-50%);"
   >
-    <!-- Slider Handle -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center border-2 border-text bg-bg/80 backdrop-blur-sm">
+    <div
+      role="slider"
+      tabindex="0"
+      aria-label="{beforeLabel} / {afterLabel}"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(sliderPosition)}
+      aria-valuetext="{Math.round(sliderPosition)}% {afterLabel}"
+      onkeydown={handleSliderKeyDown}
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex h-10 w-10 cursor-col-resize items-center justify-center border-2 border-text bg-bg/80 backdrop-blur-sm"
+    >
       <svg
         class="h-5 w-5 text-text"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
         stroke-width={2}
+        aria-hidden="true"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="m9 18-6-6 6-6" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="m15 6 6 6-6 6" />
       </svg>
     </div>
   </div>
 
   <!-- Labels -->
   <div class="absolute left-4 top-4 bg-bg/80 px-2 py-1 text-xs text-text-muted backdrop-blur-sm border border-border">
-    Before
+    {beforeLabel}
   </div>
   <div class="absolute right-4 top-4 bg-bg/80 px-2 py-1 text-xs text-text-muted backdrop-blur-sm border border-border">
-    After
+    {afterLabel}
   </div>
 </div>
