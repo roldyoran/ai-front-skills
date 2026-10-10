@@ -9,7 +9,6 @@ demos/
     <source-id>/
       before.html   # original, self-contained
       after.html    # improved with the skill, self-contained
-      BEFORE.md     # how before.html was made: model + prompt
       NOTES.md      # recipe: prompt + skill used for after.html
 ```
 
@@ -25,8 +24,7 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
    (inline CSS/JS; remote fonts and images are fine):
    `demos/<skill-slug>/<source-id>/`. One source can feed several cases
    (e.g. one per page section).
-2. **Document provenance**: `BEFORE.md` (which model + prompt produced
-   `before.html`) and `NOTES.md` (which skill + prompt produced `after.html`).
+2. **Document provenance**: `NOTES.md` (which skill + prompt produced `after.html`).
    Both are shown on the site next to each slider. If you edit any demo HTML
    afterwards, re-publish it (step 6).
 3. **Register the case(s)** in `src/data/comparisons.json` (must match

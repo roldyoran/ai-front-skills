@@ -1,1299 +1,613 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Studio Aurea · Hair Salon and Styling</title>
-    <meta
-      name="description"
-      content="Signature hair salon and styling. Cuts, color, balayage and personalized treatments in a space designed for you."
-    />
-
-    <!-- Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Studio Aurea | Beauty Salon</title>
+    <meta name="description" content="Cuts, color, balayage and personalized treatments." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              ink: "#141210",
-              coal: "#1f1b17",
-              cream: "#faf7f2",
-              sand: "#efe8dd",
-              gold: {
-                300: "#e3c88b",
-                400: "#d4af6a",
-                500: "#c19a4b",
-                600: "#a67c2e",
-              },
-            },
-            fontFamily: {
-              display: ['"Playfair Display"', "Georgia", "serif"],
-              sans: ["Inter", "system-ui", "sans-serif"],
-            },
-            boxShadow: {
-              soft: "0 20px 50px -20px rgba(20,18,16,.25)",
-            },
-          },
-        },
-      };
-    </script>
-
     <style>
+      :root {
+        --dark: #201c18;
+        --cream: #faf7f2;
+        --sand: #efe8dd;
+        --gold: #c19a4b;
+        --text: #292521;
+        --muted: #716b64;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
       html {
         scroll-behavior: smooth;
       }
-
-      /* Navbar with background on scroll */
-      .nav-scrolled {
-        background-color: rgba(20, 18, 16, 0.92);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        box-shadow: 0 12px 34px -18px rgba(0, 0, 0, 0.8);
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--cream);
+        font-family: "Inter", Arial, sans-serif;
+        line-height: 1.6;
       }
-
-      /* Reveal animation (only if JS is active) */
-      .js [data-reveal] {
-        opacity: 0;
-        transform: translateY(26px);
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", Georgia, serif;
+        font-weight: 400;
+        line-height: 1.15;
+      }
+      h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin: 0 0 1rem;
+      }
+      p {
+        margin: 0 0 1rem;
+      }
+      .container {
+        width: min(1120px, 90%);
+        margin: auto;
+      }
+      .section {
+        padding: 90px 0;
+      }
+      .eyebrow {
+        color: var(--gold);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .button {
+        display: inline-block;
+        padding: 14px 25px;
+        background: var(--gold);
+        color: white;
+        border: 1px solid var(--gold);
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.8rem;
         transition:
-          opacity 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
-          transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+          background 0.2s,
+          color 0.2s;
       }
-      .js [data-reveal].is-visible {
-        opacity: 1;
-        transform: none;
+      .button:hover {
+        background: transparent;
+        color: var(--gold);
       }
 
-      /* Decorative gold line */
-      .gold-line::after {
+      header {
+        background: var(--dark);
+        color: white;
+      }
+      .nav {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+      .logo {
+        font:
+          1.7rem "Playfair Display",
+          Georgia,
+          serif;
+      }
+      .logo span {
+        color: var(--gold);
+      }
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+      }
+      nav a {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      nav a:hover {
+        color: var(--gold);
+      }
+
+      .hero {
+        min-height: 580px;
+        display: flex;
+        align-items: center;
+        color: white;
+        background:
+          linear-gradient(90deg, rgba(32, 28, 24, 0.94), rgba(32, 28, 24, 0.55)),
+          url("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1800&q=85")
+            center/cover;
+      }
+      .hero-content {
+        max-width: 650px;
+        padding: 100px 0;
+      }
+      .hero h1 {
+        font-size: clamp(3rem, 7vw, 5.5rem);
+        margin: 18px 0;
+      }
+      .hero h1 span {
+        color: var(--gold);
+        font-style: italic;
+      }
+      .hero p {
+        max-width: 540px;
+        color: #e5dfd8;
+        font-size: 1.05rem;
+        margin-bottom: 30px;
+      }
+
+      .section-heading {
+        text-align: center;
+        max-width: 650px;
+        margin: 0 auto 45px;
+      }
+      .section-heading h2 {
+        margin-top: 10px;
+      }
+      .section-heading h2::after {
         content: "";
         display: block;
-        width: 56px;
-        height: 1px;
-        background: linear-gradient(90deg, #d4af6a, transparent);
-        margin-top: 1.25rem;
+        width: 60px;
+        height: 2px;
+        background: var(--gold);
+        margin: 22px auto 0;
+      }
+      .services {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .service {
+        background: white;
+        border: 1px solid #e9e2d8;
+        border-radius: 8px;
+        padding: 30px;
+      }
+      .service .symbol {
+        color: var(--gold);
+        font-size: 1.8rem;
+      }
+      .service h3 {
+        font-size: 1.5rem;
+        margin: 14px 0 8px;
+      }
+      .service p {
+        color: var(--muted);
+        margin: 0;
+        font-size: 0.95rem;
       }
 
-      /* Subtle scrollbar */
-      ::-webkit-scrollbar {
-        width: 10px;
+      .about {
+        background: var(--sand);
       }
-      ::-webkit-scrollbar-track {
-        background: #faf7f2;
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 55px;
       }
-      ::-webkit-scrollbar-thumb {
-        background: #d4af6a;
-        border-radius: 9999px;
+      .about img {
+        width: 100%;
+        height: 430px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .about p {
+        color: var(--muted);
+      }
+      .about .button {
+        margin-top: 12px;
+        background: var(--dark);
+        border-color: var(--dark);
+      }
+      .about .button:hover {
+        background: transparent;
+        color: var(--dark);
       }
 
+      .gallery {
+        background: var(--dark);
+        color: white;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+      }
+      .gallery-grid img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 6px;
+      }
+
+      .prices {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+      .price-card {
+        padding: 30px;
+        background: white;
+        border: 1px solid #e9e2d8;
+        border-radius: 8px;
+      }
+      .price-card h3 {
+        font-size: 1.6rem;
+        margin: 0;
+      }
+      .price {
+        font:
+          2.8rem "Playfair Display",
+          Georgia,
+          serif;
+        margin: 18px 0;
+      }
+      .price-card ul {
+        padding-left: 20px;
+        color: var(--muted);
+      }
+      .price-card .button {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .contact {
+        background: var(--sand);
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 50px;
+      }
+      .contact-info p {
+        color: var(--muted);
+      }
+      form {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      label {
+        display: block;
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #dcd5cb;
+        border-radius: 4px;
+        background: var(--cream);
+        font: inherit;
+      }
+      textarea {
+        resize: vertical;
+      }
+      .full {
+        grid-column: 1 / -1;
+      }
+      form button {
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      footer {
+        padding: 28px 0;
+        background: var(--dark);
+        color: #c8c0b6;
+        font-size: 0.85rem;
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 760px) {
+        .nav {
+          padding: 18px 0;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        nav {
+          gap: 12px 18px;
+        }
+        .section {
+          padding: 65px 0;
+        }
+        .services,
+        .prices {
+          grid-template-columns: 1fr 1fr;
+        }
+        .about-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+        .about img {
+          height: 320px;
+        }
+      }
+      @media (max-width: 520px) {
+        .services,
+        .prices,
+        .gallery-grid,
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .gallery-grid img {
+          height: 230px;
+        }
+        .full {
+          grid-column: auto;
+        }
+        .hero {
+          min-height: 520px;
+        }
+        .hero-content {
+          padding: 75px 0;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         html {
           scroll-behavior: auto;
         }
-        .js [data-reveal] {
-          opacity: 1;
-          transform: none;
-          transition: none;
+        * {
+          transition: none !important;
         }
       }
     </style>
   </head>
-
-  <body class="bg-cream font-sans text-ink antialiased selection:bg-gold-400 selection:text-ink">
-    <script>
-      document.documentElement.classList.add("js");
-    </script>
-
-    <!-- ==================== NAVBAR ==================== -->
-    <header id="navbar" class="fixed inset-x-0 top-0 z-50 transition-all duration-500">
-      <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="flex h-20 items-center justify-between">
-          <!-- Logo -->
-          <a href="#home" class="group flex items-center gap-2.5">
-            <span
-              class="flex h-9 w-9 items-center justify-center rounded-full border border-gold-400/60 font-display text-sm text-gold-400 transition group-hover:bg-gold-400 group-hover:text-ink"
-              >A</span
-            >
-            <span class="font-display text-xl tracking-wide text-white">
-              Studio <span class="text-gold-400">Aurea</span>
-            </span>
-          </a>
-
-          <!-- Desktop navigation -->
-          <nav class="hidden items-center gap-9 lg:flex">
-            <a
-              href="#services"
-              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Services</a
-            >
-            <a
-              href="#about"
-              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >About</a
-            >
-            <a
-              href="#gallery"
-              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Gallery</a
-            >
-            <a
-              href="#pricing"
-              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Pricing</a
-            >
-            <a
-              href="#contact"
-              class="text-[13px] uppercase tracking-[0.18em] text-white/80 transition hover:text-gold-400"
-              >Contact</a
-            >
-          </nav>
-
-          <a
-            href="#contact"
-            class="hidden rounded-full border border-gold-400 px-6 py-2.5 text-[13px] uppercase tracking-[0.18em] text-gold-400 transition hover:bg-gold-400 hover:text-ink lg:inline-block"
-          >
-            Book appointment
-          </a>
-
-          <!-- Mobile menu button -->
-          <button
-            id="menuBtn"
-            type="button"
-            aria-label="Open menu"
-            class="rounded-md p-2 text-white transition hover:text-gold-400 lg:hidden"
-          >
-            <svg
-              id="iconOpen"
-              class="h-7 w-7"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-            <svg
-              id="iconClose"
-              class="hidden h-7 w-7"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mobile menu -->
-      <div
-        id="mobileMenu"
-        class="hidden border-t border-white/10 bg-ink/98 backdrop-blur lg:hidden"
-      >
-        <nav class="mx-auto flex max-w-7xl flex-col px-5 py-4">
-          <a
-            href="#services"
-            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Services</a
-          >
-          <a
-            href="#about"
-            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >About</a
-          >
-          <a
-            href="#gallery"
-            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Gallery</a
-          >
-          <a
-            href="#pricing"
-            class="mobile-link border-b border-white/5 py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Pricing</a
-          >
-          <a
-            href="#contact"
-            class="mobile-link py-4 text-sm uppercase tracking-[0.18em] text-white/85"
-            >Contact</a
-          >
-          <a
-            href="#contact"
-            class="mobile-link mb-4 mt-2 rounded-full bg-gold-400 py-3 text-center text-sm uppercase tracking-[0.18em] text-ink"
-          >
-            Book appointment
-          </a>
+  <body>
+    <header>
+      <div class="container nav">
+        <a class="logo" href="#home">Studio <span>Aurea</span></a>
+        <nav aria-label="Main navigation">
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#prices">Prices</a>
+          <a href="#contact">Contact</a>
         </nav>
       </div>
     </header>
 
-    <!-- ==================== HERO ==================== -->
-    <section id="home" class="relative flex min-h-screen items-center overflow-hidden">
-      <img
-        src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80"
-        alt="Interior of Studio Aurea salon"
-        class="absolute inset-0 h-full w-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/30"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-ink/50"></div>
-
-      <div class="relative mx-auto w-full max-w-7xl px-5 pb-24 pt-36 lg:px-8">
-        <div class="max-w-2xl">
-          <p
-            data-reveal
-            class="mb-6 flex items-center gap-3 text-[12px] uppercase tracking-[0.35em] text-gold-400"
-          >
-            <span class="h-px w-10 bg-gold-400"></span>
-            Hair Salon &amp; Styling
-          </p>
-
-          <h1
-            data-reveal
-            class="font-display text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl"
-          >
-            Your hair,
-            <span class="block italic text-gold-400">your best version</span>
-          </h1>
-
-          <p data-reveal class="mt-7 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg">
-            Signature cuts, personalized color and treatments that care for your hair fiber. An
-            intimate space where every detail is designed for you to leave feeling renewed.
-          </p>
-
-          <div data-reveal class="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#contact"
-              class="group inline-flex items-center gap-3 rounded-full bg-gold-400 px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-300"
-            >
-              Book your appointment
-              <svg
-                class="h-4 w-4 transition-transform group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </a>
-            <a
-              href="#services"
-              class="inline-flex items-center rounded-full border border-white/25 px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:border-gold-400 hover:text-gold-400"
-            >
-              View services
-            </a>
-          </div>
-
-          <div
-            data-reveal
-            class="mt-14 flex flex-wrap items-center gap-x-10 gap-y-5 border-t border-white/10 pt-8"
-          >
-            <div>
-              <p class="font-display text-2xl text-gold-400">12+</p>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">
-                Years of experience
-              </p>
-            </div>
-            <div>
-              <p class="font-display text-2xl text-gold-400">4.9★</p>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Average rating</p>
-            </div>
-            <div>
-              <p class="font-display text-2xl text-gold-400">100%</p>
-              <p class="text-[11px] uppercase tracking-[0.2em] text-white/50">Vegan products</p>
-            </div>
+    <main>
+      <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-content">
+            <span class="eyebrow">Beauty salon and styling</span>
+            <h1>Your hair,<br /><span>your best version</span></h1>
+            <p>
+              Cuts, color and personalized treatments to care for your hair and highlight your
+              style.
+            </p>
+            <a class="button" href="#contact">Book an appointment</a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ==================== SERVICES ==================== -->
-    <section id="services" class="scroll-mt-24 bg-cream py-24 lg:py-32">
-      <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mb-16 max-w-2xl">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Services</p>
-          <h2
-            data-reveal
-            class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
-          >
-            Everything your hair needs
-          </h2>
-          <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
-            We work with a prior diagnosis and professional products. Each service adapts to your
-            hair type, routine and lifestyle.
-          </p>
+      <section class="section" id="services">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">Our services</span>
+            <h2>Everything your hair needs</h2>
+            <p>Services tailored to your hair type, style and routine.</p>
+          </div>
+          <div class="services">
+            <article class="service">
+              <span class="symbol">✂</span>
+              <h3>Cut and styling</h3>
+              <p>Personalized cuts, wash and styling for every look.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">◒</span>
+              <h3>Color</h3>
+              <p>Coloring, highlights and corrections for a natural result.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">〰</span>
+              <h3>Balayage</h3>
+              <p>Soft lightening and gradients that add dimension.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">✧</span>
+              <h3>Treatments</h3>
+              <p>Hydration and care for soft, healthy hair.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">♧</span>
+              <h3>Event hairstyles</h3>
+              <p>Updos, waves and hairstyles for special occasions.</p>
+            </article>
+            <article class="service">
+              <span class="symbol">◇</span>
+              <h3>Barbershop</h3>
+              <p>Men's cuts, line-ups and beard grooming.</p>
+            </article>
+          </div>
         </div>
+      </section>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <!-- Card 1 -->
-          <article
-            data-reveal
-            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
-          >
-            <span
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <circle cx="6" cy="6" r="2.5" />
-                <circle cx="6" cy="18" r="2.5" />
-                <path d="M8.2 7.7 20 18M8.2 16.3 20 6" />
-              </svg>
-            </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Cut &amp; Style</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Personalized haircut based on your face shape, texture and routine. Includes wash,
-              massage and final styling.
-            </p>
-          </article>
-
-          <!-- Card 2 -->
-          <article
-            data-reveal
-            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
-          >
-            <span
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 3s6 6.2 6 10a6 6 0 1 1-12 0c0-3.8 6-10 6-10Z" />
-              </svg>
-            </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Color &amp; Balayage</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Ammonia-free coloring, highlights, balayage and color correction. Prior tone study for
-              a natural result.
-            </p>
-          </article>
-
-          <!-- Card 3 -->
-          <article
-            data-reveal
-            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
-          >
-            <span
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"
-                />
-              </svg>
-            </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Treatments</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Deep hydration, keratin, hair botox and anti-hair loss. Scalp diagnosis included.
-            </p>
-          </article>
-
-          <!-- Card 4 -->
-          <article
-            data-reveal
-            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
-          >
-            <span
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8Z" />
-              </svg>
-            </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Event hairstyles</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Updos, waves and half-up styles for weddings, graduations and celebrations. Trial
-              available.
-            </p>
-          </article>
-
-          <!-- Card 5 -->
-          <article
-            data-reveal
-            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
-          >
-            <span
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <circle cx="12" cy="8" r="4" />
-                <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
-              </svg>
-            </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Barbering</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Men's cut, beard trim, lining and classic straight-razor shave with hot towel.
-            </p>
-          </article>
-
-          <!-- Card 6 -->
-          <article
-            data-reveal
-            class="group rounded-2xl border border-ink/8 bg-white p-8 transition duration-300 hover:-translate-y-1.5 hover:border-gold-400/50 hover:shadow-soft"
-          >
-            <span
-              class="flex h-12 w-12 items-center justify-center rounded-full bg-sand text-gold-600 transition group-hover:bg-gold-400 group-hover:text-ink"
-            >
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 20s-7-4.3-7-9.3A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7 3.1c0 5-7 9.3-7 9.3Z"
-                />
-              </svg>
-            </span>
-            <h3 class="mt-6 font-display text-2xl text-ink">Brides &amp; Editorial</h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
-              Comprehensive advice for your big day, with home service and packages for companions.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== ABOUT ==================== -->
-    <section id="about" class="scroll-mt-24 bg-sand py-24 lg:py-32">
-      <div class="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2 lg:gap-20 lg:px-8">
-        <div data-reveal class="relative">
+      <section class="section about" id="about">
+        <div class="container about-grid">
           <img
-            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&q=80"
-            alt="Stylist working in the salon"
+            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1000&q=80"
+            alt="Salon interior and styling work"
             loading="lazy"
-            class="h-[420px] w-full rounded-2xl object-cover shadow-soft sm:h-[520px]"
           />
-          <!-- Floating card -->
-          <div
-            class="absolute -bottom-6 -right-4 hidden rounded-2xl bg-ink p-6 text-center shadow-soft sm:block lg:-right-8"
-          >
-            <p class="font-display text-4xl text-gold-400">8k+</p>
-            <p class="mt-1 text-[11px] uppercase tracking-[0.2em] text-white/60">Happy clients</p>
+          <div>
+            <span class="eyebrow">About us</span>
+            <h2>A space for you</h2>
+            <p>
+              At Studio Aurea we believe that caring for your hair is also taking time for yourself.
+              We listen to what you are looking for and recommend the right service.
+            </p>
+            <p>We work with professional products and put hair care first in every service.</p>
+            <a class="button" href="#contact">Get to know us</a>
           </div>
         </div>
+      </section>
 
-        <div>
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">About</p>
-          <h2
-            data-reveal
-            class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
-          >
-            A studio, not just any salon
-          </h2>
-
-          <p data-reveal class="mt-7 text-base leading-relaxed text-ink/65">
-            We were born in 2013 with a simple idea: to reclaim time for yourself. At Studio Aurea
-            there is no rush, there is conversation, coffee and expert hands that listen before
-            cutting.
-          </p>
-          <p data-reveal class="mt-5 text-base leading-relaxed text-ink/65">
-            We are part of a sustainable beauty program: we work with vegan, cruelty-free brands
-            with recyclable packaging.
-          </p>
-
-          <ul data-reveal class="mt-9 grid gap-4 sm:grid-cols-2">
-            <li class="flex items-start gap-3 text-sm text-ink/75">
-              <svg
-                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-              Personalized diagnosis
-            </li>
-            <li class="flex items-start gap-3 text-sm text-ink/75">
-              <svg
-                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-              Professional vegan products
-            </li>
-            <li class="flex items-start gap-3 text-sm text-ink/75">
-              <svg
-                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-              No endless waiting lists
-            </li>
-            <li class="flex items-start gap-3 text-sm text-ink/75">
-              <svg
-                class="mt-0.5 h-5 w-5 shrink-0 text-gold-500"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-              Free specialty coffee
-            </li>
-          </ul>
-
-          <a
-            href="#contact"
-            class="mt-10 inline-flex items-center gap-3 rounded-full bg-ink px-8 py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-coal"
-          >
-            Meet us in person
-            <svg
-              class="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== GALLERY ==================== -->
-    <section id="gallery" class="scroll-mt-24 bg-ink py-24 lg:py-32">
-      <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <div class="max-w-xl">
-            <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-400">Gallery</p>
-            <h2
-              data-reveal
-              class="gold-line mt-4 font-display text-4xl leading-tight text-white sm:text-5xl"
-            >
-              Our work speaks for itself
-            </h2>
+      <section class="section gallery" id="gallery">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">Gallery</span>
+            <h2>Our work</h2>
+            <p>A showcase of styles, colors and results.</p>
           </div>
-          <p data-reveal class="max-w-sm text-sm leading-relaxed text-white/50">
-            A selection of real transformations done in the studio. Follow us on Instagram to see
-            more.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
-          <a
-            href="#"
-            class="group relative col-span-2 overflow-hidden rounded-2xl lg:col-span-1 lg:row-span-2"
-          >
+          <div class="gallery-grid">
             <img
-              src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=900&q=80"
-              alt="Blonde balayage"
+              src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=700&q=80"
+              alt="Color work"
               loading="lazy"
-              class="h-64 w-full object-cover transition duration-700 group-hover:scale-105 lg:h-full"
             />
-            <span
-              class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent opacity-0 transition group-hover:opacity-100"
-            ></span>
-            <span
-              class="absolute bottom-5 left-5 translate-y-3 text-sm uppercase tracking-[0.2em] text-white opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-              >Balayage</span
-            >
-          </a>
-
-          <a href="#" class="group relative overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=700&q=80"
-              alt="Barbershop cut"
+              alt="Haircut"
               loading="lazy"
-              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
             />
-            <span
-              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
-            ></span>
-          </a>
-
-          <a href="#" class="group relative overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1596728325488-58c87691e9af?auto=format&fit=crop&w=700&q=80"
-              alt="Bridal hairstyle"
+              alt="Hairstyle"
               loading="lazy"
-              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
             />
-            <span
-              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
-            ></span>
-          </a>
-
-          <a href="#" class="group relative overflow-hidden rounded-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=700&q=80"
-              alt="Color detail"
-              loading="lazy"
-              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
-            />
-            <span
-              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
-            ></span>
-          </a>
-
-          <a href="#" class="group relative overflow-hidden rounded-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=700&q=80"
-              alt="Salon interior"
-              loading="lazy"
-              class="h-44 w-full object-cover transition duration-700 group-hover:scale-105 sm:h-52"
-            />
-            <span
-              class="absolute inset-0 bg-ink/40 opacity-0 transition group-hover:opacity-100"
-            ></span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== PRICING ==================== -->
-    <section id="pricing" class="scroll-mt-24 bg-cream py-24 lg:py-32">
-      <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mx-auto mb-16 max-w-2xl text-center">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Pricing</p>
-          <h2 data-reveal class="mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl">
-            Clear prices, no surprises
-          </h2>
-          <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
-            The final price may vary depending on hair length and density. We confirm everything
-            before starting.
-          </p>
-        </div>
-
-        <div class="grid gap-6 lg:grid-cols-3">
-          <!-- Plan 1 -->
-          <div
-            data-reveal
-            class="flex flex-col rounded-2xl border border-ink/10 bg-white p-9 transition hover:shadow-soft"
-          >
-            <h3 class="font-display text-2xl text-ink">Essential</h3>
-            <p class="mt-2 text-sm text-ink/55">To keep your style up to date</p>
-            <p class="mt-7 font-display text-5xl text-ink">
-              <span class="align-top text-2xl text-gold-500">€</span>28
-            </p>
-            <ul class="mt-8 flex-1 space-y-3.5 text-sm text-ink/70">
-              <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Hair wash and scalp massage
-              </li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Personalized haircut</li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Blow-dry and styling</li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Product advice</li>
-            </ul>
-            <a
-              href="#contact"
-              class="mt-9 rounded-full border border-ink/20 py-3.5 text-center text-[13px] uppercase tracking-[0.18em] text-ink transition hover:border-ink hover:bg-ink hover:text-white"
-            >
-              Book
-            </a>
-          </div>
-
-          <!-- Plan 2 (featured) -->
-          <div
-            data-reveal
-            class="relative flex flex-col rounded-2xl bg-ink p-9 shadow-soft lg:-mt-4 lg:mb-4"
-          >
-            <span
-              class="absolute right-8 top-8 rounded-full bg-gold-400 px-3.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink"
-            >
-              Most booked
-            </span>
-            <h3 class="font-display text-2xl text-white">Color</h3>
-            <p class="mt-2 text-sm text-white/50">Color, highlights or balayage</p>
-            <p class="mt-7 font-display text-5xl text-white">
-              <span class="align-top text-2xl text-gold-400">€</span>65
-            </p>
-            <ul class="mt-8 flex-1 space-y-3.5 text-sm text-white/70">
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Tone diagnosis</li>
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Ammonia-free coloring</li>
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Post-color treatment</li>
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Trim included</li>
-              <li class="flex gap-3"><span class="text-gold-400">—</span> Final styling</li>
-            </ul>
-            <a
-              href="#contact"
-              class="mt-9 rounded-full bg-gold-400 py-3.5 text-center text-[13px] font-medium uppercase tracking-[0.18em] text-ink transition hover:bg-gold-300"
-            >
-              Book
-            </a>
-          </div>
-
-          <!-- Plan 3 -->
-          <div
-            data-reveal
-            class="flex flex-col rounded-2xl border border-ink/10 bg-white p-9 transition hover:shadow-soft"
-          >
-            <h3 class="font-display text-2xl text-ink">Ritual</h3>
-            <p class="mt-2 text-sm text-ink/55">Complete care experience</p>
-            <p class="mt-7 font-display text-5xl text-ink">
-              <span class="align-top text-2xl text-gold-500">€</span>95
-            </p>
-            <ul class="mt-8 flex-1 space-y-3.5 text-sm text-ink/70">
-              <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Everything in the Color plan
-              </li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> Keratin treatment</li>
-              <li class="flex gap-3"><span class="text-gold-500">—</span> 15-min scalp massage</li>
-              <li class="flex gap-3">
-                <span class="text-gold-500">—</span> Complimentary express manicure
-              </li>
-            </ul>
-            <a
-              href="#contact"
-              class="mt-9 rounded-full border border-ink/20 py-3.5 text-center text-[13px] uppercase tracking-[0.18em] text-ink transition hover:border-ink hover:bg-ink hover:text-white"
-            >
-              Book
-            </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ==================== TESTIMONIALS ==================== -->
-    <section id="testimonials" class="scroll-mt-24 bg-sand py-24 lg:py-32">
-      <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="mx-auto mb-16 max-w-2xl text-center">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">
-            Testimonials
-          </p>
-          <h2 data-reveal class="mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl">
-            What our clients say
-          </h2>
+      <section class="section" id="prices">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">Prices</span>
+            <h2>Simple rates</h2>
+            <p>The final price may vary depending on hair length and thickness.</p>
+          </div>
+          <div class="prices">
+            <article class="price-card">
+              <h3>Essential</h3>
+              <p>Cut and styling</p>
+              <div class="price">€28</div>
+              <ul>
+                <li>Wash</li>
+                <li>Personalized cut</li>
+                <li>Blow-dry and styling</li>
+              </ul>
+              <a class="button" href="#contact">Book</a>
+            </article>
+            <article class="price-card">
+              <h3>Color</h3>
+              <p>Coloring and highlights</p>
+              <div class="price">€65</div>
+              <ul>
+                <li>Color consultation</li>
+                <li>Coloring</li>
+                <li>Treatment and styling</li>
+              </ul>
+              <a class="button" href="#contact">Book</a>
+            </article>
+            <article class="price-card">
+              <h3>Ritual</h3>
+              <p>Complete care</p>
+              <div class="price">€95</div>
+              <ul>
+                <li>Color service</li>
+                <li>Hair treatment</li>
+                <li>Scalp massage</li>
+              </ul>
+              <a class="button" href="#contact">Book</a>
+            </article>
+          </div>
         </div>
+      </section>
 
-        <div class="grid gap-6 lg:grid-cols-3">
-          <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
-            <div class="flex gap-1 text-gold-500" aria-label="5 out of 5 stars">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
-              "For years I couldn't find a place that understood my curls. Here they didn't just cut
-              it well, they taught me how to care for it at home."
-            </blockquote>
-            <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
-              <span
-                class="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-display text-gold-400"
-                >M</span
+      <section class="section contact" id="contact">
+        <div class="container contact-grid">
+          <div class="contact-info">
+            <span class="eyebrow">Contact</span>
+            <h2>Book your appointment</h2>
+            <p>Write to us to check availability and book your next service.</p>
+            <p><strong>Address:</strong><br />42 Mayor Street, Madrid</p>
+            <p><strong>Phone:</strong><br /><a href="tel:+34912345678">+34 912 345 678</a></p>
+            <p>
+              <strong>Email:</strong><br /><a href="mailto:hello@studioaurea.es"
+                >hello@studioaurea.es</a
               >
-              <span>
-                <span class="block text-sm font-medium text-ink">María Contreras</span>
-                <span class="block text-xs text-ink/50">Client since 2019</span>
-              </span>
-            </figcaption>
-          </figure>
-
-          <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
-            <div class="flex gap-1 text-gold-500" aria-label="5 out of 5 stars">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
-              "My balayage stayed flawless for more than six months. You can tell they work color
-              with great expertise and care for the hair fiber."
-            </blockquote>
-            <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
-              <span
-                class="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-display text-gold-400"
-                >L</span
-              >
-              <span>
-                <span class="block text-sm font-medium text-ink">Lucía Ferrer</span>
-                <span class="block text-xs text-ink/50">Client since 2021</span>
-              </span>
-            </figcaption>
-          </figure>
-
-          <figure data-reveal class="rounded-2xl bg-white p-8 shadow-soft">
-            <div class="flex gap-1 text-gold-500" aria-label="5 out of 5 stars">
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </div>
-            <blockquote class="mt-5 text-sm leading-relaxed text-ink/70">
-              "They styled my hair for my wedding and it was perfect: it lasted 14 hours of dancing.
-              The service was also incredibly warm from start to finish."
-            </blockquote>
-            <figcaption class="mt-7 flex items-center gap-4 border-t border-ink/8 pt-6">
-              <span
-                class="flex h-11 w-11 items-center justify-center rounded-full bg-ink font-display text-gold-400"
-                >A</span
-              >
-              <span>
-                <span class="block text-sm font-medium text-ink">Andrea Ruiz</span>
-                <span class="block text-xs text-ink/50">Bride · June 2024</span>
-              </span>
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== CONTACT ==================== -->
-    <section id="contact" class="scroll-mt-24 bg-cream py-24 lg:py-32">
-      <div class="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-5 lg:gap-20 lg:px-8">
-        <!-- Info -->
-        <div class="lg:col-span-2">
-          <p data-reveal class="text-[12px] uppercase tracking-[0.35em] text-gold-600">Contact</p>
-          <h2
-            data-reveal
-            class="gold-line mt-4 font-display text-4xl leading-tight text-ink sm:text-5xl"
-          >
-            Book your appointment
-          </h2>
-          <p data-reveal class="mt-6 text-base leading-relaxed text-ink/60">
-            Fill out the form and we will confirm availability within 24 hours. If you prefer, call
-            us.
-          </p>
-
-          <ul data-reveal class="mt-10 space-y-6 text-sm">
-            <li class="flex gap-4">
-              <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" />
-                  <circle cx="12" cy="10" r="2.5" />
-                </svg>
-              </span>
-              <span>
-                <span class="block font-medium text-ink">Address</span>
-                <span class="block text-ink/60">Calle Mayor 42, 28013 Madrid</span>
-              </span>
-            </li>
-            <li class="flex gap-4">
-              <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"
-                  />
-                </svg>
-              </span>
-              <span>
-                <span class="block font-medium text-ink">Phone</span>
-                <a href="tel:+34912345678" class="block text-ink/60 transition hover:text-gold-600"
-                  >+34 912 345 678</a
-                >
-              </span>
-            </li>
-            <li class="flex gap-4">
-              <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
-                  <path d="m3.5 7 8.5 6 8.5-6" />
-                </svg>
-              </span>
-              <span>
-                <span class="block font-medium text-ink">Email</span>
-                <a
-                  href="mailto:hola@studioaurea.es"
-                  class="block text-ink/60 transition hover:text-gold-600"
-                  >hola@studioaurea.es</a
-                >
-              </span>
-            </li>
-            <li class="flex gap-4">
-              <span
-                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sand text-gold-600"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 7v5l3.5 2" />
-                </svg>
-              </span>
-              <span>
-                <span class="block font-medium text-ink">Hours</span>
-                <span class="block text-ink/60">Mon – Fri · 10:00 to 20:00</span>
-                <span class="block text-ink/60">Saturday · 10:00 to 14:00</span>
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Form -->
-        <div data-reveal class="lg:col-span-3">
-          <form class="rounded-2xl border border-ink/8 bg-white p-7 shadow-soft sm:p-10" novalidate>
-            <div class="grid gap-5 sm:grid-cols-2">
-              <div class="sm:col-span-1">
-                <label for="name" class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Name</label
-                >
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Your name"
-                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
-                />
+            </p>
+            <p>
+              <strong>Hours:</strong><br />Monday to Friday: 10:00–20:00<br />Saturday: 10:00–14:00
+            </p>
+          </div>
+          <form action="#" method="post">
+            <div class="form-grid">
+              <div>
+                <label for="name">Name</label><input id="name" name="name" type="text" required />
               </div>
-
-              <div class="sm:col-span-1">
-                <label
-                  for="phone"
-                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Phone</label
-                >
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  placeholder="600 000 000"
-                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
-                />
+              <div>
+                <label for="phone">Phone</label
+                ><input id="phone" name="phone" type="tel" required />
               </div>
-
-              <div class="sm:col-span-1">
-                <label
-                  for="email"
-                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Email</label
-                >
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="tu@email.com"
-                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
-                />
+              <div>
+                <label for="email">Email address</label
+                ><input id="email" name="email" type="email" required />
               </div>
-
-              <div class="sm:col-span-1">
-                <label for="date" class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Desired date</label
-                >
-                <input
-                  id="date"
-                  name="date"
-                  type="date"
-                  class="w-full rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
-                />
+              <div>
+                <label for="date">Preferred date</label><input id="date" name="date" type="date" />
               </div>
-
-              <div class="sm:col-span-2">
-                <label
-                  for="service"
-                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Service</label
-                >
-                <select
-                  id="service"
-                  name="service"
-                  class="w-full appearance-none rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
-                >
+              <div class="full">
+                <label for="service">Service</label
+                ><select id="service" name="service" required>
                   <option value="">Select a service</option>
-                  <option>Cut &amp; Style</option>
-                  <option>Color &amp; Balayage</option>
-                  <option>Hair treatment</option>
+                  <option>Cut and styling</option>
+                  <option>Color</option>
+                  <option>Balayage</option>
+                  <option>Treatment</option>
                   <option>Event hairstyle</option>
-                  <option>Barbering</option>
-                  <option>Brides &amp; Editorial</option>
+                  <option>Barbershop</option>
                 </select>
               </div>
-
-              <div class="sm:col-span-2">
-                <label
-                  for="message"
-                  class="mb-2 block text-xs uppercase tracking-[0.15em] text-ink/55"
-                  >Message</label
-                >
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="4"
-                  placeholder="Tell us what you need..."
-                  class="w-full resize-none rounded-lg border border-ink/12 bg-cream px-4 py-3 text-sm text-ink outline-none transition placeholder:text-ink/35 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/25"
-                ></textarea>
+              <div class="full">
+                <label for="message">Message</label
+                ><textarea id="message" name="message" rows="4"></textarea>
               </div>
             </div>
-
-            <button
-              type="submit"
-              class="mt-7 w-full rounded-full bg-ink py-4 text-[13px] font-medium uppercase tracking-[0.18em] text-white transition hover:bg-gold-500 hover:text-ink sm:w-auto sm:px-12"
-            >
-              Send request
-            </button>
-
-            <p class="mt-5 text-xs leading-relaxed text-ink/45">
-              By submitting you accept our privacy policy. We will only use your data to manage your
-              appointment.
-            </p>
+            <button class="button" type="submit">Send request</button>
           </form>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- ==================== FOOTER ==================== -->
-    <footer class="bg-ink pt-20 pb-10 text-white/60">
-      <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="grid gap-12 pb-14 lg:grid-cols-4">
-          <div class="lg:col-span-2">
-            <a href="#home" class="flex items-center gap-2.5">
-              <span
-                class="flex h-9 w-9 items-center justify-center rounded-full border border-gold-400/60 font-display text-sm text-gold-400"
-                >A</span
-              >
-              <span class="font-display text-xl tracking-wide text-white"
-                >Studio <span class="text-gold-400">Aurea</span></span
-              >
-            </a>
-            <p class="mt-6 max-w-sm text-sm leading-relaxed">
-              Signature hair salon and styling in central Madrid. Color, cuts and treatments with
-              vegan products since 2013.
-            </p>
-
-            <div class="mt-7 flex gap-3">
-              <a
-                href="#"
-                aria-label="Instagram"
-                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition hover:border-gold-400 hover:text-gold-400"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r=".8" fill="currentColor" />
-                </svg>
-              </a>
-              <a
-                href="#"
-                aria-label="Facebook"
-                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition hover:border-gold-400 hover:text-gold-400"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M14 8h2V5h-2a4 4 0 0 0-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13V9a1 1 0 0 1 1-1Z"
-                  />
-                </svg>
-              </a>
-              <a
-                href="#"
-                aria-label="TikTok"
-                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 transition hover:border-gold-400 hover:text-gold-400"
-              >
-                <svg
-                  class="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M15 4v9.5a3.5 3.5 0 1 1-3.5-3.5" />
-                  <path d="M15 5.5A4.5 4.5 0 0 0 19.5 10" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Services</h3>
-            <ul class="mt-5 space-y-3 text-sm">
-              <li>
-                <a href="#services" class="transition hover:text-gold-400">Cut &amp; Style</a>
-              </li>
-              <li>
-                <a href="#services" class="transition hover:text-gold-400">Color &amp; Balayage</a>
-              </li>
-              <li><a href="#services" class="transition hover:text-gold-400">Treatments</a></li>
-              <li><a href="#services" class="transition hover:text-gold-400">Barbering</a></li>
-              <li><a href="#services" class="transition hover:text-gold-400">Brides</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="text-[11px] uppercase tracking-[0.25em] text-gold-400">Studio</h3>
-            <ul class="mt-5 space-y-3 text-sm">
-              <li><a href="#about" class="transition hover:text-gold-400">About us</a></li>
-              <li><a href="#gallery" class="transition hover:text-gold-400">Gallery</a></li>
-              <li><a href="#pricing" class="transition hover:text-gold-400">Pricing</a></li>
-              <li><a href="#contact" class="transition hover:text-gold-400">Contact</a></li>
-              <li><a href="#" class="transition hover:text-gold-400">Work with us</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <div
-          class="flex flex-col gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row sm:items-center sm:justify-between"
-        >
-          <p>© 2025 Studio Aurea. All rights reserved.</p>
-          <div class="flex gap-6">
-            <a href="#" class="transition hover:text-gold-400">Legal notice</a>
-            <a href="#" class="transition hover:text-gold-400">Privacy</a>
-            <a href="#" class="transition hover:text-gold-400">Cookies</a>
-          </div>
-        </div>
+    <footer>
+      <div class="container footer-inner">
+        <span>© 2026 Studio Aurea</span>
+        <span>Beauty salon and styling</span>
       </div>
     </footer>
-
-    <!-- ==================== SCRIPTS ==================== -->
-    <script>
-      /* ---------- Navbar with background on scroll ---------- */
-      const navbar = document.getElementById("navbar");
-      const onScroll = () => navbar.classList.toggle("nav-scrolled", window.scrollY > 40);
-      onScroll();
-      window.addEventListener("scroll", onScroll, { passive: true });
-
-      /* ---------- Mobile menu ---------- */
-      const menuBtn = document.getElementById("menuBtn");
-      const menu = document.getElementById("mobileMenu");
-      const iconOpen = document.getElementById("iconOpen");
-      const iconClose = document.getElementById("iconClose");
-
-      const toggleMenu = (force) => {
-        const open = force ?? menu.classList.contains("hidden");
-        menu.classList.toggle("hidden", !open);
-        iconOpen.classList.toggle("hidden", open);
-        iconClose.classList.toggle("hidden", !open);
-        menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-      };
-
-      menuBtn.addEventListener("click", () => toggleMenu());
-      document
-        .querySelectorAll(".mobile-link")
-        .forEach((l) => l.addEventListener("click", () => toggleMenu(false)));
-      window.addEventListener("resize", () => {
-        if (window.innerWidth >= 1024) toggleMenu(false);
-      });
-
-      /* ---------- Scroll reveal animation ---------- */
-      const elements = document.querySelectorAll("[data-reveal]");
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry, i) => {
-              if (entry.isIntersecting) {
-                entry.target.style.transitionDelay = Math.min(i * 90, 360) + "ms";
-                entry.target.classList.add("is-visible");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
-        );
-
-        elements.forEach((el) => observer.observe(el));
-      } else {
-        elements.forEach((el) => el.classList.add("is-visible"));
-      }
-
-      /* ---------- Form (demo) ---------- */
-      document.querySelector("form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        alert(
-          "Thank you! We have received your request. We will confirm your appointment within 24 hours.",
-        );
-        e.target.reset();
-      });
-    </script>
   </body>
 </html>
