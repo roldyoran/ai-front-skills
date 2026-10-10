@@ -1,0 +1,81 @@
+---
+import Icon from '@/components/ui/Icon.astro';
+import { Button } from '@/components/starwind/button';
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownContent,
+  DropdownLinkItem,
+  DropdownShortcut,
+} from '@/components/starwind/dropdown';
+import { t, locales, localeLabels, type Locale } from '@/lib/i18n';
+
+interface Props {
+  locale: Locale;
+  localeUrls: Record<string, string>;
+}
+
+const { locale, localeUrls } = Astro.props;
+---
+
+<Dropdown modal={false} data-lang-menu>
+  <DropdownTrigger asChild>
+    <Button
+      variant="ghost"
+      size="sm"
+      aria-label={t('nav.language', locale)}
+      class="gap-1 px-2 text-[12px] font-medium text-text-muted hover:text-text-secondary"
+    >
+      <Icon name="globe" size={14} />
+      <span class="leading-none">{locale.toUpperCase()}</span>
+      <Icon name="chevron-down" size={14} class="opacity-60" />
+    </Button>
+  </DropdownTrigger>
+  <DropdownContent align="end" sideOffset={8} class="min-w-[11rem]">
+    {locales.map((l: Locale) =>
+      l === locale ? (
+        <DropdownLinkItem
+          href={localeUrls[l]}
+          hreflang={l}
+          aria-current="true"
+          closeOnClick={false}
+          class="cursor-default"
+        >
+          <Icon name="check" size={14} class="text-text" />
+          <span class="flex-1 text-[13px] font-medium text-text">{localeLabels[l]}</span>
+          <DropdownShortcut>{l.toUpperCase()}</DropdownShortcut>
+        </DropdownLinkItem>
+      ) : (
+        <DropdownLinkItem href={localeUrls[l]} hreflang={l} closeOnClick={true}>
+          <span class="inline-flex w-[14px] shrink-0" aria-hidden="true"></span>
+          <span class="flex-1 text-[13px] text-text-secondary">{localeLabels[l]}</span>
+          <DropdownShortcut>{l.toUpperCase()}</DropdownShortcut>
+        </DropdownLinkItem>
+      ),
+    )}
+  </DropdownContent>
+</Dropdown>
+
+<script>
+  // Preserve ?query and #hash when switching language (progressive enhancement;
+  // the links already work without JS).
+  function initLangMenu() {
+    document.querySelectorAll<HTMLElement>('[data-lang-menu]').forEach((root) => {
+      if (root.dataset.initialized === 'true') return;
+      root.dataset.initialized = 'true';
+
+      root.addEventListener('click', (event) => {
+        const anchor = (event.target as HTMLElement).closest('a[href]');
+        if (!anchor) return;
+        const url = new URL(anchor.getAttribute('href') || '/', window.location.origin);
+        if (window.location.search) url.search = window.location.search;
+        if (window.location.hash) url.hash = window.location.hash;
+        event.preventDefault();
+        window.location.href = url.pathname + url.search + url.hash;
+      });
+    });
+  }
+
+  initLangMenu();
+  document.addEventListener('astro:page-load', initLangMenu);
+</script>

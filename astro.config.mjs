@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -10,7 +9,7 @@ import svelte from '@astrojs/svelte';
 export default defineConfig({
   site: 'https://front-skills.dev',
 
-  integrations: [mdx(), sitemap(), svelte()],
+  integrations: [sitemap(), svelte()],
 
   vite: {
     plugins: [tailwindcss()],
@@ -42,7 +41,7 @@ export default defineConfig({
   },
 
   prefetch: {
-    prefetchAll: true,
+    prefetchAll: false,
     defaultStrategy: 'viewport',
   },
 });

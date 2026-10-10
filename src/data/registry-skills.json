@@ -8,13 +8,20 @@
       "author": "anthropic",
       "featured": true,
       "difficulty": "intermediate",
-      "tags": ["design", "typography", "aesthetic", "visual-identity", "color-system"],
-      "topics": ["Visual", "Systems", "Motion", "Interaction"],
-      "image": "https://placehold.co/800x500/141414/22d3ee?text=Frontend+Design",
-      "comparison": {
-        "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Generic+UI",
-        "after": "https://placehold.co/800x500/0a0a0a/22d3ee?text=Distinctive+Design"
-      },
+      "tags": [
+        "design",
+        "typography",
+        "aesthetic",
+        "visual-identity",
+        "color-system"
+      ],
+      "topics": [
+        "Visual",
+        "Systems",
+        "Motion",
+        "Interaction"
+      ],
+      "comparisons": ["hero", "services", "about", "gallery", "pricing", "testimonials", "contact"],
       "registryPath": "packages/front-skills/skills-registry/frontend-design/SKILL.md"
     },
     {
@@ -22,16 +29,24 @@
       "slug": "ui-ux-pro-max",
       "category": "ui-ux",
       "description": "UI/UX design intelligence for web and mobile. Includes 50+ styles, 161 color palettes, 57 font pairings, 161 product types, 99 UX guidelines, and 25 chart types across 10 stacks.",
-      "author": "community",
+      "author": "Next Level Builder",
       "featured": true,
       "difficulty": "advanced",
-      "tags": ["ui-ux", "design-system", "colors", "typography", "accessibility"],
-      "topics": ["Accessibility", "Visual", "Systems", "Performance"],
-      "image": "https://placehold.co/800x500/141414/a855f7?text=UI/UX+Pro+Max",
-      "comparison": {
-        "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Basic+UI",
-        "after": "https://placehold.co/800x500/0a0a0a/a855f7?text=Pro+Max+Design"
-      },
+      "tags": [
+        "ui-ux",
+        "design-system",
+        "colors",
+        "typography",
+        "accessibility"
+      ],
+      "topics": [
+        "Accessibility",
+        "Visual",
+        "Systems",
+        "Performance"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/246974152?s=200&v=4",
+      "comparisons": [],
       "registryPath": "packages/front-skills/skills-registry/ui-ux-pro-max/SKILL.md"
     },
     {
@@ -42,13 +57,20 @@
       "author": "vercel",
       "featured": true,
       "difficulty": "intermediate",
-      "tags": ["guidelines", "accessibility", "review", "best-practices", "audit"],
-      "topics": ["Accessibility", "Interaction", "Performance", "Motion"],
-      "image": "https://placehold.co/800x500/141414/f97316?text=Web+Guidelines",
-      "comparison": {
-        "before": "https://placehold.co/800x500/1c1c1f/71717a?text=Non-Compliant",
-        "after": "https://placehold.co/800x500/0a0a0a/f97316?text=Guidelines+Compliant"
-      },
+      "tags": [
+        "guidelines",
+        "accessibility",
+        "review",
+        "best-practices",
+        "audit"
+      ],
+      "topics": [
+        "Accessibility",
+        "Interaction",
+        "Performance",
+        "Motion"
+      ],
+      "comparisons": [],
       "registryPath": "packages/front-skills/skills-registry/web-design-guidelines/SKILL.md"
     }
   ]
