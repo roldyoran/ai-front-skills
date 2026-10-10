@@ -140,8 +140,8 @@ export function getComparisonCases(slug: string): ComparisonCase[] {
       return {
         id: c.id,
         label: c.label,
-        before: `/comparisons/${slug}/${c.id}/before.png`,
-        after: `/comparisons/${slug}/${c.id}/after.png`,
+        before: `/comparisons/${slug}/${c.id}/before.webp`,
+        after: `/comparisons/${slug}/${c.id}/after.webp`,
         width: c.viewport.width,
         height: c.viewport.height,
         demoBefore: `/showcase/${slug}/${src}/before.html`,
@@ -263,6 +263,23 @@ export function getAvatarUrl(author: string, size = 80): string {
   const clean = handle.replace(/^@/, '');
   if (!/^[a-z0-9](?:[a-z0-9-]{0,37}[a-z0-9])?$/.test(clean)) return '';
   return `https://github.com/${clean}.png?size=${size}`;
+}
+
+/**
+ * Upstream install reference per skill (appended to `skills add` commands).
+ * Falls back to the legacy `front-skills@<slug>` ref for skills without one.
+ */
+const INSTALL_REFS: Record<string, string> = {
+  'frontend-design': 'https://github.com/anthropics/skills --skill frontend-design',
+  'ui-ux-pro-max': 'https://github.com/nextlevelbuilder/ui-ux-pro-max-skill --skill ui-ux-pro-max',
+  'web-design-guidelines': 'https://github.com/vercel-labs/agent-skills --skill web-design-guidelines',
+};
+
+/**
+ * Install reference for a skill slug (used by InstallTabs on detail pages).
+ */
+export function getInstallRef(slug: string): string {
+  return INSTALL_REFS[slug] ?? `front-skills@${slug}`;
 }
 
 /**

@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Front Skills",
-    "description": "Frontend skills with visual before/after comparisons"
+    "title": "AI Front Skills",
+    "description": "AI Front Skills with visual before/after comparisons"
   },
   "nav": {
     "home": "Home",
@@ -14,7 +14,7 @@
     "resources": "Resources",
     "allSkills": "All skills"
   },  "hero": {
-    "title": "Frontend Skills",
+    "title": "AI Front Skills",
     "subtitle": "CSS, React, Tailwind skills with visual before/after comparisons",
     "cta": "View Skills"
   },
@@ -59,7 +59,7 @@
       "q1": "What is a front skill?",
       "a1": "A front skill is a reusable package of guidance — rules, examples and patterns — that helps humans and AI agents build better interfaces. Each skill ships with documentation and, when it matters, a visual before/after comparison.",
       "q2": "How do I install a skill?",
-      "a2": "Copy the install command and run it in your project. You can install the whole collection or a single skill by appending its slug.",
+      "a2": "Copy the install command shown on the skill page and run it in your project. Each skill installs from its own repository.",
       "q3": "Do skills work with AI agents?",
       "a3": "Yes. Skills are plain markdown with frontmatter, so any coding agent can read and apply them directly in your repository."
     }

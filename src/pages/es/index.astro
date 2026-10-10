@@ -1,10 +1,8 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SkillGrid from "@/components/skills/SkillGrid.astro";
-import InstallCommand from "@/components/skills/InstallCommand.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { Button } from "@/components/starwind/button";
-import { Separator } from "@/components/starwind/separator";
 import {
   Accordion,
   AccordionItem,
@@ -16,8 +14,6 @@ import { t } from "@/lib/i18n";
 
 const locale = "es" as const;
 const featuredSkills = await getFeaturedSkills();
-
-const installCommand = "npx skills add front-skills";
 
 const faqItems = [
   { q: t("home.faq.q1", locale), a: t("home.faq.a1", locale) },
@@ -36,24 +32,24 @@ const faqStructuredData = {
 };
 ---
 
-<BaseLayout title={t("site.title", locale)} description="Skills de frontend reutilizables para humanos y agentes de IA, con comparaciones visuales antes/después. Explora la biblioteca e instala cualquier skill en segundos.">
+<BaseLayout title={t("site.title", locale)} description="AI Front Skills reutilizables para humanos y agentes de IA, con comparaciones visuales antes/después. Explora la biblioteca e instala cualquier skill en segundos.">
   <script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)} />
   <!-- Hero -->
   <section class="pt-24 pb-12 sm:pt-32 sm:pb-16">
     <div class="container-page text-center">
-      <h1 class="sr-only">Front Skills — skills de frontend con comparaciones visuales antes/después</h1>
+      <h1 class="sr-only">AI Front Skills — skills de frontend con comparaciones visuales antes/después</h1>
       <pre
         class="mb-4 text-white text-[4px] sm:text-[5px] md:text-[7px] lg:text-[9px] font-mono leading-[110%] tracking-tight select-none">
-███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
-██╔════╝██╔══██╗██╔═══██╗████╗  ██║╚══██╔══╝    ██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝
-█████╗  ██████╔╝██║   ██║██╔██╗ ██║   ██║       ███████╗█████╔╝ ██║██║     ██║     ███████╗
-██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║   ██║       ╚════██║██╔═██╗ ██║██║     ██║     ╚════██║
-██║     ██║  ██║╚██████╔╝██║ ╚████║   ██║       ███████║██║  ██╗██║███████╗███████╗███████║
-╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
+ █████╗ ██╗    ███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗
+██╔══██╗██║    ██╔════╝██╔══██╗██╔═══██╗████╗  ██║╚══██╔══╝    ██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝
+███████║██║    █████╗  ██████╔╝██║   ██║██╔██╗ ██║   ██║       ███████╗█████╔╝ ██║██║     ██║     ███████╗
+██╔══██║██║    ██╔══╝  ██╔══██╗██║   ██║██║╚██╗██║   ██║       ╚════██║██╔═██╗ ██║██║     ██║     ╚════██║
+██║  ██║██║    ██║     ██║  ██║╚██████╔╝██║ ╚████║   ██║       ███████║██║  ██╗██║███████╗███████╗███████║
+╚═╝  ╚═╝╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝       ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝
       </pre>
 
       <p class="mb-6 text-sm text-text-secondary max-w-md mx-auto">
-        Front Skills es una colección de skills de ingeniería de diseño para ayudar a humanos y
+        AI Front Skills es una colección de skills de ingeniería de diseño para ayudar a humanos y
         agentes a crear mejores interfaces.
       </p>
 
@@ -61,9 +57,6 @@ const faqStructuredData = {
         <Button as="a" href="/es/skills" size="md">
           {t("hero.cta", locale)}
           <Icon name="arrow-right" size={15} />
-        </Button>
-        <Button as="a" href="#install" variant="outline" size="md">
-          {t("home.installTitle", locale)}
         </Button>
       </div>
     </div>
@@ -83,25 +76,6 @@ const faqStructuredData = {
         </Button>
       </div>
       <SkillGrid skills={featuredSkills} locale={locale} variant="list" />
-    </div>
-  </section>
-
-  <!-- Install -->
-  <section id="install" class="pb-20">
-    <div class="container-page">
-      <Separator class="mb-16" />
-      <div class="text-center">
-        <h2 class="mb-3 text-lg font-bold text-text">{t("home.installTitle", locale)}</h2>
-        <p class="mb-6 text-xs text-text-secondary">{t("home.installSubtitle", locale)}</p>
-        <div class="mx-auto max-w-xl text-left">
-          <InstallCommand
-            command={installCommand}
-            copyLabel={t("detail.copy", locale)}
-            copiedLabel={t("detail.copiedLabel", locale)}
-            copiedMessage={t("detail.copied", locale)}
-          />
-        </div>
-      </div>
     </div>
   </section>
 

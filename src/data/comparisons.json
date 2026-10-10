@@ -53,15 +53,6 @@
       "fullPage": false
     },
     {
-      "id": "testimonials",
-      "skill": "frontend-design",
-      "source": "hair-salon",
-      "label": "Testimonials",
-      "anchor": "testimonials",
-      "viewport": { "width": 1280, "height": 800 },
-      "fullPage": false
-    },
-    {
       "id": "contact",
       "skill": "frontend-design",
       "source": "hair-salon",

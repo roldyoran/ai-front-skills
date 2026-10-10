@@ -1,4 +1,4 @@
-# Front Skills
+# AI Front Skills
 
 A skills registry website built with Astro 7, featuring visual before/after comparisons for frontend development skills.
 

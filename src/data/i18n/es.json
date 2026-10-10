@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "Front Skills",
-    "description": "Skills de frontend con comparaciones visuales antes/después"
+    "title": "AI Front Skills",
+    "description": "AI Front Skills con comparaciones visuales antes/después"
   },
   "nav": {
     "home": "Inicio",
@@ -15,7 +15,7 @@
     "allSkills": "Todas las skills"
   },
   "hero": {
-    "title": "Frontend Skills",
+    "title": "AI Front Skills",
     "subtitle": "Skills de CSS, React, Tailwind y más con comparaciones visuales antes/después",
     "cta": "Ver Skills"
   },
@@ -60,7 +60,7 @@
       "q1": "¿Qué es una front skill?",
       "a1": "Una front skill es un paquete reutilizable de guía — reglas, ejemplos y patrones — que ayuda a humanos y agentes de IA a crear mejores interfaces. Cada skill incluye documentación y, cuando importa, una comparación visual antes/después.",
       "q2": "¿Cómo instalo una skill?",
-      "a2": "Copia el comando de instalación y ejecútalo en tu proyecto. Puedes instalar toda la colección o una sola skill añadiendo su slug.",
+      "a2": "Copia el comando de instalación que aparece en la página de la skill y ejecútalo en tu proyecto. Cada skill se instala desde su propio repositorio.",
       "q3": "¿Las skills funcionan con agentes de IA?",
       "a3": "Sí. Las skills son markdown plano con frontmatter, así que cualquier agente de código puede leerlas y aplicarlas directamente en tu repositorio."
     }

@@ -3,8 +3,8 @@
  * Capture before/after screenshots for comparison cases.
  *
  * Reads src/data/comparisons.json, renders each demos/<skill>/<id>/{before,after}.html
- * in Chromium at the manifest viewport, and saves PNGs to
- * public/comparisons/<skill>/<id>/{before,after}.png
+ * in Chromium at the manifest viewport, and saves optimized WebP files to
+ * public/comparisons/<skill>/<id>/{before,after}.webp
  *
  * Requires the `playwright-cli` binary on PATH (browsers already installed).
  *
@@ -14,12 +14,13 @@
  *   node scripts/capture-comparisons.mjs --case=hair-salon
  */
 import { execFile } from 'node:child_process';
-import { mkdirSync, readFileSync, statSync, existsSync } from 'node:fs';
+import { mkdirSync, readFileSync, rmSync, statSync, existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { dirname, extname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
+import sharp from 'sharp';
 
 const execFileAsync = promisify(execFile);
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -100,10 +101,10 @@ async function captureSide({ skill, id, source, anchor, side, viewport, force })
     return false;
   }
   const outDir = join(ROOT, 'public', 'comparisons', skill, id);
-  const outPath = join(outDir, `${side}.png`);
+  const outPath = join(outDir, `${side}.webp`);
   const manifestTime = mtime(MANIFEST_PATH);
   if (!force && existsSync(outPath) && mtime(outPath) > Math.max(mtime(htmlPath), manifestTime)) {
-    console.log(`  • ${side}.png up to date, skipping`);
+    console.log(`  • ${side}.webp up to date, skipping`);
     return true;
   }
   mkdirSync(outDir, { recursive: true });
@@ -115,9 +116,18 @@ async function captureSide({ skill, id, source, anchor, side, viewport, force })
     console.error(`  ✖ page never settled: ${skill}/${id}/${side}`);
     return false;
   }
-  await pw(['screenshot', `--filename=${outPath}`]);
-  const size = pngSize(outPath);
-  console.log(`  ✔ ${side}.png${size ? ` (${size.width}x${size.height})` : ''}`);
+  // Screenshots land as PNG first, then convert to optimized WebP (no PNGs committed).
+  const tmpPng = join(outDir, `${side}.tmp.png`);
+  await pw(['screenshot', `--filename=${tmpPng}`]);
+  const size = pngSize(tmpPng);
+  if (!size) {
+    rmSync(tmpPng, { force: true });
+    console.error(`  ✖ could not read screenshot: ${skill}/${id}/${side}`);
+    return false;
+  }
+  await sharp(tmpPng).webp({ quality: 85, effort: 6 }).toFile(outPath);
+  rmSync(tmpPng, { force: true });
+  console.log(`  ✔ ${side}.webp (${size.width}x${size.height})`);
   return size;
 }
 

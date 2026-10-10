@@ -21,7 +21,7 @@
         "Motion",
         "Interaction"
       ],
-      "comparisons": ["hero", "services", "about", "gallery", "pricing", "testimonials", "contact"],
+      "comparisons": ["hero", "services", "about", "gallery", "pricing", "contact"],
       "registryPath": "packages/front-skills/skills-registry/frontend-design/SKILL.md"
     },
     {

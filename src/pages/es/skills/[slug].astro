@@ -20,7 +20,7 @@ import {
 import { Badge } from '@/components/starwind/badge';
 import { Separator } from '@/components/starwind/separator';
 import { Prose } from '@/components/starwind/prose';
-import { getAllSkills, getComparisonCases, getRelatedSkills, getPrevNextSkills, renderMarkdown } from '@/lib/skills';
+import { getAllSkills, getComparisonCases, getInstallRef, getRelatedSkills, getPrevNextSkills, renderMarkdown } from '@/lib/skills';
 import { t } from '@/lib/i18n';
 
 export async function getStaticPaths() {
@@ -39,7 +39,7 @@ const comparisonCases = getComparisonCases(slug);
 // Render markdown body
 const contentHtml = renderMarkdown(skill.body);
 
-const installPkg = `front-skills@${slug}`;
+const installPkg = getInstallRef(slug);
 
 const relatedSkills = await getRelatedSkills(slug, 4);
 const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
