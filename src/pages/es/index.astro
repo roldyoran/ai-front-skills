@@ -24,12 +24,24 @@ const faqItems = [
   { q: t("home.faq.q2", locale), a: t("home.faq.a2", locale) },
   { q: t("home.faq.q3", locale), a: t("home.faq.a3", locale) },
 ];
+
+const faqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
 ---
 
-<BaseLayout title={t("site.title", locale)} description={t("site.description", locale)}>
+<BaseLayout title={t("site.title", locale)} description="Skills de frontend reutilizables para humanos y agentes de IA, con comparaciones visuales antes/después. Explora la biblioteca e instala cualquier skill en segundos.">
+  <script type="application/ld+json" set:html={JSON.stringify(faqStructuredData)} />
   <!-- Hero -->
   <section class="pt-24 pb-12 sm:pt-32 sm:pb-16">
     <div class="container-page text-center">
+      <h1 class="sr-only">Front Skills — skills de frontend con comparaciones visuales antes/después</h1>
       <pre
         class="mb-4 text-white text-[4px] sm:text-[5px] md:text-[7px] lg:text-[9px] font-mono leading-[110%] tracking-tight select-none">
 ███████╗██████╗  ██████╗ ███╗   ██╗████████╗    ███████╗██╗  ██╗██╗██╗     ██╗     ███████╗

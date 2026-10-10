@@ -43,14 +43,40 @@ const installPkg = `front-skills@${slug}`;
 
 const relatedSkills = await getRelatedSkills(slug, 4);
 const { prev: prevSkill, next: nextSkill } = await getPrevNextSkills(slug);
+
+const siteOrigin = Astro.site ?? new URL('https://front-skills.local');
+const pageUrl = new URL(Astro.url.pathname, siteOrigin).toString();
+const ogImageUrl = comparisonCases[0]?.after
+  ? new URL(comparisonCases[0].after, siteOrigin).toString()
+  : undefined;
+const articleStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'TechArticle',
+  headline: title,
+  description,
+  image: ogImageUrl ? [ogImageUrl] : undefined,
+  author: { '@type': 'Person', name: author },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+};
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', siteOrigin).toString() },
+    { '@type': 'ListItem', position: 2, name: 'Skills', item: new URL('/skills', siteOrigin).toString() },
+    { '@type': 'ListItem', position: 3, name: title, item: pageUrl },
+  ],
+};
 ---
 
 <BaseLayout
-  title={`${title} - Front Skills`}
+  title={title}
   description={description}
   image={comparisonCases[0]?.after}
   type="article"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(articleStructuredData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbStructuredData)} />
   <article class="container-page pt-24 pb-12">
     <Breadcrumb class="mb-6">
       <BreadcrumbList>

@@ -17,6 +17,10 @@ export function demoResponse(skill: string, source: string, side: 'before' | 'af
     return new Response('Not found', { status: 404 });
   }
   return new Response(html, {
-    headers: { 'Content-Type': 'text/html; charset=utf-8' },
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      // Demo iframes are thin content — keep them out of search indexes
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
   });
 }
