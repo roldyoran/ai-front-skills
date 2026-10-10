@@ -13,7 +13,7 @@ demos/
 ```
 
 Screenshots are generated from these files into
-`public/comparisons/<skill-slug>/<case-id>/{before,after}.png`
+`public/comparisons/<skill-slug>/<case-id>/{before,after}.webp`
 and wired through `src/data/comparisons.json` + the skill's `comparisons` array
 in `src/data/registry-skills.json`. The detail page renders one slider per case;
 skills with `"comparisons": []` show no slider and a dimmed icon on cards.
@@ -46,8 +46,9 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
    ```sh
    node scripts/capture-comparisons.mjs --case=<case-id>
    ```
-   Re-run without flags to capture any missing/outdated case, or with `--force`
-   to recapture everything. The script skips PNGs newer than their sources.
+    Re-run without flags to capture any missing/outdated case, or with `--force`
+    to recapture everything. The script skips WebPs newer than their sources
+    (captures as PNG, then optimizes to WebP with sharp — no PNGs committed).
 
 6. **Full-page routes are automatic.** `src/pages/showcase/[...path].ts` serves
    `/showcase/<skill>/<source>/{before,after}.html` for every manifest source
@@ -56,8 +57,8 @@ skills with `"comparisons": []` show no slider and a dimmed icon on cards.
 
 ## Rules
 
-- Never edit a generated PNG by hand — fix the HTML and re-run the script.
-- Never commit a case without both PNGs: `getComparisonCases()` in
-  `src/lib/skills.ts` only exposes cases whose PNGs exist on disk.
+- Never edit a generated WebP by hand — fix the HTML and re-run the script.
+- Never commit a case without both WebPs: `getComparisonCases()` in
+  `src/lib/skills.ts` only exposes cases whose WebPs exist on disk.
 - One viewport per case; if a later case needs another size, the script
   re-resizes the browser automatically.

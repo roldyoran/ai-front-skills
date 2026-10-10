@@ -8,7 +8,7 @@
   <rect width="1200" height="630" fill="url(#grid)"/>
   <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#262626" stroke-width="2"/>
   <text x="600" y="280" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="120" font-weight="bold" fill="#f0f0f0">&lt;fs/&gt;</text>
-  <text x="600" y="385" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="54" letter-spacing="10" fill="#f0f0f0">FRONT SKILLS</text>
-  <text x="600" y="445" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="26" fill="#a8a8a8">Frontend skills with visual before/after comparisons</text>
+  <text x="600" y="385" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="54" letter-spacing="10" fill="#f0f0f0">AI FRONT SKILLS</text>
+  <text x="600" y="445" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="26" fill="#a8a8a8">AI Front Skills with visual before/after comparisons</text>
   <rect x="520" y="485" width="160" height="6" fill="#f0f0f0"/>
 </svg>

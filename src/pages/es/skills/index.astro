@@ -14,7 +14,7 @@ const siteOrigin = Astro.site ?? new URL('https://front-skills.local');
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Front Skills Library',
+  name: 'Biblioteca AI Front Skills',
   url: new URL('/es/skills', siteOrigin).toString(),
   hasPart: {
     '@type': 'ItemList',
@@ -29,8 +29,8 @@ const structuredData = {
 ---
 
 <BaseLayout
-  title={`${t('skills.title', locale)} - Front Skills`}
-  description="Explora todas las skills de frontend disponibles"
+  title={`${t('skills.title', locale)}`}
+  description="Explora todas las skills de frontend de la biblioteca AI Front Skills: patrones de CSS, Tailwind, React, Astro y UI/UX con comparaciones antes/después."
 >
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   <div class="container-page pt-24 pb-12">

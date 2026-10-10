@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Full-page demos are thin/duplicate content for crawlers
+Disallow: /showcase/
+
 Sitemap: https://front-skills.dev/sitemap-index.xml

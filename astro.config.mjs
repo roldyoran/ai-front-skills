@@ -9,7 +9,18 @@ import svelte from '@astrojs/svelte';
 export default defineConfig({
   site: 'https://front-skills.dev',
 
-  integrations: [sitemap(), svelte()],
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en',
+          es: 'es',
+        },
+      },
+    }),
+    svelte(),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

@@ -3,7 +3,7 @@ import InstallCommand from '@/components/skills/InstallCommand.astro';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/starwind/tabs';
 
 interface Props {
-  /** Package reference, e.g. "front-skills" or "front-skills@my-slug" */
+  /** Install reference, e.g. "https://github.com/anthropics/skills --skill frontend-design" */
   pkg: string;
   copyLabel?: string;
   copiedLabel?: string;
