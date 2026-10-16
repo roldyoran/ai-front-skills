@@ -46,7 +46,7 @@
         "Performance"
       ],
       "image": "https://avatars.githubusercontent.com/u/246974152?s=200&v=4",
-      "comparisons": [],
+      "comparisons": ["ux-hero", "ux-services", "ux-about", "ux-gallery", "ux-pricing", "ux-contact"],
       "registryPath": "packages/front-skills/skills-registry/ui-ux-pro-max/SKILL.md"
     },
     {
